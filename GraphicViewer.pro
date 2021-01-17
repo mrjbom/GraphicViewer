@@ -1,6 +1,7 @@
-QT += core gui
+QT += core gui widgets
+LIBS += -lglu32 -lopengl32
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+#greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
 
@@ -10,9 +11,11 @@ CONFIG += c++17
 
 SOURCES += \
     source/main.cpp \
+    source/mainopenglwidget.cpp \
     source/mainwindow.cpp
 
 HEADERS += \
+    source/mainopenglwidget.h \
     source/mainwindow.h
 
 FORMS += \

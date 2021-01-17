@@ -21,7 +21,7 @@
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
       <item>
-       <widget class="QOpenGLWidget" name="openGLWidget"/>
+       <widget class="MainOpenGLWidget" name="mainopenglwidget"/>
       </item>
      </layout>
     </item>
@@ -61,6 +61,15 @@
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="0">
            <widget class="QPushButton" name="pushButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string>PushButton</string>
             </property>
@@ -98,6 +107,13 @@
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MainOpenGLWidget</class>
+   <extends>QOpenGLWidget</extends>
+   <header>source/mainopenglwidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

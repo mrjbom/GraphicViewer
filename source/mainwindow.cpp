@@ -8,6 +8,8 @@ MainWindow::MainWindow(QMainWindow* parent)
 
     Ui::MainWindowForm mainWindowFormUI;
     mainWindowFormUI.setupUi(this);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -15,4 +17,3 @@ MainWindow::~MainWindow()
     delete mainWindow;
     qDebug("[INFO] Main window object destroyed successfully");
 }
-
