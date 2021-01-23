@@ -45,6 +45,9 @@
      <layout class="QVBoxLayout" name="rightLayout">
       <item>
        <widget class="QTabWidget" name="tabWidget">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -52,9 +55,9 @@
          </sizepolicy>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
-        <widget class="QWidget" name="tab_0">
+        <widget class="QWidget" name="tab_1">
          <property name="styleSheet">
           <string notr="true"/>
          </property>
@@ -83,11 +86,11 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="tab_1">
+        <widget class="QWidget" name="tab_2">
          <attribute name="title">
           <string>Tab 2</string>
          </attribute>
-         <layout class="QGridLayout" name="gridLayout_2">
+         <layout class="QGridLayout" name="gridLayout_3">
           <item row="0" column="0">
            <widget class="QPushButton" name="pushButton_2">
             <property name="text">
@@ -101,6 +104,23 @@
             </property>
             <property name="flat">
              <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_3">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <attribute name="title">
+          <string>System Info</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>TextLabel</string>
             </property>
            </widget>
           </item>

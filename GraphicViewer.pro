@@ -1,6 +1,5 @@
 QT += core gui widgets
 LIBS += -lglu32 -lopengl32
-#LIBS += -L"$$_PRO_FILE_PWD_/source/assimp-5.0.1/build/code/Debug" -lassimp-vc142-mtd
 
 #greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -34,3 +33,6 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/source/assimp-5.0.1/bui
 
 INCLUDEPATH += $$PWD/source/assimp-5.0.1/myinclude
 DEPENDPATH += $$PWD/source/assimp-5.0.1/myinclude
+
+RESOURCES += \
+    resources.qrc
