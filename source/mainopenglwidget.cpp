@@ -98,18 +98,19 @@ GLuint MainOpenGLWidget::makeShaderProgram(const QString vertexShaderSourceFileP
     return shaderProgram;
 }
 
-float vertexes_normalized[12] =
-                     {-0.5, 0.5, 0,
-                       0.5, 0.5, 0,
-                       0.5, -0.5, 0,
-                      -0.5, -0.5, 0};
+//The vertices are specified in counter-clockwise order
+// A
+// |\
+// | \
+// |  \
+// B---C
+// A->B->C
+float vertexes_coords_normalized[9] =
+                     { 0, 0.5, 0,
+                       -0.5, -0.5, 0,
+                       0.5, -0.5, 0 };
 
-float vertexes[12] = {-100, 100, 0,
-                       100, 100, 0,
-                       100, -100, 0,
-                      -100, -100, 0};
-
-unsigned int gVBO = 0;
+unsigned int gVAO = 0;
 unsigned int gShaderProgram = 0;
 
 void MainOpenGLWidget::initializeGL()
@@ -130,25 +131,40 @@ void MainOpenGLWidget::initializeGL()
     }
     gShaderProgram = shaderProgram;
 
-    //объект вершинного буфера
+    //Vertex buffer object ID(name)
     unsigned int VBO = 0;
-    //выделяем 1 буффер
+    //Vertex arrays object ID(name)
+    unsigned int VAO = 0;
+    //Allocate 1 buffer for VBO (Vertex Buffer Object)
     glGenBuffers(1, &VBO);
-    //связываем буферный объект с буфером OpenGL
+    //Allocate 1 buffer for VAO (Vertex Arrays Object)
+    glGenVertexArrays(1, &VAO);
+    //Select VAO
+    glBindVertexArray(VAO);
+    //Linking a buffer object to an OpenGL buffer
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    //копируем данные о вершинах из массива в VBO
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexes_normalized), vertexes_normalized, GL_STATIC_DRAW);
-    gVBO = VBO;
+    //Copying vertex data from the array to VBO
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexes_coords_normalized), vertexes_coords_normalized, GL_STATIC_DRAW);
 
-    //настраиваем интерпретацию данных вершинного буфера
+    //Configuring the interpretation of the vertex buffer data
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    glUseProgram(shaderProgram);
+    //Unselect VBO(so that other calls(glBufferData for example) don't change it)
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    //Unselect VAO(so that other calls don't change it)
+    glBindVertexArray(0);
+
+    gVAO = VAO;
+
 }
 
 void MainOpenGLWidget::resizeGL(int w, int h)
 {
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(-w / 2, w / 2, -h / 2, h / 2);
     glViewport(0, 0, w, h);
 }
 
@@ -158,11 +174,19 @@ void MainOpenGLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glPushMatrix();
-    glRotatef(i++, 0, 0, -1);
-    glDrawArrays(GL_POLYGON, 0, 4);
 
-    glPopMatrix();
+    //Select shader program
+    glUseProgram(gShaderProgram);
+    //Select VAO
+    glBindVertexArray(gVAO);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    //Draw triangle
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+    //Unselect VAO
+    glBindVertexArray(0);
+    //Unselect shader program
+    glUseProgram(0);
+
 
     //glColor3f(1, 1, 1);
     //glPushMatrix();
