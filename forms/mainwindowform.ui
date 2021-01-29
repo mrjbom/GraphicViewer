@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
@@ -21,7 +24,7 @@
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
       <item>
-       <widget class="MainOpenGLWidget" name="mainopenglwidget"/>
+       <widget class="MainOpenGLWidget" name="mainOpenGLWidget"/>
       </item>
      </layout>
     </item>
@@ -55,34 +58,60 @@
          </sizepolicy>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab_1">
          <property name="styleSheet">
           <string notr="true"/>
          </property>
          <attribute name="title">
-          <string>Tab 1</string>
+          <string>Scene</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout">
-          <item row="0" column="0">
-           <widget class="QPushButton" name="pushButton">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
+          <item row="0" column="2">
+           <widget class="QComboBox" name="sceneSelectorComboBox">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="styleSheet">
-             <string notr="true"/>
+            <property name="minimumSize">
+             <size>
+              <width>140</width>
+              <height>0</height>
+             </size>
             </property>
-            <property name="text">
-             <string>PushButton</string>
+            <property name="currentText">
+             <string/>
+            </property>
+            <property name="maxVisibleItems">
+             <number>5</number>
+            </property>
+            <property name="frame">
+             <bool>true</bool>
             </property>
            </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="sceneSelectorLabel">
+            <property name="text">
+             <string>Current scene:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
@@ -114,7 +143,7 @@
           <bool>true</bool>
          </property>
          <attribute name="title">
-          <string>System Info</string>
+          <string>Tab 3</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="0" column="0">

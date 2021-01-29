@@ -1,6 +1,10 @@
 <RCC>
-    <qresource prefix="/glshaders">
-        <file alias="fragshader.frag">source/shaders/fragshader.frag</file>
-        <file alias="vertshader.vert">source/shaders/vertshader.vert</file>
+    <qresource prefix="/Scenes/Sc2VAOBlue/shaders">
+        <file alias="fragshader.frag">source/SceneManager/Scenes/Sc2VAOBlue/shaders/fragshader.frag</file>
+        <file alias="vertshader.vert">source/SceneManager/Scenes/Sc2VAOBlue/shaders/vertshader.vert</file>
+    </qresource>
+    <qresource prefix="/Scenes/Sc1VBOOrange/shaders">
+        <file alias="fragshader.frag">source/SceneManager/Scenes/Sc1VBOOrange/shaders/fragshader.frag</file>
+        <file alias="vertshader.vert">source/SceneManager/Scenes/Sc1VBOOrange/shaders/vertshader.vert</file>
     </qresource>
 </RCC>

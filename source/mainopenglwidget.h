@@ -3,9 +3,10 @@
 
 #include <QDebug>
 #include <QOpenGLWidget>
-#include <QOpenGLFunctions>
-#include <qopenglfunctions_3_3_core.h>
-#include <gl/GLU.h>
+#include <QOpenGLFunctions_3_3_Core>
+#include <GL/GLU.h>
+#include "SceneManager/SceneManager.h"
+#include "helpfulopenglfunctions.h"
 
 class MainOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
 {
@@ -13,17 +14,13 @@ class MainOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Co
 public:
     MainOpenGLWidget(QWidget *parent = nullptr);
     ~MainOpenGLWidget();
-
-    //Compiles a vertical and fragment shader, creates a shader program from them, and returns a shader program
-    GLuint makeShaderProgram(const QString vertexShaderSourceFilePath, const QString fragmentShaderSourceFilePath);
+    SceneManager* sceneManager = nullptr;
+    char* openglVersionString = nullptr;
 
 protected:
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL();
-
-private:
-    char* openglVersionString = nullptr;
 };
 
 #endif // MAINOPENGLWIDGET_H
