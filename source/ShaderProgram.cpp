@@ -1,25 +1,43 @@
-#include "helpfulopenglfunctions.h"
+#include "ShaderProgram.h"
+#include <QDebug>
+#include "shaderprintf.h"
 
-HelpfulOpenGLFunctions::HelpfulOpenGLFunctions(QOpenGLFunctions_3_3_Core* _glFunctions)
+ShaderProgram::ShaderProgram(QOpenGLFunctions_4_5_Core* _glFunctions, const QString _vertexShaderSourceFilePath, const QString _fragmentShaderSourceFilePath, bool _useShaderPrintf)
 {
     glFunctions = _glFunctions;
+    vertexShaderSourceFilePath = _vertexShaderSourceFilePath;
+    fragmentShaderSourceFilePath = _fragmentShaderSourceFilePath;
+    useShaderPrintf = _useShaderPrintf;
 }
 
-GLuint HelpfulOpenGLFunctions::makeShaderProgram(const QString vertexShaderSourceFilePath, const QString fragmentShaderSourceFilePath)
+ShaderProgram::~ShaderProgram()
+{
+    if(!makeSuccessful)
+        return;
+
+    glFunctions->glDeleteProgram(compiledShaderProgram);
+}
+
+bool ShaderProgram::compile()
 {
     const size_t errorMessageBufferSize = 512;
+
+    if(!glFunctions) {
+        qDebug("[ERROR] makeShaderProgram: glFunctions not valid!");
+        return false;
+    }
 
     //Open files containing the vertex and fragment shader source code
     QFile vertexShaderSourceFile(vertexShaderSourceFilePath);
     if (!vertexShaderSourceFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug("[ERROR] makeShadersProgram: open vertex shader source code file failed!");
-        return 0;
+        qDebug("[ERROR] makeShaderProgram: open vertex shader source code file failed!");
+        return false;
     }
 
     QFile fragmentShaderSourceFile(fragmentShaderSourceFilePath);
     if (!fragmentShaderSourceFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug("[ERROR] makeShadersProgram: open fragment shader source code file failed!");
-        return 0;
+        qDebug("[ERROR] makeShaderProgram: open fragment shader source code file failed!");
+        return false;
     };
 
     //Reading the vertex and fragment shader source code
@@ -41,7 +59,12 @@ GLuint HelpfulOpenGLFunctions::makeShaderProgram(const QString vertexShaderSourc
 
     //Compile vertex shader
     int vertexShader = glFunctions->glCreateShader(GL_VERTEX_SHADER);
-    glFunctions->glShaderSource(vertexShader, 1, &vertexShaderSourceCodeString, NULL);
+    if(useShaderPrintf) {
+        glShaderSourcePrint(glFunctions, vertexShader, 1, &vertexShaderSourceCodeString, NULL);
+    }
+    else {
+        glFunctions->glShaderSource(vertexShader, 1, &vertexShaderSourceCodeString, NULL);
+    }
     glFunctions->glCompileShader(vertexShader);
 
     //Check vertex compile result
@@ -50,13 +73,18 @@ GLuint HelpfulOpenGLFunctions::makeShaderProgram(const QString vertexShaderSourc
     if (!vertexShaderCompileStatus) {
         char infoLog[errorMessageBufferSize];
         glFunctions->glGetShaderInfoLog(vertexShader, sizeof(infoLog), NULL, infoLog);
-        qDebug() << "[ERROR] makeShadersProgram: vertex shader compilation failed!\n" << infoLog;
-        return 0;
+        qDebug() << "[ERROR] makeShaderProgram: vertex shader compilation failed!\n" << infoLog;
+        return false;
     }
 
     //Compile fragment shader
     int fragmentShader = glFunctions->glCreateShader(GL_FRAGMENT_SHADER);
-    glFunctions->glShaderSource(fragmentShader, 1, &fragmentShaderSourceCodeString, NULL);
+    if(useShaderPrintf) {
+        glShaderSourcePrint(glFunctions, fragmentShader, 1, &fragmentShaderSourceCodeString, NULL);
+    }
+    else {
+        glFunctions->glShaderSource(fragmentShader, 1, &fragmentShaderSourceCodeString, NULL);
+    }
     glFunctions->glCompileShader(fragmentShader);
 
     //Check fragment compile result
@@ -65,8 +93,8 @@ GLuint HelpfulOpenGLFunctions::makeShaderProgram(const QString vertexShaderSourc
     if (!fragmentShaderCompileStatus) {
         char infoLog[errorMessageBufferSize];
         glFunctions->glGetShaderInfoLog(fragmentShader, sizeof(infoLog), NULL, infoLog);
-        qDebug() << "[ERROR] makeShadersProgram: fragment shader compilation failed!\n" << infoLog;
-        return 0;
+        qDebug() << "[ERROR] makeShaderProgram: fragment shader compilation failed!\n" << infoLog;
+        return false;
     }
 
     //Link shader program
@@ -82,12 +110,56 @@ GLuint HelpfulOpenGLFunctions::makeShaderProgram(const QString vertexShaderSourc
     if (!shaderProgramLinkStatus) {
         char infoLog[errorMessageBufferSize];
         glFunctions->glGetProgramInfoLog(shaderProgram, sizeof(infoLog), NULL, infoLog);
-        qDebug() << "[ERROR] makeShadersProgram: shader program link failed!\n" << infoLog;
-        return 0;
+        qDebug() << "[ERROR] makeShaderProgram: shader program link failed!\n" << infoLog;
+        return false;
     }
 
     glFunctions->glDeleteShader(vertexShader);
     glFunctions->glDeleteShader(fragmentShader);
 
-    return shaderProgram;
+    compiledShaderProgram = shaderProgram;
+    makeSuccessful = true;
+    return true;
+}
+
+void ShaderProgram::enable()
+{
+    glFunctions->glUseProgram(compiledShaderProgram);
+}
+
+void ShaderProgram::disable()
+{
+    glFunctions->glUseProgram(0);
+}
+
+void ShaderProgram::setUniform3f(const GLchar* name, float x, float y, float z)
+{
+    GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
+    glFunctions->glUniform3f(location, x, y, z);
+}
+
+void ShaderProgram::printfPrepare()
+{
+    if(!useShaderPrintf)
+        return;
+
+    //Create a buffer to hold the printf results
+    gShaderPrintfBuffer = createPrintBuffer(glFunctions);
+    //Bind it to the program
+    bindPrintBuffer(glFunctions, compiledShaderProgram, gShaderPrintfBuffer);
+}
+
+void ShaderProgram::printfTerminate()
+{
+    if(!useShaderPrintf)
+        return;
+
+    //Clean up
+    deletePrintBuffer(glFunctions, gShaderPrintfBuffer);
+}
+
+std::string ShaderProgram::printfGetData()
+{
+    //Convert to string
+    return getPrintBufferString(glFunctions, gShaderPrintfBuffer).c_str();
 }

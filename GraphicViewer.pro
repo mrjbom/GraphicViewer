@@ -10,23 +10,30 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    source/SceneManager/Scenes/Sc0Test/Sc0Test.cpp \
     source/SceneManager/Scenes/Sc1VBOOrange/Sc1VBOOrange.cpp \
     source/SceneManager/Scenes/Sc2VAOBlue/Sc2VAOBlue.cpp \
+    source/SceneManager/Scenes/Sc3EBOGreen/Sc3EBOGreen.cpp \
+    source/SceneManager/Scenes/Sc4UniformInput/Sc4UniformInput.cpp \
     source/SceneManager/scenemanager.cpp \
+    source/ShaderProgram.cpp \
     source/globalvars.cpp \
-    source/helpfulopenglfunctions.cpp \
     source/main.cpp \
     source/mainopenglwidget.cpp \
     source/mainwindow.cpp
 
 HEADERS += \
+    source/SceneManager/Scenes/Sc0Test/Sc0Test.h \
     source/SceneManager/Scenes/Sc1VBOOrange/Sc1VBOOrange.h \
     source/SceneManager/Scenes/Sc2VAOBlue/Sc2VAOBlue.h \
+    source/SceneManager/Scenes/Sc3EBOGreen/Sc3EBOGreen.h \
+    source/SceneManager/Scenes/Sc4UniformInput/Sc4UniformInput.h \
     source/SceneManager/scenemanager.h \
+    source/ShaderProgram.h \
     source/globalvars.h \
-    source/helpfulopenglfunctions.h \
     source/mainopenglwidget.h \
-    source/mainwindow.h
+    source/mainwindow.h \
+    source/shaderprintf.h
 
 FORMS += \
     forms/mainwindowform.ui

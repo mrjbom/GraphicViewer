@@ -1,16 +1,15 @@
-#include "Sc2VAOBlue.h"
-#include <iostream>
+#include "Sc4UniformInput.h"
 
-Sc2VAOBlue::Sc2VAOBlue(QOpenGLContext* openGLContext)
+Sc4UniformInput::Sc4UniformInput(QOpenGLContext* openGLContext)
 {
     glFunctions = openGLContext->versionFunctions<QOpenGLFunctions_4_5_Core>();
 }
 
-Sc2VAOBlue::~Sc2VAOBlue()
+Sc4UniformInput::~Sc4UniformInput()
 {
 }
 
-void Sc2VAOBlue::initScene()
+void Sc4UniformInput::initScene()
 {
     float vertexes_coords_normalized[] =
                          { 0, 0.5, 0,
@@ -18,7 +17,7 @@ void Sc2VAOBlue::initScene()
                            0.5, -0.5, 0 };
 
     //Create shader program object
-    gShaderProgram = new ShaderProgram(glFunctions, ":Scenes/Sc2VAOBlue/shaders/vertshader.vert", ":/Scenes/Sc2VAOBlue/shaders/fragshader.frag");
+    gShaderProgram = new ShaderProgram(glFunctions, ":Scenes/Sc4UniformInput/shaders/vertshader.vert", ":/Scenes/Sc4UniformInput/shaders/fragshader.frag");
 
     //Compile shader program
     if(!gShaderProgram->compile()) {
@@ -54,13 +53,23 @@ void Sc2VAOBlue::initScene()
     gVBO = VBO;
 }
 
-void Sc2VAOBlue::drawScene()
+void Sc4UniformInput::drawScene()
 {
     glFunctions->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
     //Select shader program
     gShaderProgram->enable();
+
+    //Generate color
+    static float color = 0;
+    if(color + 0.01f <= 1.0f)
+        color += 0.01f;
+    else
+        color = 0;
+
+    //Set uniform variable
+    gShaderProgram->setUniform3f("inputColor", color, 0, color);
+
     //Select VAO
     glFunctions->glBindVertexArray(gVAO);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -75,7 +84,7 @@ void Sc2VAOBlue::drawScene()
     //Unselect shader program
     gShaderProgram->disable();
 }
-void Sc2VAOBlue::finishScene()
+void Sc4UniformInput::finishScene()
 {
     glFunctions->glDeleteBuffers(1, &gVBO);
     glFunctions->glDeleteVertexArrays(1, &gVAO);

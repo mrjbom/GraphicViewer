@@ -1,5 +1,5 @@
-#ifndef SC1VBOORANGE_H
-#define SC1VBOORANGE_H
+#ifndef SC3EBOGREEN_H
+#define SC3EBOGREEN_H
 
 #include <QDebug>
 #include <QOpenGLWidget>
@@ -9,7 +9,7 @@
 #include "../../SceneManager.h"
 #include "../../ShaderProgram.h"
 
-class Sc1VBOOrange : public SceneManager
+class Sc3EBOGreen : public SceneManager
 {
 private:
     QOpenGLFunctions_4_5_Core* glFunctions = nullptr;
@@ -17,13 +17,14 @@ private:
 private:
     ShaderProgram* gShaderProgram = nullptr;
     GLuint gVBO = 0;
+    GLuint gEBO = 0;
 
 public:
-    Sc1VBOOrange(QOpenGLContext* openGLContext);
-    ~Sc1VBOOrange();
+    Sc3EBOGreen(QOpenGLContext* openGLContext);
+    ~Sc3EBOGreen();
     void initScene();
     void drawScene();
     void finishScene();
 };
 
-#endif // SC1VBOORANGE_H
+#endif // SC3EBOGREEN_H

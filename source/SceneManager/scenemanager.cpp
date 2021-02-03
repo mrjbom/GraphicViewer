@@ -1,9 +1,11 @@
 #include <iostream>
 #include "SceneManager.h"
 #include "../globalvars.h"
+#include "Scenes/Sc0Test/Sc0Test.h"
 #include "Scenes/Sc1VBOOrange/Sc1VBOOrange.h"
 #include "Scenes/Sc2VAOBlue/Sc2VAOBlue.h"
-#include <QMetaMethod>
+#include "Scenes/Sc3EBOGreen/Sc3EBOGreen.h"
+#include "Scenes/Sc4UniformInput/Sc4UniformInput.h"
 
 SceneManager::SceneManager()
 {
@@ -19,8 +21,14 @@ SceneManager::~SceneManager()
 
 void SceneManager::init(QOpenGLContext* openGLContext)
 {
+    //Save OpenGL context
     this->openGLContext = openGLContext;
     void* scenePtr = nullptr;
+
+    //Add scenes
+
+    scenePtr = new Sc0Test(openGLContext);
+    addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Test scene");
 
     scenePtr = new Sc1VBOOrange(openGLContext);
     addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Triangle VBO(Orange)");
@@ -28,13 +36,18 @@ void SceneManager::init(QOpenGLContext* openGLContext)
     scenePtr = new Sc2VAOBlue(openGLContext);
     addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Triangle VAO(Blue)");
 
-    setCurrentSceneObjectIndex(0);
+    scenePtr = new Sc3EBOGreen(openGLContext);
+    addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Triangle EBO(Green)");
+
+    scenePtr = new Sc4UniformInput(openGLContext);
+    addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Triangle Uniform Input");
 
     //Configuring the scene combo-box to select the current scene
     for(size_t i = 0; i < getScenesNumber(); ++i) {
         globalMainWindowFormUI->sceneSelectorComboBox->addItem(getSceneName(i));
     }
     QObject::connect(globalMainWindowFormUI->sceneSelectorComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(comboBoxChangedCurrentIndex(int)));
+    setCurrentSceneObjectIndex(0);
 }
 
 void SceneManager::final()

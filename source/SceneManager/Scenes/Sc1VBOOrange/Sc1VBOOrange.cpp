@@ -3,7 +3,7 @@
 
 Sc1VBOOrange::Sc1VBOOrange(QOpenGLContext* openGLContext)
 {
-    glFunctions = openGLContext->versionFunctions<QOpenGLFunctions_3_3_Core>();
+    glFunctions = openGLContext->versionFunctions<QOpenGLFunctions_4_5_Core>();
 }
 
 Sc1VBOOrange::~Sc1VBOOrange()
@@ -17,15 +17,14 @@ void Sc1VBOOrange::initScene()
                            -0.5, -0.5, 0,
                            0.5, -0.5, 0 };
 
-    HelpfulOpenGLFunctions helpfulOpenGLFunctions(glFunctions);
+    //Create shader program object
+    gShaderProgram = new ShaderProgram(glFunctions, ":Scenes/Sc1VBOOrange/shaders/vertshader.vert", ":/Scenes/Sc1VBOOrange/shaders/fragshader.frag");
 
     //Compile shader program
-    unsigned int shaderProgram = helpfulOpenGLFunctions.makeShaderProgram(":/Scenes/Sc1VBOOrange/shaders/vertshader.vert", ":/Scenes/Sc1VBOOrange/shaders/fragshader.frag");
-    if(!shaderProgram) {
+    if(!gShaderProgram->compile()) {
         qDebug("[ERROR] initializeGL: makeShaderProgram failed!");
         return;
     }
-    gShaderProgram = shaderProgram;
 
     //Vertex buffer object ID(name)
     unsigned int VBO = 0;
@@ -49,20 +48,30 @@ void Sc1VBOOrange::drawScene()
 {
     glFunctions->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Select shader program
-    glFunctions->glUseProgram(gShaderProgram);
-    glEnableClientState(GL_VERTEX_ARRAY);
+    gShaderProgram->enable();
     //Select VBO
+    glEnableClientState(GL_VERTEX_ARRAY);
     glFunctions->glBindBuffer(GL_ARRAY_BUFFER, gVBO);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+
+    gShaderProgram->printfPrepare();
+
     //Draw triangle
     glFunctions->glDrawArrays(GL_TRIANGLES , 0, 3);
+
+    //qInfo() << QString::fromStdString(gShaderProgram->printfGetData());
+    gShaderProgram->printfTerminate();
+
+
     //Unselect VBO
     glFunctions->glBindBuffer(GL_ARRAY_BUFFER, 0);
-    //Unselect shader program
     glDisableClientState(GL_VERTEX_ARRAY);
-    glFunctions->glUseProgram(0);
+    //Unselect shader program
+    gShaderProgram->disable();
 }
 void Sc1VBOOrange::finishScene()
 {
     glFunctions->glDeleteBuffers(1, &gVBO);
+    delete gShaderProgram;
 }

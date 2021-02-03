@@ -7,4 +7,16 @@
         <file alias="fragshader.frag">source/SceneManager/Scenes/Sc1VBOOrange/shaders/fragshader.frag</file>
         <file alias="vertshader.vert">source/SceneManager/Scenes/Sc1VBOOrange/shaders/vertshader.vert</file>
     </qresource>
+    <qresource prefix="/Scenes/Sc0Test/shaders">
+        <file alias="fragshader.frag">source/SceneManager/Scenes/Sc0Test/shaders/fragshader.frag</file>
+        <file alias="vertshader.vert">source/SceneManager/Scenes/Sc0Test/shaders/vertshader.vert</file>
+    </qresource>
+    <qresource prefix="/Scenes/Sc4UniformInput/shaders">
+        <file alias="fragshader.frag">source/SceneManager/Scenes/Sc4UniformInput/shaders/fragshader.frag</file>
+        <file alias="vertshader.vert">source/SceneManager/Scenes/Sc4UniformInput/shaders/vertshader.vert</file>
+    </qresource>
+    <qresource prefix="/Scenes/Sc3EBOGreen/shaders">
+        <file alias="fragshader.frag">source/SceneManager/Scenes/Sc3EBOGreen/shaders/fragshader.frag</file>
+        <file alias="vertshader.vert">source/SceneManager/Scenes/Sc3EBOGreen/shaders/vertshader.vert</file>
+    </qresource>
 </RCC>

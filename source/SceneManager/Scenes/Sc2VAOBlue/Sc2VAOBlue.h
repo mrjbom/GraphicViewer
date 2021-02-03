@@ -4,17 +4,18 @@
 #include <QDebug>
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions_3_3_Core>
+#include <QOpenGLFunctions_4_5_Core>
 #include <GL/GLU.h>
 #include "../../SceneManager.h"
-#include "../../helpfulopenglfunctions.h"
+#include "../../ShaderProgram.h"
 
 class Sc2VAOBlue : public SceneManager
 {
 private:
-    QOpenGLFunctions_3_3_Core* glFunctions = nullptr;
+    QOpenGLFunctions_4_5_Core* glFunctions = nullptr;
 
 private:
-    GLuint gShaderProgram = 0;
+    ShaderProgram* gShaderProgram = nullptr;
     GLuint gVAO = 0;
     GLuint gVBO = 0;
 

@@ -1,5 +1,5 @@
-#ifndef SC1VBOORANGE_H
-#define SC1VBOORANGE_H
+#ifndef SC3UNIFORMINPUT_H
+#define SC3UNIFORMINPUT_H
 
 #include <QDebug>
 #include <QOpenGLWidget>
@@ -9,21 +9,22 @@
 #include "../../SceneManager.h"
 #include "../../ShaderProgram.h"
 
-class Sc1VBOOrange : public SceneManager
+class Sc4UniformInput : public SceneManager
 {
 private:
     QOpenGLFunctions_4_5_Core* glFunctions = nullptr;
 
 private:
     ShaderProgram* gShaderProgram = nullptr;
+    GLuint gVAO = 0;
     GLuint gVBO = 0;
 
 public:
-    Sc1VBOOrange(QOpenGLContext* openGLContext);
-    ~Sc1VBOOrange();
+    Sc4UniformInput(QOpenGLContext* openGLContext);
+    ~Sc4UniformInput();
     void initScene();
     void drawScene();
     void finishScene();
 };
 
-#endif // SC1VBOORANGE_H
+#endif // SC3UNIFORMINPUT_H
