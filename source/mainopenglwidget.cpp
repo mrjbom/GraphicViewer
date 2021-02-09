@@ -1,9 +1,11 @@
-#include "mainopenglwidget.h"
+#include "MainOpenGLWidget.h"
+#include "globalvars.h"
 #include <QFile>
 
 MainOpenGLWidget::MainOpenGLWidget(QWidget* parent) : QOpenGLWidget(parent)
 {
     sceneManager = new SceneManager;
+
 }
 
 MainOpenGLWidget::~MainOpenGLWidget()
@@ -33,24 +35,23 @@ void MainOpenGLWidget::initializeGL()
     openglVersionString = (char*)glGetString(GL_VERSION);
     sceneManager->init(this->context());
     glClearColor(0.0, 0.0, 0.0, 0.0);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluOrtho2D(-this->width() / 2, this->width() / 2, -this->height() / 2, this->height() / 2);
     glViewport(0, 0, this->width(), this->height());
 
 }
 
 void MainOpenGLWidget::resizeGL(int w, int h)
 {
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluOrtho2D(-w / 2, w / 2, -h / 2, h / 2);
     glViewport(0, 0, w, h);
 }
 
 void MainOpenGLWidget::paintGL()
 {
-    sceneManager->callInitScene();
+    sceneManager->callInitSceneAndOptionsWidgets();
+    QTime framerateTime;
+    framerateTime.start();
     sceneManager->callDrawScene();
+    int timeElapsedInMilliseconds = framerateTime.elapsed();
+    globalMainWindowFormUI->sceneFramerateLabelMilliseconds->setText(QString::number(timeElapsedInMilliseconds));
+
     update();
 }

@@ -15,12 +15,13 @@ SOURCES += \
     source/SceneManager/Scenes/Sc2VAOBlue/Sc2VAOBlue.cpp \
     source/SceneManager/Scenes/Sc3EBOGreen/Sc3EBOGreen.cpp \
     source/SceneManager/Scenes/Sc4UniformInput/Sc4UniformInput.cpp \
-    source/SceneManager/scenemanager.cpp \
+    source/SceneManager/Scenes/Sc5Texture/Sc5Texture.cpp \
+    source/SceneManager/SceneManager.cpp \
     source/ShaderProgram.cpp \
     source/globalvars.cpp \
     source/main.cpp \
-    source/mainopenglwidget.cpp \
-    source/mainwindow.cpp
+    source/MainOpenGLWidget.cpp \
+    source/MainWindow.cpp
 
 HEADERS += \
     source/SceneManager/Scenes/Sc0Test/Sc0Test.h \
@@ -28,15 +29,16 @@ HEADERS += \
     source/SceneManager/Scenes/Sc2VAOBlue/Sc2VAOBlue.h \
     source/SceneManager/Scenes/Sc3EBOGreen/Sc3EBOGreen.h \
     source/SceneManager/Scenes/Sc4UniformInput/Sc4UniformInput.h \
-    source/SceneManager/scenemanager.h \
+    source/SceneManager/Scenes/Sc5Texture/Sc5Texture.h \
+    source/SceneManager/SceneManager.h \
     source/ShaderProgram.h \
     source/globalvars.h \
-    source/mainopenglwidget.h \
-    source/mainwindow.h \
-    source/shaderprintf.h
+    source/MainOpenGLWidget.h \
+    source/MainWindow.h \
+    source/ShaderPrintf.h
 
 FORMS += \
-    forms/mainwindowform.ui
+    forms/MainWindowForm.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -44,9 +46,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 #ASSIMP
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/source/assimp-5.0.1/build/code/release/ -lassimp-vc142-mtd
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/source/assimp-5.0.1/build/code/debug/ -lassimp-vc142-mtd
+#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/source/assimp-5.0.1/build/code/release/ -lassimp-vc142-mtd
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/source/assimp-5.0.1/build/code/debug/ -lassimp-vc142-mtd
 
 INCLUDEPATH += $$PWD/source/assimp-5.0.1/myinclude
 DEPENDPATH += $$PWD/source/assimp-5.0.1/myinclude

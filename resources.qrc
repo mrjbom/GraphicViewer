@@ -1,22 +1,28 @@
 <RCC>
-    <qresource prefix="/Scenes/Sc2VAOBlue/shaders">
-        <file alias="fragshader.frag">source/SceneManager/Scenes/Sc2VAOBlue/shaders/fragshader.frag</file>
-        <file alias="vertshader.vert">source/SceneManager/Scenes/Sc2VAOBlue/shaders/vertshader.vert</file>
+    <qresource prefix="/Scenes/Sc2VAOBlue">
+        <file alias="/shaders/fragshader.frag">source/SceneManager/Scenes/Sc2VAOBlue/shaders/fragshader.frag</file>
+        <file alias="/shaders/vertshader.vert">source/SceneManager/Scenes/Sc2VAOBlue/shaders/vertshader.vert</file>
     </qresource>
-    <qresource prefix="/Scenes/Sc1VBOOrange/shaders">
-        <file alias="fragshader.frag">source/SceneManager/Scenes/Sc1VBOOrange/shaders/fragshader.frag</file>
-        <file alias="vertshader.vert">source/SceneManager/Scenes/Sc1VBOOrange/shaders/vertshader.vert</file>
+    <qresource prefix="/Scenes/Sc1VBOOrange">
+        <file alias="/shaders/fragshader.frag">source/SceneManager/Scenes/Sc1VBOOrange/shaders/fragshader.frag</file>
+        <file alias="/shaders/vertshader.vert">source/SceneManager/Scenes/Sc1VBOOrange/shaders/vertshader.vert</file>
     </qresource>
-    <qresource prefix="/Scenes/Sc0Test/shaders">
-        <file alias="fragshader.frag">source/SceneManager/Scenes/Sc0Test/shaders/fragshader.frag</file>
-        <file alias="vertshader.vert">source/SceneManager/Scenes/Sc0Test/shaders/vertshader.vert</file>
+    <qresource prefix="/Scenes/Sc0Test">
+        <file alias="/shaders/fragshader.frag">source/SceneManager/Scenes/Sc0Test/shaders/fragshader.frag</file>
+        <file alias="/shaders/vertshader.vert">source/SceneManager/Scenes/Sc0Test/shaders/vertshader.vert</file>
     </qresource>
-    <qresource prefix="/Scenes/Sc4UniformInput/shaders">
-        <file alias="fragshader.frag">source/SceneManager/Scenes/Sc4UniformInput/shaders/fragshader.frag</file>
-        <file alias="vertshader.vert">source/SceneManager/Scenes/Sc4UniformInput/shaders/vertshader.vert</file>
+    <qresource prefix="/Scenes/Sc4UniformInput">
+        <file alias="/shaders/fragshader.frag">source/SceneManager/Scenes/Sc4UniformInput/shaders/fragshader.frag</file>
+        <file alias="/shaders/vertshader.vert">source/SceneManager/Scenes/Sc4UniformInput/shaders/vertshader.vert</file>
     </qresource>
-    <qresource prefix="/Scenes/Sc3EBOGreen/shaders">
-        <file alias="fragshader.frag">source/SceneManager/Scenes/Sc3EBOGreen/shaders/fragshader.frag</file>
-        <file alias="vertshader.vert">source/SceneManager/Scenes/Sc3EBOGreen/shaders/vertshader.vert</file>
+    <qresource prefix="/Scenes/Sc3EBOGreen">
+        <file alias="/shaders/fragshader.frag">source/SceneManager/Scenes/Sc3EBOGreen/shaders/fragshader.frag</file>
+        <file alias="/shaders/vertshader.vert">source/SceneManager/Scenes/Sc3EBOGreen/shaders/vertshader.vert</file>
+    </qresource>
+    <qresource prefix="/Scenes/Sc5Texture">
+        <file alias="/shaders/fragshader.frag">source/SceneManager/Scenes/Sc5Texture/shaders/fragshader.frag</file>
+        <file alias="/shaders/vertshader.vert">source/SceneManager/Scenes/Sc5Texture/shaders/vertshader.vert</file>
+        <file alias="/textures/cat512x512.png">source/SceneManager/Scenes/Sc5Texture/textures/cat512x512.png</file>
+        <file alias="/textures/wall512x512.png">source/SceneManager/Scenes/Sc5Texture/textures/wall512x512.png</file>
     </qresource>
 </RCC>

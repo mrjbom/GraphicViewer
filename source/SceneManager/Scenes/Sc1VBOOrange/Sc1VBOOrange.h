@@ -21,9 +21,12 @@ private:
 public:
     Sc1VBOOrange(QOpenGLContext* openGLContext);
     ~Sc1VBOOrange();
-    void initScene();
-    void drawScene();
-    void finishScene();
+    void initScene() override;
+    void drawScene() override;
+    void finishScene() override;
+
+    void createUiOptionsWidgets() override;
+    void deleteUiOptionsWidgets() override;
 };
 
 #endif // SC1VBOORANGE_H

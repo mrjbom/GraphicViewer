@@ -24,7 +24,11 @@
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
       <item>
-       <widget class="MainOpenGLWidget" name="mainOpenGLWidget"/>
+       <widget class="MainOpenGLWidget" name="mainOpenGLWidget">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -67,8 +71,8 @@
          <attribute name="title">
           <string>Scene</string>
          </attribute>
-         <layout class="QGridLayout" name="gridLayout">
-          <item row="0" column="2">
+         <layout class="QGridLayout" name="tab_1GridLayout">
+          <item row="1" column="2">
            <widget class="QComboBox" name="sceneSelectorComboBox">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -82,25 +86,41 @@
               <height>0</height>
              </size>
             </property>
+            <property name="editable">
+             <bool>false</bool>
+            </property>
             <property name="currentText">
              <string/>
             </property>
+            <property name="currentIndex">
+             <number>-1</number>
+            </property>
             <property name="maxVisibleItems">
-             <number>5</number>
+             <number>10</number>
             </property>
             <property name="frame">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="sceneSelectorLabel">
-            <property name="text">
-             <string>Current scene:</string>
+          <item row="2" column="1" colspan="2">
+           <widget class="QFrame" name="sceneOptionsFrame">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="sceneOptionsGridLayout"/>
            </widget>
           </item>
-          <item row="1" column="2">
+          <item row="3" column="1">
            <spacer name="verticalSpacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -113,13 +133,34 @@
             </property>
            </spacer>
           </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="sceneFramerateLabel">
+            <property name="text">
+             <string>Framerate:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="sceneFramerateLabelMilliseconds">
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="sceneSelectorLabel">
+            <property name="text">
+             <string>Current scene:</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
         <widget class="QWidget" name="tab_2">
          <attribute name="title">
           <string>Tab 2</string>
          </attribute>
-         <layout class="QGridLayout" name="gridLayout_3">
+         <layout class="QGridLayout" name="tab_2GridLayout">
           <item row="0" column="0">
            <widget class="QPushButton" name="pushButton_2">
             <property name="text">
@@ -145,7 +186,7 @@
          <attribute name="title">
           <string>Tab 3</string>
          </attribute>
-         <layout class="QGridLayout" name="gridLayout_2">
+         <layout class="QGridLayout" name="tab_3GridLayout">
           <item row="0" column="0">
            <widget class="QLabel" name="label">
             <property name="text">

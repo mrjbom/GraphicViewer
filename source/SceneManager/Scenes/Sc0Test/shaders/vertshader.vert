@@ -5,8 +5,6 @@ out vec3 vertexColor;
 
 void main()
 {
-    enablePrintf();
-    printf("aColor = %.1^3f ", aColor);
     gl_Position = vec4(aPos, 1.0);
     vertexColor = aColor;
 }

@@ -35,7 +35,7 @@ void Sc4UniformInput::initScene()
     glFunctions->glGenVertexArrays(1, &VAO);
     //Select VAO
     glFunctions->glBindVertexArray(VAO);
-    //Linking a buffer object to an OpenGL buffer
+    //Use buffer object to an OpenGL buffer
     glFunctions->glBindBuffer(GL_ARRAY_BUFFER, VBO);
     //Copying vertex data from the array to VBO
     glFunctions->glBufferData(GL_ARRAY_BUFFER, sizeof(vertexes_coords_normalized), vertexes_coords_normalized, GL_STATIC_DRAW);
@@ -89,4 +89,14 @@ void Sc4UniformInput::finishScene()
     glFunctions->glDeleteBuffers(1, &gVBO);
     glFunctions->glDeleteVertexArrays(1, &gVAO);
     delete gShaderProgram;
+}
+
+void Sc4UniformInput::createUiOptionsWidgets()
+{
+
+}
+
+void Sc4UniformInput::deleteUiOptionsWidgets()
+{
+
 }

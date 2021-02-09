@@ -1,5 +1,6 @@
-#include "mainwindow.h"
+#include "MainWindow.h"
 #include "globalvars.h"
+#include <QWidget>
 
 MainWindow::MainWindow(QMainWindow* parent)
 {

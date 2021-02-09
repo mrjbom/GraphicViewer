@@ -22,9 +22,12 @@ private:
 public:
     Sc4UniformInput(QOpenGLContext* openGLContext);
     ~Sc4UniformInput();
-    void initScene();
-    void drawScene();
-    void finishScene();
+    void initScene() override;
+    void drawScene() override;
+    void finishScene() override;
+
+    void createUiOptionsWidgets() override;
+    void deleteUiOptionsWidgets() override;
 };
 
 #endif // SC3UNIFORMINPUT_H

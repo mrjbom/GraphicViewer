@@ -22,9 +22,12 @@ private:
 public:
     Sc2VAOBlue(QOpenGLContext* openGLContext);
     ~Sc2VAOBlue();
-    void initScene();
-    void drawScene();
-    void finishScene();
+    void initScene() override;
+    void drawScene() override;
+    void finishScene() override;
+
+    void createUiOptionsWidgets() override;
+    void deleteUiOptionsWidgets() override;
 };
 
 #endif // SC2VAOBLUE_H

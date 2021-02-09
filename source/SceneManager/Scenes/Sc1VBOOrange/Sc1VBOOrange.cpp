@@ -1,5 +1,4 @@
 #include "Sc1VBOOrange.h"
-#include <iostream>
 
 Sc1VBOOrange::Sc1VBOOrange(QOpenGLContext* openGLContext)
 {
@@ -30,7 +29,7 @@ void Sc1VBOOrange::initScene()
     unsigned int VBO = 0;
     //Allocate 1 buffer for VBO (Vertex Buffer Object)
     glFunctions->glGenBuffers(1, &VBO);
-    //Linking a buffer object to an OpenGL buffer
+    //Use buffer object to an OpenGL buffer
     glFunctions->glBindBuffer(GL_ARRAY_BUFFER, VBO);
     //Copying vertex data from the array to VBO
     glFunctions->glBufferData(GL_ARRAY_BUFFER, sizeof(vertexes_coords_normalized), vertexes_coords_normalized, GL_STATIC_DRAW);
@@ -74,4 +73,14 @@ void Sc1VBOOrange::finishScene()
 {
     glFunctions->glDeleteBuffers(1, &gVBO);
     delete gShaderProgram;
+}
+
+void Sc1VBOOrange::createUiOptionsWidgets()
+{
+
+}
+
+void Sc1VBOOrange::deleteUiOptionsWidgets()
+{
+
 }

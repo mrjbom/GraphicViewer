@@ -6,6 +6,7 @@
 #include "Scenes/Sc2VAOBlue/Sc2VAOBlue.h"
 #include "Scenes/Sc3EBOGreen/Sc3EBOGreen.h"
 #include "Scenes/Sc4UniformInput/Sc4UniformInput.h"
+#include "Scenes/Sc5Texture/Sc5Texture.h"
 
 SceneManager::SceneManager()
 {
@@ -42,6 +43,9 @@ void SceneManager::init(QOpenGLContext* openGLContext)
     scenePtr = new Sc4UniformInput(openGLContext);
     addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Triangle Uniform Input");
 
+    scenePtr = new Sc5Texture(openGLContext);
+    addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Square Textured");
+
     //Configuring the scene combo-box to select the current scene
     for(size_t i = 0; i < getScenesNumber(); ++i) {
         globalMainWindowFormUI->sceneSelectorComboBox->addItem(getSceneName(i));
@@ -77,6 +81,7 @@ void SceneManager::setCurrentSceneObjectIndex(size_t newCurrentIndex)
 	}
     sceneObjectsInitStatusList[currentObjectIndex] = false;
     sceneObjectsList[currentObjectIndex]->finishScene();
+    sceneObjectsList[currentObjectIndex]->deleteUiOptionsWidgets();
 	currentObjectIndex = newCurrentIndex;
 }
 
@@ -105,7 +110,17 @@ void SceneManager::finishScene()
     //DON'T USE
 }
 
-void SceneManager::callInitScene()
+void SceneManager::createUiOptionsWidgets()
+{
+    //DON'T USE
+}
+
+void SceneManager::deleteUiOptionsWidgets()
+{
+    //DON'T USE
+}
+
+void SceneManager::callInitSceneAndOptionsWidgets()
 {
 	if (sceneObjectsList.size() == 0) {
 		return;
@@ -113,6 +128,7 @@ void SceneManager::callInitScene()
 	if (sceneObjectsInitStatusList[currentObjectIndex] == false) {
 		sceneObjectsInitStatusList[currentObjectIndex] = true;
 		sceneObjectsList[currentObjectIndex]->initScene();
+        sceneObjectsList[currentObjectIndex]->createUiOptionsWidgets();
 		return;
 	}
 }
@@ -122,7 +138,7 @@ void SceneManager::callDrawScene()
 	if (sceneObjectsList.size() == 0) {
 		return;
 	}
-	sceneObjectsList[currentObjectIndex]->drawScene();
+    sceneObjectsList[currentObjectIndex]->drawScene();
 }
 
 void SceneManager::comboBoxChangedCurrentIndex(int newIndex) {

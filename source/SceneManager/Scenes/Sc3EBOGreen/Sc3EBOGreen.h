@@ -3,11 +3,12 @@
 
 #include <QDebug>
 #include <QOpenGLWidget>
-#include <QOpenGLFunctions_3_3_Core>
 #include <QOpenGLFunctions_4_5_Core>
 #include <GL/GLU.h>
+#include "../../globalvars.h"
 #include "../../SceneManager.h"
 #include "../../ShaderProgram.h"
+#include <QCheckBox>
 
 class Sc3EBOGreen : public SceneManager
 {
@@ -19,12 +20,23 @@ private:
     GLuint gVBO = 0;
     GLuint gEBO = 0;
 
+    bool gShowPolygonLines = false;
+
+    QCheckBox* gShowPolygonLinesCheckBoxWidget = nullptr;
+
+
 public:
     Sc3EBOGreen(QOpenGLContext* openGLContext);
     ~Sc3EBOGreen();
-    void initScene();
-    void drawScene();
-    void finishScene();
+    void initScene() override;
+    void drawScene() override;
+    void finishScene() override;
+
+    void createUiOptionsWidgets() override;
+    void deleteUiOptionsWidgets() override;
+
+public slots:
+    void showPolygonLinesStateChanged(int state);
 };
 
 #endif // SC3EBOGREEN_H

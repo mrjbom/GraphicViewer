@@ -1,7 +1,8 @@
 #include "ShaderProgram.h"
+#include "ShaderPrintf.h"
 #include <QDebug>
-#include "shaderprintf.h"
 
+// _useShaderPrintf
 ShaderProgram::ShaderProgram(QOpenGLFunctions_4_5_Core* _glFunctions, const QString _vertexShaderSourceFilePath, const QString _fragmentShaderSourceFilePath, bool _useShaderPrintf)
 {
     glFunctions = _glFunctions;
@@ -136,6 +137,18 @@ void ShaderProgram::setUniform3f(const GLchar* name, float x, float y, float z)
 {
     GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
     glFunctions->glUniform3f(location, x, y, z);
+}
+
+void ShaderProgram::setUniform1i(const GLchar* name, int num)
+{
+    GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
+    glFunctions->glUniform1i(location, num);
+}
+
+void ShaderProgram::setUniform1f(const GLchar* name, float num)
+{
+    GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
+    glFunctions->glUniform1f(location, num);
 }
 
 void ShaderProgram::printfPrepare()

@@ -1,5 +1,4 @@
 #include "Sc2VAOBlue.h"
-#include <iostream>
 
 Sc2VAOBlue::Sc2VAOBlue(QOpenGLContext* openGLContext)
 {
@@ -36,7 +35,7 @@ void Sc2VAOBlue::initScene()
     glFunctions->glGenVertexArrays(1, &VAO);
     //Select VAO
     glFunctions->glBindVertexArray(VAO);
-    //Linking a buffer object to an OpenGL buffer
+    //Use buffer object to an OpenGL buffer
     glFunctions->glBindBuffer(GL_ARRAY_BUFFER, VBO);
     //Copying vertex data from the array to VBO
     glFunctions->glBufferData(GL_ARRAY_BUFFER, sizeof(vertexes_coords_normalized), vertexes_coords_normalized, GL_STATIC_DRAW);
@@ -80,4 +79,14 @@ void Sc2VAOBlue::finishScene()
     glFunctions->glDeleteBuffers(1, &gVBO);
     glFunctions->glDeleteVertexArrays(1, &gVAO);
     delete gShaderProgram;
+}
+
+void Sc2VAOBlue::createUiOptionsWidgets()
+{
+
+}
+
+void Sc2VAOBlue::deleteUiOptionsWidgets()
+{
+
 }
