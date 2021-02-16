@@ -10,6 +10,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    source/Camera/Camera.cpp \
     source/SceneManager/Scenes/Sc0Test/Sc0Test.cpp \
     source/SceneManager/Scenes/Sc1VBOOrange/Sc1VBOOrange.cpp \
     source/SceneManager/Scenes/Sc2VAOBlue/Sc2VAOBlue.cpp \
@@ -17,6 +18,8 @@ SOURCES += \
     source/SceneManager/Scenes/Sc4UniformInput/Sc4UniformInput.cpp \
     source/SceneManager/Scenes/Sc5Texture/Sc5Texture.cpp \
     source/SceneManager/SceneManager.cpp \
+    source/SceneManager/Scenes/Sc6Box3DPerspective/Sc6Box3DPerspective.cpp \
+    source/SceneManager/Scenes/Sc7Box3DCam/Sc7Box3DCam.cpp \
     source/ShaderProgram.cpp \
     source/globalvars.cpp \
     source/main.cpp \
@@ -24,6 +27,7 @@ SOURCES += \
     source/MainWindow.cpp
 
 HEADERS += \
+    source/Camera/Camera.h \
     source/SceneManager/Scenes/Sc0Test/Sc0Test.h \
     source/SceneManager/Scenes/Sc1VBOOrange/Sc1VBOOrange.h \
     source/SceneManager/Scenes/Sc2VAOBlue/Sc2VAOBlue.h \
@@ -31,6 +35,8 @@ HEADERS += \
     source/SceneManager/Scenes/Sc4UniformInput/Sc4UniformInput.h \
     source/SceneManager/Scenes/Sc5Texture/Sc5Texture.h \
     source/SceneManager/SceneManager.h \
+    source/SceneManager/Scenes/Sc6Box3DPerspective/Sc6Box3DPerspective.h \
+    source/SceneManager/Scenes/Sc7Box3DCam/Sc7Box3DCam.h \
     source/ShaderProgram.h \
     source/globalvars.h \
     source/MainOpenGLWidget.h \

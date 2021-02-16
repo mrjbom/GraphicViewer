@@ -25,6 +25,7 @@ public:
     void setUniform3f(const GLchar* name, float x, float y, float z);
     void setUniform1i(const GLchar* name, int num);
     void setUniform1f(const GLchar* name, float num);
+    void setUniformMatrix4fv(const GLchar* name, GLsizei count, GLboolean transpose, const GLfloat* value);
 
 
     //Using these functions if useShaderPrintf enabled results in a huge memory overhead!

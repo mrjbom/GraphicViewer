@@ -151,6 +151,12 @@ void ShaderProgram::setUniform1f(const GLchar* name, float num)
     glFunctions->glUniform1f(location, num);
 }
 
+void ShaderProgram::setUniformMatrix4fv(const GLchar* name, GLsizei count, GLboolean transpose, const GLfloat* value)
+{
+    GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
+    glFunctions->glUniformMatrix4fv(location, count, transpose, value);
+}
+
 void ShaderProgram::printfPrepare()
 {
     if(!useShaderPrintf)

@@ -9,8 +9,11 @@ Sc3EBOGreen::~Sc3EBOGreen()
 {
 }
 
-void Sc3EBOGreen::initScene()
+void Sc3EBOGreen::initScene(int start_window_width, int start_window_height)
 {
+    (void)start_window_width;
+    (void)start_window_height;
+
     float vertexes_coords_normalized[] =
                          { 0, 0.5, 0,
                            -0.5, -0.5, 0,
@@ -55,8 +58,8 @@ void Sc3EBOGreen::initScene()
     //Unselect EBO(so that other calls(glBufferData for example) don't change it)
     glFunctions->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-    gVBO = VBO;
-    gEBO = EBO;
+    g_VBO = VBO;
+    g_EBO = EBO;
 }
 
 void Sc3EBOGreen::drawScene()
@@ -66,17 +69,17 @@ void Sc3EBOGreen::drawScene()
     gShaderProgram->enable();
     glEnableClientState(GL_VERTEX_ARRAY);
     //Select VBO
-    glFunctions->glBindBuffer(GL_ARRAY_BUFFER, gVBO);
+    glFunctions->glBindBuffer(GL_ARRAY_BUFFER, g_VBO);
     //Select EBO
-    glFunctions->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gEBO);
+    glFunctions->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_EBO);
     //Draw and polygons lines
-    if(gShowPolygonLines) {
+    if(g_show_polygon_lines) {
         glFunctions->glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     }
     //Draw triangle
     glFunctions->glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-    if(gShowPolygonLines) {
+    if(g_show_polygon_lines) {
         glFunctions->glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
     //Unselect VBO
@@ -89,8 +92,8 @@ void Sc3EBOGreen::drawScene()
 }
 void Sc3EBOGreen::finishScene()
 {
-    glFunctions->glDeleteBuffers(1, &gVBO);
-    glFunctions->glDeleteBuffers(1, &gEBO);
+    glFunctions->glDeleteBuffers(1, &g_VBO);
+    glFunctions->glDeleteBuffers(1, &g_EBO);
     delete gShaderProgram;
 }
 
@@ -105,15 +108,15 @@ void Sc3EBOGreen::deleteUiOptionsWidgets()
 {
     globalMainWindowFormUI->sceneOptionsGridLayout->removeWidget(gShowPolygonLinesCheckBoxWidget);
     delete gShowPolygonLinesCheckBoxWidget;
-    gShowPolygonLines = false;
+    g_show_polygon_lines = false;
 }
 
 void Sc3EBOGreen::showPolygonLinesStateChanged(int state)
 {
     if(state == Qt::Unchecked) {
-        gShowPolygonLines = false;
+        g_show_polygon_lines = false;
     }
     else if(state == Qt::Checked) {
-        gShowPolygonLines = true;
+        g_show_polygon_lines = true;
     }
 }

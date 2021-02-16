@@ -9,8 +9,11 @@ Sc1VBOOrange::~Sc1VBOOrange()
 {
 }
 
-void Sc1VBOOrange::initScene()
+void Sc1VBOOrange::initScene(int start_window_width, int start_window_height)
 {
+    (void)start_window_width;
+    (void)start_window_height;
+
     float vertexes_coords_normalized[] =
                          { 0, 0.5, 0,
                            -0.5, -0.5, 0,
@@ -40,7 +43,7 @@ void Sc1VBOOrange::initScene()
     //Unselect VBO(so that other calls(glBufferData for example) don't change it)
     glFunctions->glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    gVBO = VBO;
+    g_VBO = VBO;
 }
 
 void Sc1VBOOrange::drawScene()
@@ -50,7 +53,7 @@ void Sc1VBOOrange::drawScene()
     gShaderProgram->enable();
     //Select VBO
     glEnableClientState(GL_VERTEX_ARRAY);
-    glFunctions->glBindBuffer(GL_ARRAY_BUFFER, gVBO);
+    glFunctions->glBindBuffer(GL_ARRAY_BUFFER, g_VBO);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 
@@ -71,7 +74,7 @@ void Sc1VBOOrange::drawScene()
 }
 void Sc1VBOOrange::finishScene()
 {
-    glFunctions->glDeleteBuffers(1, &gVBO);
+    glFunctions->glDeleteBuffers(1, &g_VBO);
     delete gShaderProgram;
 }
 

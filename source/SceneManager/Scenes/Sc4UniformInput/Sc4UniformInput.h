@@ -16,13 +16,13 @@ private:
 
 private:
     ShaderProgram* gShaderProgram = nullptr;
-    GLuint gVAO = 0;
-    GLuint gVBO = 0;
+    GLuint g_VAO = 0;
+    GLuint g_VBO = 0;
 
 public:
     Sc4UniformInput(QOpenGLContext* openGLContext);
     ~Sc4UniformInput();
-    void initScene() override;
+    void initScene(int start_window_width, int start_window_height) override;
     void drawScene() override;
     void finishScene() override;
 

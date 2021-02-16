@@ -16,13 +16,13 @@ private:
 
 private:
     ShaderProgram* gShaderProgram = nullptr;
-    GLuint gVAO = 0;
-    GLuint gVBO = 0;
+    GLuint g_VAO = 0;
+    GLuint g_VBO = 0;
 
 public:
     Sc2VAOBlue(QOpenGLContext* openGLContext);
     ~Sc2VAOBlue();
-    void initScene() override;
+    void initScene(int start_window_width, int start_window_height) override;
     void drawScene() override;
     void finishScene() override;
 

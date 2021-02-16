@@ -2,7 +2,9 @@
 #define MAINOPENGLWIDGET_H
 
 #include <QDebug>
-#include <QTime>
+#include <QElapsedTimer>
+#include <QEvent>
+#include <QMouseEvent>
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions_3_3_Core>
 #include <GL/GLU.h>
@@ -19,9 +21,14 @@ public:
     char* openglVersionString = nullptr;
 
 protected:
-    void initializeGL();
-    void resizeGL(int w, int h);
-    void paintGL();
+    void initializeGL() override;
+    void resizeGL(int w, int h) override;
+    void paintGL() override;
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
+    void keyPressEvent(QKeyEvent* event) override;
+    void keyReleaseEvent(QKeyEvent* event) override;
 };
 
 #endif // MAINOPENGLWIDGET_H

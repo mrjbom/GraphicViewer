@@ -3,7 +3,6 @@
 
 #include <QDebug>
 #include <QOpenGLWidget>
-#include <QOpenGLFunctions_3_3_Core>
 #include <QOpenGLFunctions_4_5_Core>
 #include <GL/GLU.h>
 #include "../../SceneManager.h"
@@ -19,23 +18,23 @@ private:
 
 private:
     ShaderProgram* gShaderProgram = nullptr;
-    GLuint gVAO = 0;
-    GLuint gVBOvertexes = 0;
-    GLuint gVBOWallTexcoords = 0;
-    GLuint gVBOCatTexcoords = 0;
-    GLuint gEBOindexes = 0;
-    GLuint gWallTexture = 0;
-    GLuint gCatTexture = 0;
+    GLuint g_VAO = 0;
+    GLuint g_VBO_vertexes = 0;
+    GLuint g_VBO_wall_texcoords = 0;
+    GLuint g_VBO_cat_texcoords = 0;
+    GLuint g_EBO_indexes = 0;
+    GLuint g_wall_texture = 0;
+    GLuint g_cat_texture = 0;
 
 
     QLabel* gMixValueTextLabel = nullptr;
     QSlider* gMixValueSlider = nullptr;
-    float gMixValue = 0;
+    float g_mix_value = 0;
 
 public:
     Sc5Texture(QOpenGLContext* openGLContext);
     ~Sc5Texture();
-    void initScene() override;
+    void initScene(int start_window_width, int start_window_height) override;
     void drawScene() override;
     void finishScene() override;
 

@@ -9,8 +9,11 @@ Sc2VAOBlue::~Sc2VAOBlue()
 {
 }
 
-void Sc2VAOBlue::initScene()
+void Sc2VAOBlue::initScene(int start_window_width, int start_window_height)
 {
+    (void)start_window_width;
+    (void)start_window_height;
+
     float vertexes_coords_normalized[] =
                          { 0, 0.5, 0,
                            -0.5, -0.5, 0,
@@ -49,8 +52,8 @@ void Sc2VAOBlue::initScene()
     //Unselect VAO(so that other calls don't change it)
     glFunctions->glBindVertexArray(0);
 
-    gVAO = VAO;
-    gVBO = VBO;
+    g_VAO = VAO;
+    g_VBO = VBO;
 }
 
 void Sc2VAOBlue::drawScene()
@@ -61,7 +64,7 @@ void Sc2VAOBlue::drawScene()
     //Select shader program
     gShaderProgram->enable();
     //Select VAO
-    glFunctions->glBindVertexArray(gVAO);
+    glFunctions->glBindVertexArray(g_VAO);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     //Enable the vertex attribute(the rest attributes remain off for optimization)
     glFunctions->glEnableVertexAttribArray(0);
@@ -76,8 +79,8 @@ void Sc2VAOBlue::drawScene()
 }
 void Sc2VAOBlue::finishScene()
 {
-    glFunctions->glDeleteBuffers(1, &gVBO);
-    glFunctions->glDeleteVertexArrays(1, &gVAO);
+    glFunctions->glDeleteBuffers(1, &g_VBO);
+    glFunctions->glDeleteVertexArrays(1, &g_VAO);
     delete gShaderProgram;
 }
 

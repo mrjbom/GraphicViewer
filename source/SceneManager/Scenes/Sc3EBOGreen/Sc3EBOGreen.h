@@ -17,10 +17,10 @@ private:
 
 private:
     ShaderProgram* gShaderProgram = nullptr;
-    GLuint gVBO = 0;
-    GLuint gEBO = 0;
+    GLuint g_VBO = 0;
+    GLuint g_EBO = 0;
 
-    bool gShowPolygonLines = false;
+    bool g_show_polygon_lines = false;
 
     QCheckBox* gShowPolygonLinesCheckBoxWidget = nullptr;
 
@@ -28,7 +28,7 @@ private:
 public:
     Sc3EBOGreen(QOpenGLContext* openGLContext);
     ~Sc3EBOGreen();
-    void initScene() override;
+    void initScene(int start_window_width, int start_window_height) override;
     void drawScene() override;
     void finishScene() override;
 

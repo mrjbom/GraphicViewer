@@ -16,12 +16,12 @@ private:
 
 private:
     ShaderProgram* gShaderProgram = nullptr;
-    GLuint gVBO = 0;
+    GLuint g_VBO = 0;
 
 public:
     Sc1VBOOrange(QOpenGLContext* openGLContext);
     ~Sc1VBOOrange();
-    void initScene() override;
+    void initScene(int start_window_width, int start_window_height) override;
     void drawScene() override;
     void finishScene() override;
 

@@ -136,7 +136,7 @@
           <item row="0" column="1">
            <widget class="QLabel" name="sceneFramerateLabel">
             <property name="text">
-             <string>Framerate:</string>
+             <string>Frametime:</string>
             </property>
            </widget>
           </item>

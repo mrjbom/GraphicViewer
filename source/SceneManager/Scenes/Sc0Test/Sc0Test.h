@@ -17,9 +17,9 @@ private:
 
 private:
     ShaderProgram* gShaderProgram = nullptr;
-    GLuint gVAO = 0;
-    GLuint gVBO = 0;
-    GLuint gColorsVBO = 0;
+    GLuint g_VAO = 0;
+    GLuint g_VBO = 0;
+    GLuint g_сolors_VBO = 0;
 
     //UI
     QPushButton* gBtn = nullptr;
@@ -27,7 +27,7 @@ private:
 public:
     Sc0Test(QOpenGLContext* openGLContext);
     ~Sc0Test();
-    void initScene() override;
+    void initScene(int start_window_width, int start_window_height) override;
     void drawScene() override;
     void finishScene() override;
 

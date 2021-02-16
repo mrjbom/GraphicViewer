@@ -1,5 +1,4 @@
 #include "Sc5Texture.h"
-#include <iostream>
 #include <QGLWidget> //for convertation to gl format
 #include "../../globalvars.h"
 
@@ -12,8 +11,10 @@ Sc5Texture::~Sc5Texture()
 {
 }
 
-void Sc5Texture::initScene()
+void Sc5Texture::initScene(int start_window_width, int start_window_height)
 {
+    (void)start_window_width;
+    (void)start_window_height;
 
     //for RGBA texture
     glFunctions->glEnable(GL_BLEND);
@@ -122,7 +123,7 @@ void Sc5Texture::initScene()
 
 
 
-    //Select wall texture
+    //Select cat texture
     glFunctions->glBindTexture(GL_TEXTURE_2D, catTexture);
     //Load data to texture
     glFunctions->glTexImage2D(GL_TEXTURE_2D, //selected texture type
@@ -214,12 +215,13 @@ void Sc5Texture::initScene()
     //Unselect VAO(so that other calls don't change it)
     glFunctions->glBindVertexArray(0);
 
-    gVAO = VAO;
-    gVBOvertexes = VBOvertexes;
-    gEBOindexes = EBOindexes;
-    gVBOWallTexcoords = VBOWallTexcoords;
-    gWallTexture = wallTexture;
-    gCatTexture = catTexture;
+    g_VAO = VAO;
+    g_VBO_vertexes = VBOvertexes;
+    g_EBO_indexes = EBOindexes;
+    g_VBO_wall_texcoords = VBOWallTexcoords;
+    g_VBO_cat_texcoords = VBOCatTexcoords;
+    g_wall_texture = wallTexture;
+    g_cat_texture = catTexture;
 }
 
 void Sc5Texture::drawScene()
@@ -228,31 +230,31 @@ void Sc5Texture::drawScene()
     //Select shader program
     gShaderProgram->enable();
 
-    gShaderProgram->setUniform1f("mixValue", gMixValue);
+    gShaderProgram->setUniform1f("mix_value", g_mix_value);
 
     //Select texture unit
     glFunctions->glActiveTexture(GL_TEXTURE0);
     //Select texture
-    glFunctions->glBindTexture(GL_TEXTURE_2D, gWallTexture);
+    glFunctions->glBindTexture(GL_TEXTURE_2D, g_wall_texture);
     gShaderProgram->setUniform1i("wallTexture", 0);
 
     //Select texture unit
     glFunctions->glActiveTexture(GL_TEXTURE1);
     //Select texture
-    glFunctions->glBindTexture(GL_TEXTURE_2D, gCatTexture);
+    glFunctions->glBindTexture(GL_TEXTURE_2D, g_cat_texture);
     gShaderProgram->setUniform1i("catTexture", 1);
 
     //Select default texture unit
     glFunctions->glActiveTexture(GL_TEXTURE0);
     //Select VAO
-    glFunctions->glBindVertexArray(gVAO);
+    glFunctions->glBindVertexArray(g_VAO);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     //Enable the vertex attribute(the rest attributes remain off for optimization)
     glFunctions->glEnableVertexAttribArray(0);
     glFunctions->glEnableVertexAttribArray(1);
     glFunctions->glEnableVertexAttribArray(2);
 
-    glFunctions->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gEBOindexes);
+    glFunctions->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_EBO_indexes);
 
     gShaderProgram->printfPrepare();
 
@@ -279,20 +281,23 @@ void Sc5Texture::drawScene()
 }
 void Sc5Texture::finishScene()
 {
-    glFunctions->glDeleteTextures(1, &gWallTexture);
-    glFunctions->glDeleteTextures(1, &gCatTexture);
-    glFunctions->glDeleteBuffers(1, &gVBOvertexes);
-    glFunctions->glDeleteBuffers(1, &gEBOindexes);
-    glFunctions->glDeleteBuffers(1, &gVBOWallTexcoords);
-    glFunctions->glDeleteBuffers(1, &gVBOCatTexcoords);
-    glFunctions->glDeleteVertexArrays(1, &gVAO);
+    glFunctions->glDeleteTextures(1, &g_wall_texture);
+    glFunctions->glDeleteTextures(1, &g_cat_texture);
+    glFunctions->glDeleteBuffers(1, &g_VBO_vertexes);
+    glFunctions->glDeleteBuffers(1, &g_EBO_indexes);
+    glFunctions->glDeleteBuffers(1, &g_VBO_wall_texcoords);
+    glFunctions->glDeleteBuffers(1, &g_VBO_cat_texcoords);
+    glFunctions->glDeleteVertexArrays(1, &g_VAO);
+
+    glFunctions->glDisable(GL_BLEND);
+
     delete gShaderProgram;
 }
 
 void Sc5Texture::createUiOptionsWidgets()
 {
     gMixValueTextLabel = new QLabel();
-    gMixValueTextLabel->setText("Mix Value: " + QString::number(gMixValue));
+    gMixValueTextLabel->setText("Mix Value: " + QString::number(g_mix_value));
     globalMainWindowFormUI->sceneOptionsGridLayout->addWidget(gMixValueTextLabel);
 
     gMixValueSlider = new QSlider(Qt::Orientation::Horizontal);
@@ -308,12 +313,12 @@ void Sc5Texture::deleteUiOptionsWidgets()
     delete gMixValueTextLabel;
     globalMainWindowFormUI->sceneOptionsGridLayout->removeWidget(gMixValueSlider);
     delete gMixValueSlider;
-    gMixValue = 0;
+    g_mix_value = 0;
 }
 
-void Sc5Texture::setNewMixValueFromSlider(int newValue)
+void Sc5Texture::setNewMixValueFromSlider(int new_value)
 {
     //Convert range 0...100 to 0.0...1.0
-    gMixValue = (1.0f / 100) * newValue;
-    gMixValueTextLabel->setText("Mix Value: " + QString::number(gMixValue));
+    g_mix_value = (1.0f / 100) * new_value;
+    gMixValueTextLabel->setText("Mix Value: " + QString::number(g_mix_value));
 }

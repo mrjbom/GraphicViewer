@@ -25,4 +25,14 @@
         <file alias="/textures/cat512x512.png">source/SceneManager/Scenes/Sc5Texture/textures/cat512x512.png</file>
         <file alias="/textures/wall512x512.png">source/SceneManager/Scenes/Sc5Texture/textures/wall512x512.png</file>
     </qresource>
+    <qresource prefix="/Scenes/Sc6Box3DPerspective">
+        <file alias="/shaders/fragshader.frag">source/SceneManager/Scenes/Sc6Box3DPerspective/shaders/fragshader.frag</file>
+        <file alias="/shaders/vertshader.vert">source/SceneManager/Scenes/Sc6Box3DPerspective/shaders/vertshader.vert</file>
+        <file alias="/textures/BoxWall512x512.png">source/SceneManager/Scenes/Sc6Box3DPerspective/textures/BoxWall512x512.png</file>
+    </qresource>
+    <qresource prefix="/Scenes/Sc7Box3DCam">
+        <file alias="/shaders/fragshader.frag">source/SceneManager/Scenes/Sc7Box3DCam/shaders/fragshader.frag</file>
+        <file alias="/shaders/vertshader.vert">source/SceneManager/Scenes/Sc7Box3DCam/shaders/vertshader.vert</file>
+        <file alias="/textures/BoxWall512x512.png">source/SceneManager/Scenes/Sc7Box3DCam/textures/BoxWall512x512.png</file>
+    </qresource>
 </RCC>

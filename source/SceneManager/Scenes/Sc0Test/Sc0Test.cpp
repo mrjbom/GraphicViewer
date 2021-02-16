@@ -9,8 +9,11 @@ Sc0Test::~Sc0Test()
 {
 }
 
-void Sc0Test::initScene()
+void Sc0Test::initScene(int start_window_width, int start_window_height)
 {
+    (void)start_window_width;
+    (void)start_window_height;
+
     float vertexes_coords_normalized[] =
                          { 0, 0.5, 0,
                            -0.5, -0.5, 0,
@@ -32,12 +35,12 @@ void Sc0Test::initScene()
 
     //Vertex buffer object ID(name)
     unsigned int VBO = 0;
-    unsigned int colorsVBO;
+    unsigned int colors_VBO;
     //Vertex arrays object ID(name)
     unsigned int VAO = 0;
     //Allocate 1 buffer for VBO (Vertex Buffer Object)
     glFunctions->glGenBuffers(1, &VBO);
-    glFunctions->glGenBuffers(1, &colorsVBO);
+    glFunctions->glGenBuffers(1, &colors_VBO);
     //Allocate 1 buffer for VAO (Vertex Arrays Object)
     glFunctions->glGenVertexArrays(1, &VAO);
     //Select VAO
@@ -50,7 +53,7 @@ void Sc0Test::initScene()
     glFunctions->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
     //Use buffer object to an OpenGL buffer
-    glFunctions->glBindBuffer(GL_ARRAY_BUFFER, colorsVBO);
+    glFunctions->glBindBuffer(GL_ARRAY_BUFFER, colors_VBO);
     //Copying vertex data from the array to VBO
     glFunctions->glBufferData(GL_ARRAY_BUFFER, sizeof(vertexes_colors), vertexes_colors, GL_STATIC_DRAW);
     //Configuring the interpretation of the vertex buffer data
@@ -62,9 +65,9 @@ void Sc0Test::initScene()
     //Unselect VAO(so that other calls don't change it)
     glFunctions->glBindVertexArray(0);
 
-    gVAO = VAO;
-    gVBO = VBO;
-    gColorsVBO = colorsVBO;
+    g_VAO = VAO;
+    g_VBO = VBO;
+    g_сolors_VBO = colors_VBO;
 }
 
 void Sc0Test::drawScene()
@@ -73,7 +76,7 @@ void Sc0Test::drawScene()
     //Select shader program
     gShaderProgram->enable();
     //Select VAO
-    glFunctions->glBindVertexArray(gVAO);
+    glFunctions->glBindVertexArray(g_VAO);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     //Enable the vertex attribute(the rest attributes remain off for optimization)
     glFunctions->glEnableVertexAttribArray(0);
@@ -98,9 +101,9 @@ void Sc0Test::drawScene()
 }
 void Sc0Test::finishScene()
 {
-    glFunctions->glDeleteBuffers(1, &gVBO);
-    glFunctions->glDeleteBuffers(1, &gColorsVBO);
-    glFunctions->glDeleteVertexArrays(1, &gVAO);
+    glFunctions->glDeleteBuffers(1, &g_VBO);
+    glFunctions->glDeleteBuffers(1, &g_сolors_VBO);
+    glFunctions->glDeleteVertexArrays(1, &g_VAO);
     delete gShaderProgram;
 }
 
