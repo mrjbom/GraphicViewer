@@ -306,8 +306,11 @@ void Sc6Box3DPerspective::finishScene()
 
     glFunctions->glDisable(GL_BLEND);
 
+    rotation_matrix = glm::mat4(1.0f);
     x_rot = 0;
     y_rot = 0;
+    x_rotation_speed_in_degrees = 0;
+    y_rotation_speed_in_degrees = 0;
 
     delete gShaderProgram;
 }
