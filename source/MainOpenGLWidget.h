@@ -2,18 +2,30 @@
 #define MAINOPENGLWIDGET_H
 
 #include <QDebug>
+#include <QPoint>
 #include <QElapsedTimer>
-#include <QEvent>
 #include <QMouseEvent>
+#include <QKeyEvent>
 #include <QOpenGLWidget>
-#include <QOpenGLFunctions_3_3_Core>
+#include <QOpenGLFunctions_4_5_Core>
 #include <GL/GLU.h>
 #include "SceneManager/SceneManager.h"
 #include "ShaderProgram.h"
 
-class MainOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Core
+class MainOpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_5_Core
 {
     Q_OBJECT
+private:
+    //Required offsets to build the area where the mouse shift is checked to update the position of the virtual mouse
+    const int CONTROL_AREA_RECTANGLE_LEFT_X_OFFSET = 20;
+    const int CONTROL_AREA_RECTANGLE_LEFT_Y_OFFSET = 20;
+    const int CONTROL_AREA_RECTANGLE_X_SIZE = 40;
+    const int CONTROL_AREA_RECTANGLE_Y_SIZE = 40;
+
+    bool mouseCaptured = false;
+    QPoint virtualMousePosition = { 0, 0 };
+    QPoint mouseLastPositon = { 0, 0 };
+    QString savedWindowTitle = "";
 public:
     MainOpenGLWidget(QWidget *parent = nullptr);
     ~MainOpenGLWidget();

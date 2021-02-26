@@ -20,6 +20,7 @@ SOURCES += \
     source/SceneManager/SceneManager.cpp \
     source/SceneManager/Scenes/Sc6Box3DPerspective/Sc6Box3DPerspective.cpp \
     source/SceneManager/Scenes/Sc7Box3DCam/Sc7Box3DCam.cpp \
+    source/SceneManager/Scenes/Sc8Lighting/Sc8Lighting.cpp \
     source/ShaderProgram.cpp \
     source/globalvars.cpp \
     source/main.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     source/SceneManager/SceneManager.h \
     source/SceneManager/Scenes/Sc6Box3DPerspective/Sc6Box3DPerspective.h \
     source/SceneManager/Scenes/Sc7Box3DCam/Sc7Box3DCam.h \
+    source/SceneManager/Scenes/Sc8Lighting/Sc8Lighting.h \
     source/ShaderProgram.h \
     source/globalvars.h \
     source/MainOpenGLWidget.h \

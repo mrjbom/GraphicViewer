@@ -26,27 +26,29 @@ public:
     QString getSceneName(size_t index);
     size_t getScenesNumber();
 
-    //Functions to be defined in the child class of the scene
+//Functions to be defined in the child class of the scene
+protected:
     virtual void initScene(int start_window_width, int start_window_height);
     virtual void drawScene();
     virtual void finishScene();
     //These functions do not need to be declared
     virtual void resizeSceneWindow(int w, int h);
-    virtual void mousePressEventHandler(QMouseEvent* event);
-    virtual void mouseReleaseEventHandler(QMouseEvent* event);
-    virtual void mouseMoveEventHandler(QMouseEvent* event);
+    virtual void mousePressEventHandler(QMouseEvent event);
+    virtual void mouseReleaseEventHandler(QMouseEvent event);
+    virtual void mouseMoveEventHandler(QMouseEvent event);
     virtual void keyPressEventHandler(QKeyEvent* event);
     virtual void keyReleaseEventHandler(QKeyEvent* event);
     //There is a management of widgets that allow you to customize the scene
     virtual void createUiOptionsWidgets();
     virtual void deleteUiOptionsWidgets();
 
+public:
     void callInitSceneAndOptionsWidgets(int start_window_width, int start_window_height);
     void callDrawScene();
     void callResizeSceneWindow(int w, int h);
-    void callMousePressEventHandler(QMouseEvent* event);
-    void callMouseReleaseEventHandler(QMouseEvent* event);
-    void callMouseMoveEventHandler(QMouseEvent* event);
+    void callMousePressEventHandler(QMouseEvent event);
+    void callMouseReleaseEventHandler(QMouseEvent event);
+    void callMouseMoveEventHandler(QMouseEvent event);
     void callKeyPressEventHandler(QKeyEvent* event);
     void callKeyReleaseEventHandler(QKeyEvent* event);
 

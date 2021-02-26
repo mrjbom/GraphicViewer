@@ -9,6 +9,7 @@
 #include "Scenes/Sc5Texture/Sc5Texture.h"
 #include "Scenes/Sc6Box3DPerspective/Sc6Box3DPerspective.h"
 #include "Scenes/Sc7Box3DCam/Sc7Box3DCam.h"
+#include "Scenes/Sc8Lighting/Sc8Lighting.h"
 
 SceneManager::SceneManager()
 {
@@ -52,7 +53,10 @@ void SceneManager::init(QOpenGLContext* openGLContext)
     addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Box in 3D space");
 	
 	scenePtr = new Sc7Box3DCam(openGLContext);
-    addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "3D Camera");
+    addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Box 3D Camera");
+
+    scenePtr = new Sc8Lighting(openGLContext);
+    addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Box with lighting");
 
     //Configuring the scene combo-box to select the current scene
     for(size_t i = 0; i < getScenesNumber(); ++i) {
@@ -127,19 +131,19 @@ void SceneManager::resizeSceneWindow(int w, int h)
     //DON'T USE
 }
 
-void SceneManager::mousePressEventHandler(QMouseEvent* event)
+void SceneManager::mousePressEventHandler(QMouseEvent event)
 {
     (void)event;
     //DON'T USE
 }
 
-void SceneManager::mouseReleaseEventHandler(QMouseEvent* event)
+void SceneManager::mouseReleaseEventHandler(QMouseEvent event)
 {
     (void)event;
     //DON'T USE
 }
 
-void SceneManager::mouseMoveEventHandler(QMouseEvent* event)
+void SceneManager::mouseMoveEventHandler(QMouseEvent event)
 {
     (void)event;
     //DON'T USE
@@ -196,7 +200,7 @@ void SceneManager::callResizeSceneWindow(int w, int h)
     sceneObjectsList[currentObjectIndex]->resizeSceneWindow(w, h);
 }
 
-void SceneManager::callMousePressEventHandler(QMouseEvent* event)
+void SceneManager::callMousePressEventHandler(QMouseEvent event)
 {
     if (sceneObjectsList.size() == 0) {
         return;
@@ -204,7 +208,7 @@ void SceneManager::callMousePressEventHandler(QMouseEvent* event)
     sceneObjectsList[currentObjectIndex]->mousePressEventHandler(event);
 }
 
-void SceneManager::callMouseReleaseEventHandler(QMouseEvent* event)
+void SceneManager::callMouseReleaseEventHandler(QMouseEvent event)
 {
     if (sceneObjectsList.size() == 0) {
         return;
@@ -212,7 +216,7 @@ void SceneManager::callMouseReleaseEventHandler(QMouseEvent* event)
     sceneObjectsList[currentObjectIndex]->mouseReleaseEventHandler(event);
 }
 
-void SceneManager::callMouseMoveEventHandler(QMouseEvent* event)
+void SceneManager::callMouseMoveEventHandler(QMouseEvent event)
 {
     if (sceneObjectsList.size() == 0) {
         return;

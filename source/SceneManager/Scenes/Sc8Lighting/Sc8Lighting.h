@@ -1,5 +1,5 @@
-#ifndef SC7BOX3DCAM_H
-#define SC7BOX3DCAM_H
+#ifndef SC8LIGHTING_H
+#define SC8LIGHTING_H
 
 
 #include <QDebug>
@@ -18,7 +18,7 @@
 #include <QSlider>
 #include <QPushButton>
 
-class Sc7Box3DCam : public SceneManager
+class Sc8Lighting : public SceneManager
 {
 private:
     QOpenGLFunctions_4_5_Core* glFunctions = nullptr;
@@ -31,33 +31,29 @@ private:
 
     Camera* cam = nullptr;
 
-    ShaderProgram* gShaderProgram = nullptr;
+    ShaderProgram* gBoxShaderProgram = nullptr;
     GLuint g_VAO_box = 0;
-    GLuint g_VAO_box2 = 0;
     GLuint g_VBO_box_vertexes = 0;
-    GLuint g_VBO_box_vertexes2 = 0;
+    GLuint g_VBO_box_normals = 0;
     GLuint g_VBO_box_wall_texcoords = 0;
-    GLuint g_VBO_box_wall_texcoords2 = 0;
     GLuint g_texture_box_wall = 0;
-    GLuint g_texture_box_wall2 = 0;
+    ShaderProgram* gLightShaderProgram = nullptr;
+    GLuint g_VAO_light;
+    glm::vec3 g_light_to_box_distance = glm::vec3(2.5f, 0.0f, 0.0f);
+    glm::vec3 g_light_position = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 g_light_color = glm::vec3(1.0f, 3.0f, 0.7f);
+    float light_rotation_around_box_degress = 0.0f;
 
     glm::mat4 model_matrix = glm::mat4(1.0f);
     glm::mat4 view_matrix = glm::mat4(1.0f);
     glm::mat4 projection_matrix = glm::mat4(1.0f);
     glm::mat4 replication_matrix = glm::mat4(1.0f);
 
-    float x_rot = 0;
-    float y_rot = 0;
-    float x_rotation_speed_in_degrees = 0;
-    float y_rotation_speed_in_degrees = 0;
-
-    QSlider* xRotationSpeedSlider = nullptr;
-    QSlider* yRotationSpeedSlider = nullptr;
-    QPushButton* rotationsResetButton = nullptr;
+    QSlider* lightRotationSpeedSlider = nullptr;
 
 public:
-    Sc7Box3DCam(QOpenGLContext* openGLContext);
-    ~Sc7Box3DCam();
+    Sc8Lighting(QOpenGLContext* openGLContext);
+    ~Sc8Lighting();
     void initScene(int start_window_width, int start_window_height) override;
     void drawScene() override;
     void finishScene() override;
@@ -72,9 +68,7 @@ public:
     void deleteUiOptionsWidgets() override;
 
 public slots:
-    void setXRotSpeedValueFromSlider(int new_value);
-    void setYRotSpeedValueFromSlider(int new_value);
-    void resetRotationsButtonClicked();
+    void setLightRotSpeedValueFromSlider(int new_value);
 };
 
-#endif // SC7BOX3DCAM_H
+#endif // SC8LIGHTING_H

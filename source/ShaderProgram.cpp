@@ -139,6 +139,12 @@ void ShaderProgram::setUniform3f(const GLchar* name, float x, float y, float z)
     glFunctions->glUniform3f(location, x, y, z);
 }
 
+void ShaderProgram::setUniform3f(const GLchar* name, glm::vec3 vec)
+{
+    GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
+    glFunctions->glUniform3f(location, vec.x, vec.y, vec.z);
+}
+
 void ShaderProgram::setUniform1i(const GLchar* name, int num)
 {
     GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
@@ -155,6 +161,15 @@ void ShaderProgram::setUniformMatrix4fv(const GLchar* name, GLsizei count, GLboo
 {
     GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
     glFunctions->glUniformMatrix4fv(location, count, transpose, value);
+}
+
+void ShaderProgram::setUniformBool(const GLchar* name, bool value)
+{
+    GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
+    if(location < 0) {
+        qInfo() << "[ERROR] ShaderProgram::setUniformBool: location: " << location;
+    }
+    glFunctions->glUniform1i(location, (int)value);
 }
 
 void ShaderProgram::printfPrepare()

@@ -40,12 +40,12 @@ void Sc6Box3DPerspective::initScene(int start_window_width, int start_window_hei
                            -0.5, 0.5, 0.5,
                            0.5, 0.5, 0.5,
                            //bottom side
-                           0.5, -0.5, -0.5,
-                           -0.5, -0.5, -0.5,
                            0.5, -0.5, 0.5,
-                           -0.5, -0.5, -0.5,
                            -0.5, -0.5, 0.5,
-                           0.5, -0.5, 0.5,
+                           0.5, -0.5, -0.5,
+                           -0.5, -0.5, 0.5,
+                           -0.5, -0.5, -0.5,
+                           0.5, -0.5, -0.5,
                            //near side
                            0.5, 0.5, 0.5,
                            -0.5, 0.5, 0.5,
@@ -348,7 +348,7 @@ void Sc6Box3DPerspective::deleteUiOptionsWidgets()
 
     globalMainWindowFormUI->sceneOptionsGridLayout->removeWidget(yRotationSpeedSlider);
     delete yRotationSpeedSlider;
-    x_rotation_speed_in_degrees = 0;
+    y_rotation_speed_in_degrees = 0;
 
     globalMainWindowFormUI->sceneOptionsGridLayout->removeWidget(rotationsResetButton);
     delete rotationsResetButton;
