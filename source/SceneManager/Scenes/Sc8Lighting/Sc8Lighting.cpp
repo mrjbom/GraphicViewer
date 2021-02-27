@@ -367,6 +367,7 @@ void Sc8Lighting::drawScene()
     gBoxShaderProgram->setUniform3f("objectColor", 0.7f, 0.7f, 0.7f);
     gBoxShaderProgram->setUniform3f("lightPosition", g_light_position);
     gBoxShaderProgram->setUniform3f("lightColor", g_light_color);
+    gBoxShaderProgram->setUniform1f("ambientLightCoef", 0.3f);
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     //Enable the vertex attribute(the rest attributes remain off for optimization)
