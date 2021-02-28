@@ -136,30 +136,50 @@ void ShaderProgram::disable()
 void ShaderProgram::setUniform3f(const GLchar* name, float x, float y, float z)
 {
     GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
+    if(location < 0) {
+        qInfo() << "[ERROR] ShaderProgram::setUniform3f: name:" << name;
+        return;
+    }
     glFunctions->glUniform3f(location, x, y, z);
 }
 
 void ShaderProgram::setUniform3f(const GLchar* name, glm::vec3 vec)
 {
     GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
+    if(location < 0) {
+        qInfo() << "[ERROR] ShaderProgram::setUniform3f: name:" << name;
+        return;
+    }
     glFunctions->glUniform3f(location, vec.x, vec.y, vec.z);
 }
 
 void ShaderProgram::setUniform1i(const GLchar* name, int num)
 {
     GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
+    if(location < 0) {
+        qInfo() << "[ERROR] ShaderProgram::setUniform1i: name:" << name;
+        return;
+    }
     glFunctions->glUniform1i(location, num);
 }
 
 void ShaderProgram::setUniform1f(const GLchar* name, float num)
 {
     GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
+    if(location < 0) {
+        qInfo() << "[ERROR] ShaderProgram::setUniform1f: name:" << name;
+        return;
+    }
     glFunctions->glUniform1f(location, num);
 }
 
 void ShaderProgram::setUniformMatrix4fv(const GLchar* name, GLsizei count, GLboolean transpose, const GLfloat* value)
 {
     GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
+    if(location < 0) {
+        qInfo() << "[ERROR] ShaderProgram::setUniformMatrix4fv: name:" << name;
+        return;
+    }
     glFunctions->glUniformMatrix4fv(location, count, transpose, value);
 }
 
@@ -167,7 +187,8 @@ void ShaderProgram::setUniformBool(const GLchar* name, bool value)
 {
     GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
     if(location < 0) {
-        qInfo() << "[ERROR] ShaderProgram::setUniformBool: location: " << location;
+        qInfo() << "[ERROR] ShaderProgram::setUniformBool: name:" << name;
+        return;
     }
     glFunctions->glUniform1i(location, (int)value);
 }
@@ -194,6 +215,8 @@ void ShaderProgram::printfTerminate()
 
 std::string ShaderProgram::printfGetData()
 {
+    if(!useShaderPrintf)
+        return "This shader program does not use ShaderPrintf, enable it using the parameters of the shader program compilation function";
     //Convert to string
     return getPrintBufferString(glFunctions, gShaderPrintfBuffer).c_str();
 }

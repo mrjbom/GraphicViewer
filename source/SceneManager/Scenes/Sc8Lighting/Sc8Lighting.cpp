@@ -306,19 +306,9 @@ void Sc8Lighting::initScene(int start_window_width, int start_window_height)
 void Sc8Lighting::drawScene()
 {
     glFunctions->glEnable(GL_DEPTH_TEST);
-
     glFunctions->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
     gLightShaderProgram->enable();
-    gLightShaderProgram->setUniform3f("lightColor", g_light_color);
-
-    //Select VAO
-    glFunctions->glBindVertexArray(g_VAO_light);
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    //Enable the vertex attribute(the rest attributes remain off for optimization)
-    glFunctions->glEnableVertexAttribArray(0);
-
     //use matrix
     //create model matrix
     model_matrix = glm::mat4(1.0f);
@@ -336,16 +326,23 @@ void Sc8Lighting::drawScene()
     model_matrix = glm::translate(model_matrix, g_light_to_box_distance);
     model_matrix = glm::scale(model_matrix, glm::vec3(0.5, 0.5, 0.5));
 
+    gLightShaderProgram->setUniformMatrix4fv("projectionMatrix", 1, GL_FALSE, glm::value_ptr(projection_matrix));
+    gLightShaderProgram->setUniformMatrix4fv("viewMatrix", 1, GL_FALSE, glm::value_ptr(view_matrix));
+    gLightShaderProgram->setUniformMatrix4fv("modelMatrix", 1, GL_FALSE, glm::value_ptr(model_matrix));
+    gLightShaderProgram->setUniform3f("lightColor", g_light_color);
+
+    //Select VAO
+    glFunctions->glBindVertexArray(g_VAO_light);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    //Enable the vertex attribute(the rest attributes remain off for optimization)
+    glFunctions->glEnableVertexAttribArray(0);
+
     //calculating light position
     //                             box position
     g_light_position = glm::vec3(0.0f, 0.0f, 0.0f) + g_light_to_box_distance;
     g_light_position = glm::vec4(g_light_position, 0.0f) * glm::rotate(glm::mat4(1.0f), glm::radians(light_rotation_around_box_degress), glm::vec3(0, 1, 0));
     g_light_position.z = -g_light_position.z;
     //qInfo() << g_light_position.x << g_light_position.y << g_light_position.z;
-
-    replication_matrix = projection_matrix * view_matrix * model_matrix;
-
-    gLightShaderProgram->setUniformMatrix4fv("replication_matrix", 1, GL_FALSE, glm::value_ptr(replication_matrix));
 
     gLightShaderProgram->printfPrepare();
 
@@ -363,26 +360,23 @@ void Sc8Lighting::drawScene()
     glFunctions->glBindVertexArray(g_VAO_box);
     //Select shader program
     gBoxShaderProgram->enable();
-    gBoxShaderProgram->setUniform1i("boxWallTexture", 0);
-    gBoxShaderProgram->setUniform3f("objectColor", 0.7f, 0.7f, 0.7f);
-    gBoxShaderProgram->setUniform3f("lightPosition", g_light_position);
-    gBoxShaderProgram->setUniform3f("lightColor", g_light_color);
+    //use matrix
+    //create model matrix
+    model_matrix = glm::mat4(1.0f);
+    view_matrix = cam->getViewMatrix();
+    gBoxShaderProgram->setUniformMatrix4fv("projectionMatrix", 1, GL_FALSE, glm::value_ptr(projection_matrix));
+    gBoxShaderProgram->setUniformMatrix4fv("viewMatrix", 1, GL_FALSE, glm::value_ptr(view_matrix));
+    gBoxShaderProgram->setUniformMatrix4fv("modelMatrix", 1, GL_FALSE, glm::value_ptr(model_matrix));
+    gBoxShaderProgram->setUniform3f("objectColor", 1.0f, 0.0f, 0.0f);
+    gBoxShaderProgram->setUniform3f("ambientLightColor", 1.0f, 1.0f, 1.0f);
     gBoxShaderProgram->setUniform1f("ambientLightCoef", 0.3f);
+    gBoxShaderProgram->setUniform3f("deffuseLightPosition", g_light_position);
+    gBoxShaderProgram->setUniform3f("deffuseLightColor", g_light_color);
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     //Enable the vertex attribute(the rest attributes remain off for optimization)
     glFunctions->glEnableVertexAttribArray(0);
     glFunctions->glEnableVertexAttribArray(1);
-
-    //use matrix
-    //create model matrix
-    model_matrix = glm::mat4(1.0f);
-
-    view_matrix = cam->getViewMatrix();
-
-    replication_matrix = projection_matrix * view_matrix * model_matrix;
-
-    gBoxShaderProgram->setUniformMatrix4fv("replication_matrix", 1, GL_FALSE, glm::value_ptr(replication_matrix));
 
     gBoxShaderProgram->printfPrepare();
 
@@ -390,7 +384,7 @@ void Sc8Lighting::drawScene()
     glFunctions->glDrawArrays(GL_TRIANGLES, 0, 36);
 
     //Debug output from
-    //qInfo() << QString::fromStdString(gShaderProgram->printfGetData());
+    //qInfo() << QString::fromStdString(gBoxShaderProgram->printfGetData());
     gBoxShaderProgram->printfTerminate();
 
     glFunctions->glDisableVertexAttribArray(0);

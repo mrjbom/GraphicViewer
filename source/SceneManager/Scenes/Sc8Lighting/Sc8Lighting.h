@@ -41,7 +41,7 @@ private:
     GLuint g_VAO_light;
     glm::vec3 g_light_to_box_distance = glm::vec3(2.5f, 0.0f, 0.0f);
     glm::vec3 g_light_position = glm::vec3(0.0f, 0.0f, 0.0f);
-    glm::vec3 g_light_color = glm::vec3(1.0f, 3.0f, 0.7f);
+    glm::vec3 g_light_color = glm::vec3(1.0f, 1.0f, 0.7f);
     float light_rotation_around_box_degress = 0.0f;
 
     glm::mat4 model_matrix = glm::mat4(1.0f);

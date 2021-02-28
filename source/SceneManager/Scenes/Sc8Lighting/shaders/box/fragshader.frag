@@ -1,24 +1,22 @@
 #version 450 core
 in vec3 aaNormal;
-in vec2 aaWallTexCoord;
 in vec3 aaFragPos;
 
-uniform sampler2D boxWallTexture;
-uniform bool useTexture;
 uniform vec3 objectColor;
-uniform vec3 lightPosition;
-uniform vec3 lightColor;
+uniform vec3 ambientLightColor;
 uniform float ambientLightCoef;
+uniform vec3 deffuseLightPosition;
+uniform vec3 deffuseLightColor;
 
 out vec4 FragColor;
 
 void main()
 {
-    vec3 abmbientColor = objectColor * ambientLightCoef;
     vec3 normalizedNormal = normalize(aaNormal);
-    vec3 lightDirection = normalize(lightPosition - aaFragPos);
-    float diff = max(dot(normalizedNormal, lightDirection), 0.0);
-    vec3 diffuse = diff * lightColor;
-    vec3 resultColor = (abmbientColor + diffuse) * objectColor;
+    vec3 ambientLight = ambientLightColor * ambientLightCoef;
+    vec3 deffuseLightDirection = normalize(deffuseLightPosition - aaFragPos);
+    float diffuseLightAngleCoef = max(dot(normalizedNormal, deffuseLightDirection), 0.0);
+    vec3 diffuseLight = diffuseLightAngleCoef * deffuseLightColor;
+    vec3 resultColor = (ambientLight + diffuseLight) * objectColor;
     FragColor = vec4(resultColor, 1.0);
 }
