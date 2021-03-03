@@ -10,6 +10,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    source/BasicObjects/ArrowPainter/ArrowPainter.cpp \
     source/Camera/Camera.cpp \
     source/SceneManager/Scenes/Sc0Test/Sc0Test.cpp \
     source/SceneManager/Scenes/Sc1VBOOrange/Sc1VBOOrange.cpp \
@@ -28,6 +29,7 @@ SOURCES += \
     source/MainWindow.cpp
 
 HEADERS += \
+    source/BasicObjects/ArrowPainter/ArrowPainter.h \
     source/Camera/Camera.h \
     source/SceneManager/Scenes/Sc0Test/Sc0Test.h \
     source/SceneManager/Scenes/Sc1VBOOrange/Sc1VBOOrange.h \
@@ -61,4 +63,5 @@ INCLUDEPATH += $$PWD/source/assimp-5.0.1/myinclude
 DEPENDPATH += $$PWD/source/assimp-5.0.1/myinclude
 
 RESOURCES += \
-    resources.qrc
+    resourcesBasicObjects.qrc \
+    resourcesScenes.qrc

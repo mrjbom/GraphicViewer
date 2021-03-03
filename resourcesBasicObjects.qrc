@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/BasicObjects/ArrowPainter">
+        <file alias="/shaders/fragshader.frag">source/BasicObjects/ArrowPainter/shaders/fragshader.frag</file>
+        <file alias="/shaders/vertshader.vert">source/BasicObjects/ArrowPainter/shaders/vertshader.vert</file>
+    </qresource>
+</RCC>

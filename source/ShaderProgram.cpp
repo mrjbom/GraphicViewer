@@ -15,7 +15,6 @@ ShaderProgram::~ShaderProgram()
 {
     if(!makeSuccessful)
         return;
-
     glFunctions->glDeleteProgram(compiledShaderProgram);
 }
 
@@ -31,13 +30,13 @@ bool ShaderProgram::compile()
     //Open files containing the vertex and fragment shader source code
     QFile vertexShaderSourceFile(vertexShaderSourceFilePath);
     if (!vertexShaderSourceFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug("[ERROR] makeShaderProgram: open vertex shader source code file failed!");
+        qDebug("[ERROR] compile: open vertex shader source code file failed!");
         return false;
     }
 
     QFile fragmentShaderSourceFile(fragmentShaderSourceFilePath);
     if (!fragmentShaderSourceFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug("[ERROR] makeShaderProgram: open fragment shader source code file failed!");
+        qDebug("[ERROR] compile: open fragment shader source code file failed!");
         return false;
     };
 
@@ -74,7 +73,7 @@ bool ShaderProgram::compile()
     if (!vertexShaderCompileStatus) {
         char infoLog[errorMessageBufferSize];
         glFunctions->glGetShaderInfoLog(vertexShader, sizeof(infoLog), NULL, infoLog);
-        qDebug() << "[ERROR] makeShaderProgram: vertex shader compilation failed!\n" << infoLog;
+        qDebug() << "[ERROR] compile: vertex shader compilation failed!\n" << infoLog;
         return false;
     }
 
@@ -94,7 +93,7 @@ bool ShaderProgram::compile()
     if (!fragmentShaderCompileStatus) {
         char infoLog[errorMessageBufferSize];
         glFunctions->glGetShaderInfoLog(fragmentShader, sizeof(infoLog), NULL, infoLog);
-        qDebug() << "[ERROR] makeShaderProgram: fragment shader compilation failed!\n" << infoLog;
+        qDebug() << "[ERROR] compile: fragment shader compilation failed!\n" << infoLog;
         return false;
     }
 
@@ -111,7 +110,7 @@ bool ShaderProgram::compile()
     if (!shaderProgramLinkStatus) {
         char infoLog[errorMessageBufferSize];
         glFunctions->glGetProgramInfoLog(shaderProgram, sizeof(infoLog), NULL, infoLog);
-        qDebug() << "[ERROR] makeShaderProgram: shader program link failed!\n" << infoLog;
+        qDebug() << "[ERROR] compile: shader program link failed!\n" << infoLog;
         return false;
     }
 

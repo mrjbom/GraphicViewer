@@ -41,5 +41,7 @@
         <file alias="/textures/BoxWall512x512.png">source/SceneManager/Scenes/Sc8Lighting/textures/BoxWall512x512.png</file>
         <file alias="/shaders/light/fragshader.frag">source/SceneManager/Scenes/Sc8Lighting/shaders/light/fragshader.frag</file>
         <file alias="/shaders/light/vertshader.vert">source/SceneManager/Scenes/Sc8Lighting/shaders/light/vertshader.vert</file>
+        <file alias="/shaders/pyramide/fragshader.frag">source/SceneManager/Scenes/Sc8Lighting/shaders/pyramide/fragshader.frag</file>
+        <file alias="/shaders/pyramide/vertshader.vert">source/SceneManager/Scenes/Sc8Lighting/shaders/pyramide/vertshader.vert</file>
     </qresource>
 </RCC>

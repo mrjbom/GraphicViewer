@@ -27,7 +27,7 @@ private:
     int window_width = 0, window_height = 0;
     float mouse_last_xpos = 0;
     float mouse_last_ypos = 0;
-    float mouse_left_button_pressed = false;
+    bool mouse_left_button_pressed = false;
 
     Camera* cam = nullptr;
 
