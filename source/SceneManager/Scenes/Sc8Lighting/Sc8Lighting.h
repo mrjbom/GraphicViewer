@@ -44,7 +44,7 @@ private:
     GLuint g_VAO_light = 0;
     glm::vec3 g_light_to_cube_distance = glm::vec3(2.5f, 0.0f, 0.0f);
     glm::vec3 g_light_position = glm::vec3(0.0f, 0.0f, 0.0f);
-    glm::vec3 g_light_color = glm::vec3(1.0f, 1.0f, 0.7f);
+    glm::vec3 g_light_color = glm::vec3(1.0f, 1.0f, 1.0f);
     ShaderProgram* gPyramideShaderProgram = nullptr;
     GLuint g_VAO_pyramide = 0;
     GLuint g_VBO_pyramide_vertexes = 0;
@@ -55,16 +55,15 @@ private:
     glm::mat4 model_matrix = glm::mat4(1.0f);
     glm::mat4 view_matrix = glm::mat4(1.0f);
     glm::mat4 projection_matrix = glm::mat4(1.0f);
-    glm::mat4 cube_rotation_matrix = glm::mat4(1.0f);
+    glm::mat4 rotation_matrix = glm::mat4(1.0f);
 
-    float x_cube_rot = 0;
-    float y_cube_rot = 0;
-    float x_cube_rotation_speed_in_degrees = 0;
-    float y_cube_rotation_speed_in_degrees = 0;
-    float x_cube_size_scale = 1;
-    float y_cube_size_scale = 1;
-    float light_rotation_around_cube_degress = 0.0f;
-    bool show_cube_normals = false;
+    float x_rot = 0;
+    float y_rot = 0;
+    float x_rotation_speed_in_degrees = 0;
+    float y_rotation_speed_in_degrees = 0;
+    float x_size_scale = 1;
+    float y_size_scale = 1;
+    float light_rotation_around_degress = 0.0f;
 
     QLabel* xRotationSpeedLabel = nullptr;
     QSlider* xRotationSpeedSlider = nullptr;

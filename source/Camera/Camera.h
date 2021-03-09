@@ -47,6 +47,7 @@ public:
     void processMouseOffsets(float xoffset, float yoffset);
     void setMoveSpeed(float move_speed);
     void setMoveDirectionFlagStatus(CameraMoveDirections f, bool status);
+    glm::vec3 getPosition();
     float getPitch();
     float getYaw();
     float getRoll();

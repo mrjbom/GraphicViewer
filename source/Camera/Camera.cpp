@@ -61,6 +61,11 @@ void Camera::setMoveDirectionFlagStatus(CameraMoveDirections f, bool status)
     camera_move_directions.set(f, status);
 }
 
+glm::vec3 Camera::getPosition()
+{
+    return camera_position;
+}
+
 float Camera::getPitch()
 {
     return camera_pitch;
