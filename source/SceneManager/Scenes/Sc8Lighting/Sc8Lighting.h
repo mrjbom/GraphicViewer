@@ -65,18 +65,6 @@ private:
     float y_size_scale = 1;
     float light_rotation_around_degress = 0.0f;
 
-    QLabel* xRotationSpeedLabel = nullptr;
-    QSlider* xRotationSpeedSlider = nullptr;
-    QLabel* yRotationSpeedLabel = nullptr;
-    QSlider* yRotationSpeedSlider = nullptr;
-    QLabel* xSizeSliderLabel = nullptr;
-    QSlider* xSizeSlider = nullptr;
-    QLabel* ySizeSliderLabel = nullptr;
-    QSlider* ySizeSlider = nullptr;
-    QLabel* lightRotationSliderLabel = nullptr;
-    QSlider* lightRotationSpeedSlider = nullptr;
-    QPushButton* rotationsResetButton = nullptr;
-
 public:
     Sc8Lighting(QOpenGLContext* openGLContext);
     ~Sc8Lighting();
@@ -89,17 +77,6 @@ public:
     void mouseMoveEventHandler(QMouseEvent event) override;
     void keyPressEventHandler(QKeyEvent* event) override;
     void keyReleaseEventHandler(QKeyEvent* event) override;
-
-    void createUiOptionsWidgets() override;
-    void deleteUiOptionsWidgets() override;
-
-public slots:
-    void setXRotSpeedValueFromSlider(int new_value);
-    void setYRotSpeedValueFromSlider(int new_value);
-    void setXSizeValueFromSlider(int new_value);
-    void setYSizeValueFromSlider(int new_value);
-    void setLightRotSpeedValueFromSlider(int new_value);
-    void resetRotationsButtonClicked();
 };
 
 #endif // SC8LIGHTING_H

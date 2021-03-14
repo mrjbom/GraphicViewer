@@ -1,5 +1,5 @@
-#ifndef SC3UNIFORMINPUT_H
-#define SC3UNIFORMINPUT_H
+#ifndef SC4UNIFORMINPUT_H
+#define SC4UNIFORMINPUT_H
 
 #include <QDebug>
 #include <QOpenGLWidget>
@@ -25,9 +25,6 @@ public:
     void initScene(int start_window_width, int start_window_height) override;
     void drawScene() override;
     void finishScene() override;
-
-    void createUiOptionsWidgets() override;
-    void deleteUiOptionsWidgets() override;
 };
 
-#endif // SC3UNIFORMINPUT_H
+#endif // SC4UNIFORMINPUT_H

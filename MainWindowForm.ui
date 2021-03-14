@@ -42,7 +42,7 @@
       </property>
       <property name="sizeHint" stdset="0">
        <size>
-        <width>15</width>
+        <width>10</width>
         <height>20</height>
        </size>
       </property>
@@ -103,21 +103,18 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1" colspan="2">
-           <widget class="QFrame" name="sceneOptionsFrame">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+          <item row="0" column="2">
+           <widget class="QLabel" name="sceneFramerateLabelMilliseconds">
+            <property name="text">
+             <string>0</string>
             </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="sceneSelectorLabel">
+            <property name="text">
+             <string>Current scene:</string>
             </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="sceneOptionsGridLayout"/>
            </widget>
           </item>
           <item row="3" column="1">
@@ -140,17 +137,10 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="2">
-           <widget class="QLabel" name="sceneFramerateLabelMilliseconds">
-            <property name="text">
-             <string>0</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="sceneSelectorLabel">
-            <property name="text">
-             <string>Current scene:</string>
+          <item row="2" column="1" colspan="2">
+           <widget class="QStackedWidget" name="sceneOptrionsStackedWidget">
+            <property name="currentIndex">
+             <number>-1</number>
             </property>
            </widget>
           </item>

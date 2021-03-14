@@ -27,40 +27,39 @@ void SceneManager::init(QOpenGLContext* openGLContext)
 {
     //Save OpenGL context
     this->openGLContext = openGLContext;
-    void* scenePtr = nullptr;
-
-    //Add scenes
+    SceneManager* scenePtr = nullptr;
 
     scenePtr = new Sc0Test(openGLContext);
-    addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Test scene");
+    addSceneObject(scenePtr, "Test scene");
 
     scenePtr = new Sc1VBOOrange(openGLContext);
-    addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Triangle VBO(Orange)");
+    addSceneObject(scenePtr, "Triangle VBO(Orange)");
 
     scenePtr = new Sc2VAOBlue(openGLContext);
-    addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Triangle VAO(Blue)");
+    addSceneObject(scenePtr, "Triangle VAO(Blue)");
 
     scenePtr = new Sc3EBOGreen(openGLContext);
-    addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Triangle EBO(Green)");
+    addSceneObject(scenePtr, "Triangle EBO(Green)");
 
     scenePtr = new Sc4UniformInput(openGLContext);
-    addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Triangle Uniform Input");
+    addSceneObject(scenePtr, "Triangle Uniform Input");
 
     scenePtr = new Sc5Texture(openGLContext);
-    addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Square Textured");
+    addSceneObject(scenePtr,"Square Textured");
 
     scenePtr = new Sc6Box3DPerspective(openGLContext);
-    addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Box in 3D space");
-	
-	scenePtr = new Sc7Box3DCam(openGLContext);
-    addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Box 3D Camera");
+    addSceneObject(scenePtr, "Box in 3D space");
+
+    scenePtr = new Sc7Box3DCam(openGLContext);
+    addSceneObject(scenePtr, "Box 3D Camera");
 
     scenePtr = new Sc8Lighting(openGLContext);
-    addSceneObject((SceneManager*)scenePtr, (void*)scenePtr, "Box with lighting");
+    addSceneObject(scenePtr, "Box with lighting");
 
     //Configuring the scene combo-box to select the current scene
     for(size_t i = 0; i < getScenesNumber(); ++i) {
         globalMainWindowFormUI->sceneSelectorComboBox->addItem(getSceneName(i));
+        //globalMainWindowFormUI->sceneOptrionsStackedWidget->addWidget();
     }
     QObject::connect(globalMainWindowFormUI->sceneSelectorComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(comboBoxChangedCurrentIndex(int)));
     setCurrentSceneObjectIndex(0);
@@ -68,20 +67,19 @@ void SceneManager::init(QOpenGLContext* openGLContext)
 
 void SceneManager::final()
 {
-	for (size_t i = 0; i < sceneObjectsVoidPtrList.size(); i++) {
+    for (size_t i = 0; i < sceneObjectsList.size(); i++) {
         //sceneObjectsList[i]->~SceneManager();
-        //prevents calling finishScene() for inactive scenes
+        //prevents calling finishScene() for inactive scenes(after change current scene)
         if(i == currentObjectIndex) {
             sceneObjectsList[i]->finishScene();
         }
-        delete sceneObjectsVoidPtrList[i];
+        delete sceneObjectsList[i];
 	}
 }
 
-void SceneManager::addSceneObject(SceneManager* newSceneObjectPtr, void* newSceneObjectVoidPtr, const QString sceneName)
+void SceneManager::addSceneObject(SceneManager* newSceneObjectPtr, const QString sceneName)
 {
-	sceneObjectsList.push_back(newSceneObjectPtr);
-	sceneObjectsVoidPtrList.push_back(newSceneObjectVoidPtr);
+    sceneObjectsList.push_back(newSceneObjectPtr);
 	sceneObjectsNamesList.push_back(sceneName);
     sceneObjectsInitStatusList.push_back(false);
 }
@@ -93,7 +91,7 @@ void SceneManager::setCurrentSceneObjectIndex(size_t newCurrentIndex)
 	}
     sceneObjectsInitStatusList[currentObjectIndex] = false;
     sceneObjectsList[currentObjectIndex]->finishScene();
-    sceneObjectsList[currentObjectIndex]->deleteUiOptionsWidgets();
+    sceneObjectsList[currentObjectIndex]->createUiOptionsWidget();
 	currentObjectIndex = newCurrentIndex;
 }
 
@@ -161,14 +159,12 @@ void SceneManager::keyReleaseEventHandler(QKeyEvent* event)
     //DON'T USE
 }
 
-void SceneManager::createUiOptionsWidgets()
+void SceneManager::createUiOptionsWidget()
 {
-    //DON'T USE
 }
 
-void SceneManager::deleteUiOptionsWidgets()
+void SceneManager::deleteUiOptionsWidget()
 {
-    //DON'T USE
 }
 
 void SceneManager::callInitSceneAndOptionsWidgets(int start_window_width, int start_window_height)
@@ -179,7 +175,7 @@ void SceneManager::callInitSceneAndOptionsWidgets(int start_window_width, int st
 	if (sceneObjectsInitStatusList[currentObjectIndex] == false) {
 		sceneObjectsInitStatusList[currentObjectIndex] = true;
         sceneObjectsList[currentObjectIndex]->initScene(start_window_width, start_window_height);
-        sceneObjectsList[currentObjectIndex]->createUiOptionsWidgets();
+        sceneObjectsList[currentObjectIndex]->createUiOptionsWidget();
 		return;
 	}
 }

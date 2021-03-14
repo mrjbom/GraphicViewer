@@ -25,9 +25,6 @@ public:
     void initScene(int start_window_width, int start_window_height) override;
     void drawScene() override;
     void finishScene() override;
-
-    void createUiOptionsWidgets() override;
-    void deleteUiOptionsWidgets() override;
 };
 
 #endif // SC2VAOBLUE_H

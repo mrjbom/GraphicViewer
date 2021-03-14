@@ -106,18 +106,3 @@ void Sc0Test::finishScene()
     glFunctions->glDeleteVertexArrays(1, &g_VAO);
     delete gShaderProgram;
 }
-
-void Sc0Test::createUiOptionsWidgets()
-{
-    //QPushButton* btn = new QPushButton(globalMainWindowFormUI->sceneOptionsFrame);
-    //btn->setGeometry(0, 0, 100, 30);
-    //btn->setText("Button for Test Scene");
-    //globalMainWindowFormUI->sceneOptionsGridLayout->addWidget(btn);
-    //gBtn = btn;
-}
-
-void Sc0Test::deleteUiOptionsWidgets()
-{
-    //globalMainWindowFormUI->sceneOptionsGridLayout->removeWidget(gBtn);
-    //delete gBtn;
-}

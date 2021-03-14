@@ -11,8 +11,6 @@ class SceneManager : public QObject
 private:
     QOpenGLContext* openGLContext = nullptr;
     std::vector<SceneManager*> sceneObjectsList;
-    //Address of the object obtained during memory allocation, saved for the correct memory release
-    std::vector<void*> sceneObjectsVoidPtrList;
     std::vector<QString> sceneObjectsNamesList;
     std::vector<bool> sceneObjectsInitStatusList;
     size_t currentObjectIndex = 0;
@@ -21,7 +19,7 @@ public:
     virtual ~SceneManager();
     void init(QOpenGLContext* openGLContext);
     void final();
-    void addSceneObject(SceneManager* newSceneObjectPtr, void* newSceneObjectVoidPtr, const QString sceneName);
+    void addSceneObject(SceneManager* newSceneObjectPtr, const QString sceneName);
     void setCurrentSceneObjectIndex(size_t newCurrentObjectIndex);
     QString getSceneName(size_t index);
     size_t getScenesNumber();
@@ -39,8 +37,8 @@ protected:
     virtual void keyPressEventHandler(QKeyEvent* event);
     virtual void keyReleaseEventHandler(QKeyEvent* event);
     //There is a management of widgets that allow you to customize the scene
-    virtual void createUiOptionsWidgets();
-    virtual void deleteUiOptionsWidgets();
+    void createUiOptionsWidget();
+    void deleteUiOptionsWidget();
 
 public:
     void callInitSceneAndOptionsWidgets(int start_window_width, int start_window_height);

@@ -21,19 +21,12 @@ private:
     GLuint g_VBO = 0;
     GLuint g_сolors_VBO = 0;
 
-    //UI
-    QPushButton* gBtn = nullptr;
-
 public:
     Sc0Test(QOpenGLContext* openGLContext);
     ~Sc0Test();
     void initScene(int start_window_width, int start_window_height) override;
     void drawScene() override;
     void finishScene() override;
-
-    //UI
-    void createUiOptionsWidgets() override;
-    void deleteUiOptionsWidgets() override;
 };
 
 #endif // SC0TEST_H

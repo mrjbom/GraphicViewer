@@ -13,15 +13,24 @@ SOURCES += \
     source/BasicObjects/ArrowPainter/ArrowPainter.cpp \
     source/Camera/Camera.cpp \
     source/SceneManager/Scenes/Sc0Test/Sc0Test.cpp \
+    source/SceneManager/Scenes/Sc0Test/ui/Sc0TestOptionsForm.cpp \
     source/SceneManager/Scenes/Sc1VBOOrange/Sc1VBOOrange.cpp \
+    source/SceneManager/Scenes/Sc1VBOOrange/ui/Sc1VBOOrangeOptionsForm.cpp \
     source/SceneManager/Scenes/Sc2VAOBlue/Sc2VAOBlue.cpp \
+    source/SceneManager/Scenes/Sc2VAOBlue/ui/Sc2VAOBlueOptionsForm.cpp \
     source/SceneManager/Scenes/Sc3EBOGreen/Sc3EBOGreen.cpp \
+    source/SceneManager/Scenes/Sc3EBOGreen/ui/Sc3EBOGreenOptionsForm.cpp \
     source/SceneManager/Scenes/Sc4UniformInput/Sc4UniformInput.cpp \
+    source/SceneManager/Scenes/Sc4UniformInput/ui/Sc4UniformInputOptionsForm.cpp \
     source/SceneManager/Scenes/Sc5Texture/Sc5Texture.cpp \
     source/SceneManager/SceneManager.cpp \
+    source/SceneManager/Scenes/Sc5Texture/ui/Sc5TextureOptionsForm.cpp \
     source/SceneManager/Scenes/Sc6Box3DPerspective/Sc6Box3DPerspective.cpp \
+    source/SceneManager/Scenes/Sc6Box3DPerspective/ui/Sc6Box3DPerspectiveOptionsForm.cpp \
     source/SceneManager/Scenes/Sc7Box3DCam/Sc7Box3DCam.cpp \
+    source/SceneManager/Scenes/Sc7Box3DCam/ui/Sc7Box3DCamOptionsForm.cpp \
     source/SceneManager/Scenes/Sc8Lighting/Sc8Lighting.cpp \
+    source/SceneManager/Scenes/Sc8Lighting/ui/Sc8LightingOptionsForm.cpp \
     source/ShaderProgram.cpp \
     source/globalvars.cpp \
     source/main.cpp \
@@ -32,15 +41,24 @@ HEADERS += \
     source/BasicObjects/ArrowPainter/ArrowPainter.h \
     source/Camera/Camera.h \
     source/SceneManager/Scenes/Sc0Test/Sc0Test.h \
+    source/SceneManager/Scenes/Sc0Test/ui/Sc0TestOptionsForm.h \
     source/SceneManager/Scenes/Sc1VBOOrange/Sc1VBOOrange.h \
+    source/SceneManager/Scenes/Sc1VBOOrange/ui/Sc1VBOOrangeOptionsForm.h \
     source/SceneManager/Scenes/Sc2VAOBlue/Sc2VAOBlue.h \
+    source/SceneManager/Scenes/Sc2VAOBlue/ui/Sc2VAOBlueOptionsForm.h \
     source/SceneManager/Scenes/Sc3EBOGreen/Sc3EBOGreen.h \
+    source/SceneManager/Scenes/Sc3EBOGreen/ui/Sc3EBOGreenOptionsForm.h \
     source/SceneManager/Scenes/Sc4UniformInput/Sc4UniformInput.h \
+    source/SceneManager/Scenes/Sc4UniformInput/ui/Sc4UniformInputOptionsForm.h \
     source/SceneManager/Scenes/Sc5Texture/Sc5Texture.h \
     source/SceneManager/SceneManager.h \
+    source/SceneManager/Scenes/Sc5Texture/ui/Sc5TextureOptionsForm.h \
     source/SceneManager/Scenes/Sc6Box3DPerspective/Sc6Box3DPerspective.h \
+    source/SceneManager/Scenes/Sc6Box3DPerspective/ui/Sc6Box3DPerspectiveOptionsForm.h \
     source/SceneManager/Scenes/Sc7Box3DCam/Sc7Box3DCam.h \
+    source/SceneManager/Scenes/Sc7Box3DCam/ui/Sc7Box3DCamOptionsForm.h \
     source/SceneManager/Scenes/Sc8Lighting/Sc8Lighting.h \
+    source/SceneManager/Scenes/Sc8Lighting/ui/Sc8LightingOptionsForm.h \
     source/ShaderProgram.h \
     source/globalvars.h \
     source/MainOpenGLWidget.h \
@@ -48,7 +66,16 @@ HEADERS += \
     source/ShaderPrintf.h
 
 FORMS += \
-    forms/MainWindowForm.ui
+    MainWindowForm.ui \
+    source/SceneManager/Scenes/Sc0Test/ui/Sc0TestOptionsForm.ui \
+    source/SceneManager/Scenes/Sc1VBOOrange/ui/Sc1VBOOrangeOptionsForm.ui \
+    source/SceneManager/Scenes/Sc2VAOBlue/ui/Sc2VAOBlueOptionsForm.ui \
+    source/SceneManager/Scenes/Sc3EBOGreen/ui/Sc3EBOGreenOptionsForm.ui \
+    source/SceneManager/Scenes/Sc4UniformInput/ui/Sc4UniformInputOptionsForm.ui \
+    source/SceneManager/Scenes/Sc5Texture/ui/Sc5TextureOptionsForm.ui \
+    source/SceneManager/Scenes/Sc6Box3DPerspective/ui/Sc6Box3DPerspectiveOptionsForm.ui \
+    source/SceneManager/Scenes/Sc7Box3DCam/ui/Sc7Box3DCamOptionsForm.ui \
+    source/SceneManager/Scenes/Sc8Lighting/ui/Sc8LightingOptionsForm.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

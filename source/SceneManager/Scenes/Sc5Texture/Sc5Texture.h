@@ -26,9 +26,6 @@ private:
     GLuint g_wall_texture = 0;
     GLuint g_cat_texture = 0;
 
-
-    QLabel* gMixValueTextLabel = nullptr;
-    QSlider* gMixValueSlider = nullptr;
     float g_mix_value = 0;
 
 public:
@@ -37,12 +34,6 @@ public:
     void initScene(int start_window_width, int start_window_height) override;
     void drawScene() override;
     void finishScene() override;
-
-    void createUiOptionsWidgets() override;
-    void deleteUiOptionsWidgets() override;
-
-public slots:
-    void setNewMixValueFromSlider(int newValue);
 };
 
 #endif // SC5TEXTURE_H

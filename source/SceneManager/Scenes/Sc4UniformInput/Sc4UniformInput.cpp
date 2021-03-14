@@ -93,13 +93,3 @@ void Sc4UniformInput::finishScene()
     glFunctions->glDeleteVertexArrays(1, &g_VAO);
     delete gShaderProgram;
 }
-
-void Sc4UniformInput::createUiOptionsWidgets()
-{
-
-}
-
-void Sc4UniformInput::deleteUiOptionsWidgets()
-{
-
-}

@@ -83,13 +83,3 @@ void Sc2VAOBlue::finishScene()
     glFunctions->glDeleteVertexArrays(1, &g_VAO);
     delete gShaderProgram;
 }
-
-void Sc2VAOBlue::createUiOptionsWidgets()
-{
-
-}
-
-void Sc2VAOBlue::deleteUiOptionsWidgets()
-{
-
-}

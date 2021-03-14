@@ -77,13 +77,3 @@ void Sc1VBOOrange::finishScene()
     glFunctions->glDeleteBuffers(1, &g_VBO);
     delete gShaderProgram;
 }
-
-void Sc1VBOOrange::createUiOptionsWidgets()
-{
-
-}
-
-void Sc1VBOOrange::deleteUiOptionsWidgets()
-{
-
-}

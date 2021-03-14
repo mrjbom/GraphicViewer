@@ -22,18 +22,12 @@ private:
 
     bool g_show_polygon_lines = false;
 
-    QCheckBox* gShowPolygonLinesCheckBoxWidget = nullptr;
-
-
 public:
     Sc3EBOGreen(QOpenGLContext* openGLContext);
     ~Sc3EBOGreen();
     void initScene(int start_window_width, int start_window_height) override;
     void drawScene() override;
     void finishScene() override;
-
-    void createUiOptionsWidgets() override;
-    void deleteUiOptionsWidgets() override;
 
 public slots:
     void showPolygonLinesStateChanged(int state);

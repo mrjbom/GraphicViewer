@@ -293,32 +293,3 @@ void Sc5Texture::finishScene()
 
     delete gShaderProgram;
 }
-
-void Sc5Texture::createUiOptionsWidgets()
-{
-    gMixValueTextLabel = new QLabel();
-    gMixValueTextLabel->setText("Mix Value: " + QString::number(g_mix_value));
-    globalMainWindowFormUI->sceneOptionsGridLayout->addWidget(gMixValueTextLabel);
-
-    gMixValueSlider = new QSlider(Qt::Orientation::Horizontal);
-    gMixValueSlider->setMinimum(0);
-    gMixValueSlider->setMaximum(100);
-    QObject::connect(gMixValueSlider, &QSlider::valueChanged, this, &Sc5Texture::setNewMixValueFromSlider);
-    globalMainWindowFormUI->sceneOptionsGridLayout->addWidget(gMixValueSlider);
-}
-
-void Sc5Texture::deleteUiOptionsWidgets()
-{
-    globalMainWindowFormUI->sceneOptionsGridLayout->removeWidget(gMixValueTextLabel);
-    delete gMixValueTextLabel;
-    globalMainWindowFormUI->sceneOptionsGridLayout->removeWidget(gMixValueSlider);
-    delete gMixValueSlider;
-    g_mix_value = 0;
-}
-
-void Sc5Texture::setNewMixValueFromSlider(int new_value)
-{
-    //Convert range 0...100 to 0.0...1.0
-    g_mix_value = (1.0f / 100) * new_value;
-    gMixValueTextLabel->setText("Mix Value: " + QString::number(g_mix_value));
-}

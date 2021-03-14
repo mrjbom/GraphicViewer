@@ -41,10 +41,6 @@ private:
     float x_rotation_speed_in_degrees = 0;
     float y_rotation_speed_in_degrees = 0;
 
-    QSlider* xRotationSpeedSlider = nullptr;
-    QSlider* yRotationSpeedSlider = nullptr;
-    QPushButton* rotationsResetButton = nullptr;
-
 public:
     Sc6Box3DPerspective(QOpenGLContext* openGLContext);
     ~Sc6Box3DPerspective();
@@ -52,14 +48,6 @@ public:
     void drawScene() override;
     void finishScene() override;
     void resizeSceneWindow(int w, int h) override;
-
-    void createUiOptionsWidgets() override;
-    void deleteUiOptionsWidgets() override;
-
-public slots:
-    void setXRotSpeedValueFromSlider(int new_value);
-    void setYRotSpeedValueFromSlider(int new_value);
-    void resetRotationsButtonClicked();
 };
 
 #endif // SC6BOX3DPERSPECTIVE_H

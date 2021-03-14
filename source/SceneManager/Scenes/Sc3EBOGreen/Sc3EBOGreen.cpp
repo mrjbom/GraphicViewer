@@ -96,27 +96,3 @@ void Sc3EBOGreen::finishScene()
     glFunctions->glDeleteBuffers(1, &g_EBO);
     delete gShaderProgram;
 }
-
-void Sc3EBOGreen::createUiOptionsWidgets()
-{
-    gShowPolygonLinesCheckBoxWidget = new QCheckBox("Show Polygon Lines");
-    globalMainWindowFormUI->sceneOptionsGridLayout->addWidget(gShowPolygonLinesCheckBoxWidget);
-    QObject::connect(gShowPolygonLinesCheckBoxWidget, &QCheckBox::stateChanged, this, &Sc3EBOGreen::showPolygonLinesStateChanged);
-}
-
-void Sc3EBOGreen::deleteUiOptionsWidgets()
-{
-    globalMainWindowFormUI->sceneOptionsGridLayout->removeWidget(gShowPolygonLinesCheckBoxWidget);
-    delete gShowPolygonLinesCheckBoxWidget;
-    g_show_polygon_lines = false;
-}
-
-void Sc3EBOGreen::showPolygonLinesStateChanged(int state)
-{
-    if(state == Qt::Unchecked) {
-        g_show_polygon_lines = false;
-    }
-    else if(state == Qt::Checked) {
-        g_show_polygon_lines = true;
-    }
-}

@@ -51,10 +51,6 @@ private:
     float x_rotation_speed_in_degrees = 0;
     float y_rotation_speed_in_degrees = 0;
 
-    QSlider* xRotationSpeedSlider = nullptr;
-    QSlider* yRotationSpeedSlider = nullptr;
-    QPushButton* rotationsResetButton = nullptr;
-
 public:
     Sc7Box3DCam(QOpenGLContext* openGLContext);
     ~Sc7Box3DCam();
@@ -67,14 +63,6 @@ public:
     void mouseMoveEventHandler(QMouseEvent event) override;
     void keyPressEventHandler(QKeyEvent* event) override;
     void keyReleaseEventHandler(QKeyEvent* event) override;
-
-    void createUiOptionsWidgets() override;
-    void deleteUiOptionsWidgets() override;
-
-public slots:
-    void setXRotSpeedValueFromSlider(int new_value);
-    void setYRotSpeedValueFromSlider(int new_value);
-    void resetRotationsButtonClicked();
 };
 
 #endif // SC7BOX3DCAM_H
