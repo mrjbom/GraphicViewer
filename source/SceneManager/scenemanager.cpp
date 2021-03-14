@@ -70,7 +70,7 @@ void SceneManager::final()
     for (size_t i = 0; i < sceneObjectsList.size(); i++) {
         //sceneObjectsList[i]->~SceneManager();
         //prevents calling finishScene() for inactive scenes(after change current scene)
-        if(i == currentObjectIndex) {
+        if(i == current_object_index) {
             sceneObjectsList[i]->finishScene();
         }
         delete sceneObjectsList[i];
@@ -84,15 +84,15 @@ void SceneManager::addSceneObject(SceneManager* newSceneObjectPtr, const QString
     sceneObjectsInitStatusList.push_back(false);
 }
 
-void SceneManager::setCurrentSceneObjectIndex(size_t newCurrentIndex)
+void SceneManager::setCurrentSceneObjectIndex(size_t new_сurrent_index)
 {
-	if (currentObjectIndex == newCurrentIndex) {
+    if (current_object_index == new_сurrent_index) {
 		return;
 	}
-    sceneObjectsInitStatusList[currentObjectIndex] = false;
-    sceneObjectsList[currentObjectIndex]->finishScene();
-    sceneObjectsList[currentObjectIndex]->createUiOptionsWidget();
-	currentObjectIndex = newCurrentIndex;
+    sceneObjectsInitStatusList[current_object_index] = false;
+    sceneObjectsList[current_object_index]->finishScene();
+    sceneObjectsList[current_object_index]->deleteUiOptionsWidget();
+    current_object_index = new_сurrent_index;
 }
 
 QString SceneManager::getSceneName(size_t index)
@@ -161,21 +161,23 @@ void SceneManager::keyReleaseEventHandler(QKeyEvent* event)
 
 void SceneManager::createUiOptionsWidget()
 {
+    //DON'T USE
 }
 
 void SceneManager::deleteUiOptionsWidget()
 {
+    //DON'T USE
 }
 
-void SceneManager::callInitSceneAndOptionsWidgets(int start_window_width, int start_window_height)
+void SceneManager::callInitSceneAndOptionsWidget(int start_window_width, int start_window_height)
 {
 	if (sceneObjectsList.size() == 0) {
 		return;
 	}
-	if (sceneObjectsInitStatusList[currentObjectIndex] == false) {
-		sceneObjectsInitStatusList[currentObjectIndex] = true;
-        sceneObjectsList[currentObjectIndex]->initScene(start_window_width, start_window_height);
-        sceneObjectsList[currentObjectIndex]->createUiOptionsWidget();
+    if (sceneObjectsInitStatusList[current_object_index] == false) {
+        sceneObjectsInitStatusList[current_object_index] = true;
+        sceneObjectsList[current_object_index]->initScene(start_window_width, start_window_height);
+        sceneObjectsList[current_object_index]->createUiOptionsWidget();
 		return;
 	}
 }
@@ -185,7 +187,7 @@ void SceneManager::callDrawScene()
 	if (sceneObjectsList.size() == 0) {
 		return;
 	}
-    sceneObjectsList[currentObjectIndex]->drawScene();
+    sceneObjectsList[current_object_index]->drawScene();
 }
 
 void SceneManager::callResizeSceneWindow(int w, int h)
@@ -193,7 +195,7 @@ void SceneManager::callResizeSceneWindow(int w, int h)
     if (sceneObjectsList.size() == 0) {
         return;
     }
-    sceneObjectsList[currentObjectIndex]->resizeSceneWindow(w, h);
+    sceneObjectsList[current_object_index]->resizeSceneWindow(w, h);
 }
 
 void SceneManager::callMousePressEventHandler(QMouseEvent event)
@@ -201,7 +203,7 @@ void SceneManager::callMousePressEventHandler(QMouseEvent event)
     if (sceneObjectsList.size() == 0) {
         return;
     }
-    sceneObjectsList[currentObjectIndex]->mousePressEventHandler(event);
+    sceneObjectsList[current_object_index]->mousePressEventHandler(event);
 }
 
 void SceneManager::callMouseReleaseEventHandler(QMouseEvent event)
@@ -209,7 +211,7 @@ void SceneManager::callMouseReleaseEventHandler(QMouseEvent event)
     if (sceneObjectsList.size() == 0) {
         return;
     }
-    sceneObjectsList[currentObjectIndex]->mouseReleaseEventHandler(event);
+    sceneObjectsList[current_object_index]->mouseReleaseEventHandler(event);
 }
 
 void SceneManager::callMouseMoveEventHandler(QMouseEvent event)
@@ -217,7 +219,7 @@ void SceneManager::callMouseMoveEventHandler(QMouseEvent event)
     if (sceneObjectsList.size() == 0) {
         return;
     }
-    sceneObjectsList[currentObjectIndex]->mouseMoveEventHandler(event);
+    sceneObjectsList[current_object_index]->mouseMoveEventHandler(event);
 }
 
 void SceneManager::callKeyPressEventHandler(QKeyEvent* event)
@@ -225,7 +227,7 @@ void SceneManager::callKeyPressEventHandler(QKeyEvent* event)
     if (sceneObjectsList.size() == 0) {
         return;
     }
-    sceneObjectsList[currentObjectIndex]->keyPressEventHandler(event);
+    sceneObjectsList[current_object_index]->keyPressEventHandler(event);
 }
 
 void SceneManager::callKeyReleaseEventHandler(QKeyEvent* event)
@@ -233,7 +235,7 @@ void SceneManager::callKeyReleaseEventHandler(QKeyEvent* event)
     if (sceneObjectsList.size() == 0) {
         return;
     }
-    sceneObjectsList[currentObjectIndex]->keyReleaseEventHandler(event);
+    sceneObjectsList[current_object_index]->keyReleaseEventHandler(event);
 }
 
 void SceneManager::comboBoxChangedCurrentIndex(int newIndex) {

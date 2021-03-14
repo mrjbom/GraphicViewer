@@ -12,11 +12,10 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
+private:
+    Ui::MainWindowForm* mainWindowFormUI = nullptr;
 public:
     MainWindow(QMainWindow *parent = nullptr);
     ~MainWindow();
-private:
-    Ui::MainWindowForm* mainWindowFormUI = nullptr;
 };
 #endif // MAINWINDOW_H

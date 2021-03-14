@@ -138,7 +138,7 @@
            </widget>
           </item>
           <item row="2" column="1" colspan="2">
-           <widget class="QStackedWidget" name="sceneOptrionsStackedWidget">
+           <widget class="QStackedWidget" name="sceneOptionsStackedWidget">
             <property name="currentIndex">
              <number>-1</number>
             </property>

@@ -32,7 +32,7 @@ void MainOpenGLWidget::resizeGL(int w, int h)
 
 void MainOpenGLWidget::paintGL()
 {
-    sceneManager->callInitSceneAndOptionsWidgets(this->width(), this->height());
+    sceneManager->callInitSceneAndOptionsWidget(this->width(), this->height());
     QElapsedTimer framerateTime;
     framerateTime.start();
     sceneManager->callDrawScene();

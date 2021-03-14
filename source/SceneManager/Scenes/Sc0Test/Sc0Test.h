@@ -9,6 +9,7 @@
 #include "../../SceneManager.h"
 #include "../../ShaderProgram.h"
 #include "../../globalvars.h"
+#include "ui_Sc0TestOptionsForm.h"
 
 class Sc0Test : public SceneManager
 {
@@ -20,6 +21,8 @@ private:
     GLuint g_VAO = 0;
     GLuint g_VBO = 0;
     GLuint g_сolors_VBO = 0;
+    Ui::Sc0TestOptionsForm* uiOptionsForm = nullptr;
+    QWidget* optionsFormWidget = nullptr;
 
 public:
     Sc0Test(QOpenGLContext* openGLContext);
@@ -27,6 +30,11 @@ public:
     void initScene(int start_window_width, int start_window_height) override;
     void drawScene() override;
     void finishScene() override;
+    void createUiOptionsWidget() override;
+    void deleteUiOptionsWidget() override;
+
+public slots:
+    void buttonPressed();
 };
 
 #endif // SC0TEST_H

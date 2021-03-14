@@ -4,6 +4,7 @@
 
 MainWindow::MainWindow(QMainWindow* parent)
 {
+    (void)parent;
     qDebug("[INFO] Main window object created successfully");
     mainWindowFormUI = new Ui::MainWindowForm;
     globalMainWindowFormUI = mainWindowFormUI;

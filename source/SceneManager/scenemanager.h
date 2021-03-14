@@ -13,14 +13,14 @@ private:
     std::vector<SceneManager*> sceneObjectsList;
     std::vector<QString> sceneObjectsNamesList;
     std::vector<bool> sceneObjectsInitStatusList;
-    size_t currentObjectIndex = 0;
+    size_t current_object_index = 0;
 public:
     SceneManager();
     virtual ~SceneManager();
     void init(QOpenGLContext* openGLContext);
     void final();
     void addSceneObject(SceneManager* newSceneObjectPtr, const QString sceneName);
-    void setCurrentSceneObjectIndex(size_t newCurrentObjectIndex);
+    void setCurrentSceneObjectIndex(size_t new_сurrent_index);
     QString getSceneName(size_t index);
     size_t getScenesNumber();
 
@@ -37,11 +37,11 @@ protected:
     virtual void keyPressEventHandler(QKeyEvent* event);
     virtual void keyReleaseEventHandler(QKeyEvent* event);
     //There is a management of widgets that allow you to customize the scene
-    void createUiOptionsWidget();
-    void deleteUiOptionsWidget();
+    virtual void createUiOptionsWidget();
+    virtual void deleteUiOptionsWidget();
 
 public:
-    void callInitSceneAndOptionsWidgets(int start_window_width, int start_window_height);
+    void callInitSceneAndOptionsWidget(int start_window_width, int start_window_height);
     void callDrawScene();
     void callResizeSceneWindow(int w, int h);
     void callMousePressEventHandler(QMouseEvent event);
