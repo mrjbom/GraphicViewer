@@ -17,7 +17,6 @@ public:
     MainWindow(QMainWindow *parent = nullptr);
     ~MainWindow();
 private:
-    QMainWindow* mainWindow = nullptr;
     Ui::MainWindowForm* mainWindowFormUI = nullptr;
 };
 #endif // MAINWINDOW_H
