@@ -3,16 +3,19 @@
 
 #include <QDebug>
 #include <QOpenGLWidget>
-#include <QOpenGLFunctions_3_3_Core>
 #include <QOpenGLFunctions_4_5_Core>
 #include <GL/GLU.h>
 #include "../../SceneManager.h"
 #include "../../ShaderProgram.h"
+#include "../../globalvars.h"
+#include "ui_Sc4UniformInputOptionsForm.h"
 
 class Sc4UniformInput : public SceneManager
 {
 private:
     QOpenGLFunctions_4_5_Core* glFunctions = nullptr;
+    Ui::Sc4UniformInputOptionsForm* uiOptionsForm = nullptr;
+    QWidget* optionsFormWidget = nullptr;
 
 private:
     ShaderProgram* gShaderProgram = nullptr;

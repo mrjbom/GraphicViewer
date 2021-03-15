@@ -279,6 +279,7 @@ void Sc5Texture::drawScene()
     //Unselect shader program
     gShaderProgram->disable();
 }
+
 void Sc5Texture::finishScene()
 {
     glFunctions->glDeleteTextures(1, &g_wall_texture);
@@ -292,4 +293,28 @@ void Sc5Texture::finishScene()
     glFunctions->glDisable(GL_BLEND);
 
     delete gShaderProgram;
+}
+
+void Sc5Texture::createUiOptionsWidget()
+{
+    uiOptionsForm = new Ui::Sc5TextureOptionsForm;
+    optionsFormWidget = new QWidget;
+    uiOptionsForm->setupUi(optionsFormWidget);
+    globalMainWindowFormUI->sceneOptionsStackedWidget->addWidget(optionsFormWidget);
+    QObject::connect(uiOptionsForm->mixValueHorizontalSlider, &QSlider::valueChanged, this, &Sc5Texture::setNewMixValueFromSlider);
+}
+
+void Sc5Texture::deleteUiOptionsWidget()
+{
+    globalMainWindowFormUI->sceneOptionsStackedWidget->removeWidget(optionsFormWidget);
+    delete optionsFormWidget;
+    delete uiOptionsForm;
+    g_mix_value = 0;
+}
+
+void Sc5Texture::setNewMixValueFromSlider(int new_value)
+{
+    //Convert range 0...100 to 0.0...1.0
+    g_mix_value = (1.0f / 100) * new_value;
+    uiOptionsForm->mixValueLabel->setText(QString::number(g_mix_value));
 }

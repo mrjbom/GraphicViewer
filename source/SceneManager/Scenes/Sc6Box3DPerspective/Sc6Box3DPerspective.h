@@ -13,13 +13,14 @@
 #include <../../glm/gtc/matrix_transform.hpp>
 #include <../../glm/gtc/type_ptr.hpp>
 
-#include <QSlider>
-#include <QPushButton>
+#include "ui_Sc6Box3DPerspectiveOptionsForm.h"
 
 class Sc6Box3DPerspective : public SceneManager
 {
 private:
     QOpenGLFunctions_4_5_Core* glFunctions = nullptr;
+    Ui::Sc6Box3DPerspectiveOptionsForm* uiOptionsForm = nullptr;
+    QWidget* optionsFormWidget = nullptr;
 
 private:
     int window_width = 0, window_height = 0;
@@ -48,6 +49,13 @@ public:
     void drawScene() override;
     void finishScene() override;
     void resizeSceneWindow(int w, int h) override;
+    void createUiOptionsWidget() override;
+    void deleteUiOptionsWidget() override;
+
+public slots:
+    void setXRotSpeedValueFromSlider(int new_value);
+    void setYRotSpeedValueFromSlider(int new_value);
+    void resetRotationsButtonClicked();
 };
 
 #endif // SC6BOX3DPERSPECTIVE_H

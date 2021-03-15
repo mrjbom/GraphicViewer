@@ -8,11 +8,14 @@
 #include <GL/GLU.h>
 #include "../../SceneManager.h"
 #include "../../ShaderProgram.h"
+#include "ui_Sc1VBOOrangeOptionsForm.h"
 
 class Sc1VBOOrange : public SceneManager
 {
 private:
     QOpenGLFunctions_4_5_Core* glFunctions = nullptr;
+    Ui::Sc1VBOOrangeOptionsForm* uiOptionsForm = nullptr;
+    QWidget* optionsFormWidget = nullptr;
 
 private:
     ShaderProgram* gShaderProgram = nullptr;

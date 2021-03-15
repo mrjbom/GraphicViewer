@@ -8,11 +8,14 @@
 #include <GL/GLU.h>
 #include "../../SceneManager.h"
 #include "../../ShaderProgram.h"
+#include "ui_Sc2VAOBlueOptionsForm.h"
 
 class Sc2VAOBlue : public SceneManager
 {
 private:
     QOpenGLFunctions_4_5_Core* glFunctions = nullptr;
+    Ui::Sc2VAOBlueOptionsForm* uiOptionsForm = nullptr;
+    QWidget* optionsFormWidget = nullptr;
 
 private:
     ShaderProgram* gShaderProgram = nullptr;

@@ -99,31 +99,11 @@ void Sc0Test::drawScene()
     //Unselect shader program
     gShaderProgram->disable();
 }
+
 void Sc0Test::finishScene()
 {
     glFunctions->glDeleteBuffers(1, &g_VBO);
     glFunctions->glDeleteBuffers(1, &g_сolors_VBO);
     glFunctions->glDeleteVertexArrays(1, &g_VAO);
     delete gShaderProgram;
-}
-
-void Sc0Test::createUiOptionsWidget()
-{
-    uiOptionsForm = new Ui::Sc0TestOptionsForm;
-    optionsFormWidget = new QWidget();
-    uiOptionsForm->setupUi(optionsFormWidget);
-    globalMainWindowFormUI->sceneOptionsStackedWidget->addWidget(optionsFormWidget);
-    QObject::connect(uiOptionsForm->pushButton, &QPushButton::clicked, this, &Sc0Test::buttonPressed);
-}
-
-void Sc0Test::deleteUiOptionsWidget()
-{
-    globalMainWindowFormUI->sceneOptionsStackedWidget->removeWidget(optionsFormWidget);
-    delete optionsFormWidget;
-    delete uiOptionsForm;
-}
-
-void Sc0Test::buttonPressed()
-{
-    qInfo() << "button pressed";
 }

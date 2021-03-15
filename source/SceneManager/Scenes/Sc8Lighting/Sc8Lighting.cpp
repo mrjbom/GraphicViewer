@@ -388,7 +388,7 @@ void Sc8Lighting::drawScene()
     gLightShaderProgram->setUniformMatrix4fv("projectionMatrix", 1, GL_FALSE, glm::value_ptr(projection_matrix));
     gLightShaderProgram->setUniformMatrix4fv("viewMatrix", 1, GL_FALSE, glm::value_ptr(view_matrix));
     gLightShaderProgram->setUniformMatrix4fv("modelMatrix", 1, GL_FALSE, glm::value_ptr(model_matrix));
-    gLightShaderProgram->setUniform3f("lightColor", g_light_color);
+    gLightShaderProgram->setUniform3f("lightColor", g_light_color * g_light_color_coef);
 
     //Select VAO
     glFunctions->glBindVertexArray(g_VAO_light);
@@ -439,13 +439,13 @@ void Sc8Lighting::drawScene()
     gBoxShaderProgram->setUniformMatrix4fv("normalMatrix", 1, GL_FALSE, glm::value_ptr(normal_matrix));
     gBoxShaderProgram->setUniform3f("cameraPosition", cam->getPosition());
     gBoxShaderProgram->setUniform3f("objectColor", 1.0f, 0.0f, 0.0f);
-    gBoxShaderProgram->setUniform3f("ambientLightColor", 1.0f, 1.0f, 1.0f);
-    gBoxShaderProgram->setUniform1f("ambientLightCoef", 0.3f);
+    gBoxShaderProgram->setUniform3f("ambientLightColor", g_light_color * g_light_color_coef);
+    gBoxShaderProgram->setUniform1f("ambientLightCoef", g_light_ambient_coef);
     gBoxShaderProgram->setUniform3f("deffuseLightPosition", g_light_position);
-    gBoxShaderProgram->setUniform3f("deffuseLightColor", g_light_color);
-    gBoxShaderProgram->setUniform3f("specularLightColor", g_light_color);
-    gBoxShaderProgram->setUniform1f("specularLightCoef", 0.5);
-    gBoxShaderProgram->setUniform1f("specularLightShineCoef", 32);
+    gBoxShaderProgram->setUniform3f("deffuseLightColor", g_light_color * g_light_color_coef);
+    gBoxShaderProgram->setUniform3f("specularLightColor", g_light_color * g_light_color_coef);
+    gBoxShaderProgram->setUniform1f("specularLightCoef", g_light_specular_coef);
+    gBoxShaderProgram->setUniform1f("specularLightShineCoef", g_light_specular_shine_coef);
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     //Enable the vertex attribute(the rest attributes remain off for optimization)
@@ -659,3 +659,97 @@ void Sc8Lighting::keyReleaseEventHandler(QKeyEvent* event)
     }
 }
 
+void Sc8Lighting::createUiOptionsWidget()
+{
+    uiOptionsForm = new Ui::Sc8LightingOptionsForm;
+    optionsFormWidget = new QWidget;
+    uiOptionsForm->setupUi(optionsFormWidget);
+    globalMainWindowFormUI->sceneOptionsStackedWidget->addWidget(optionsFormWidget);
+
+    QObject::connect(uiOptionsForm->xRotationSlider, &QSlider::valueChanged, this, &Sc8Lighting::setXRotSpeedValueFromSlider);
+    QObject::connect(uiOptionsForm->yRotationSlider, &QSlider::valueChanged, this, &Sc8Lighting::setYRotSpeedValueFromSlider);
+    QObject::connect(uiOptionsForm->xSizeSlider, &QSlider::valueChanged, this, &Sc8Lighting::setXSizeValueFromSlider);
+    QObject::connect(uiOptionsForm->ySizeSlider, &QSlider::valueChanged, this, &Sc8Lighting::setYSizeValueFromSlider);
+    QObject::connect(uiOptionsForm->resetRotationsPushButton, &QPushButton::clicked, this, &Sc8Lighting::resetRotationsButtonClicked);
+
+    QObject::connect(uiOptionsForm->lightRotationSlider, &QSlider::valueChanged, this, &Sc8Lighting::setLightRotValueFromSlider);
+
+    uiOptionsForm->lightColorCoefSlider->setValue(g_light_color_coef * 100);
+    uiOptionsForm->lightColorCoefValueLabel->setText(QString::number(g_light_color_coef));
+    QObject::connect(uiOptionsForm->lightColorCoefSlider, &QSlider::valueChanged, this, &Sc8Lighting::setLightColorCoefValueFromSlider);
+
+    uiOptionsForm->lightAmbientCoefSlider->setValue(g_light_ambient_coef * 100);
+    uiOptionsForm->lightAmbientCoefValueLabel->setText(QString::number(g_light_ambient_coef));
+    QObject::connect(uiOptionsForm->lightAmbientCoefSlider, &QSlider::valueChanged, this, &Sc8Lighting::setLightAmbientCoefValueFromSlider);
+
+    uiOptionsForm->lightSpecularCoefSlider->setValue(g_light_specular_coef * 100);
+    uiOptionsForm->lightSpecularCoefValueLabel->setText(QString::number(g_light_specular_coef));
+    QObject::connect(uiOptionsForm->lightSpecularCoefSlider, &QSlider::valueChanged, this, &Sc8Lighting::setLightSpecularCoefValueFromSlider);
+
+    uiOptionsForm->lightSpecularShineCoefSlider->setValue(g_light_specular_shine_coef);
+    uiOptionsForm->lightSpecularShineCoefValueLabel->setText(QString::number(g_light_specular_shine_coef));
+    QObject::connect(uiOptionsForm->lightSpecularShineCoefSlider, &QSlider::valueChanged, this, &Sc8Lighting::setLightSpecularShineCoefValueFromSlider);
+}
+
+void Sc8Lighting::deleteUiOptionsWidget()
+{
+    globalMainWindowFormUI->sceneOptionsStackedWidget->removeWidget(optionsFormWidget);
+    delete optionsFormWidget;
+    delete uiOptionsForm;
+}
+
+void Sc8Lighting::setXRotSpeedValueFromSlider(int new_value)
+{
+    x_rotation_speed_in_degrees = (1.0f / 100) * new_value;
+}
+
+void Sc8Lighting::setYRotSpeedValueFromSlider(int new_value)
+{
+    y_rotation_speed_in_degrees = (1.0f / 100) * new_value;
+}
+
+void Sc8Lighting::setXSizeValueFromSlider(int new_value)
+{
+    x_size_scale = (1.0f / 100) * new_value;
+}
+
+void Sc8Lighting::setYSizeValueFromSlider(int new_value)
+{
+    y_size_scale = (1.0f / 100) * new_value;
+}
+
+void Sc8Lighting::resetRotationsButtonClicked()
+{
+    rotation_matrix = glm::mat4(1.0f);
+    x_rot = 0;
+    y_rot = 0;
+}
+
+void Sc8Lighting::setLightRotValueFromSlider(int new_value)
+{
+    light_rotation_around_degress = new_value;
+}
+
+void Sc8Lighting::setLightColorCoefValueFromSlider(int new_value)
+{
+    g_light_color_coef = (1.0f / 100) * new_value;
+    uiOptionsForm->lightColorCoefValueLabel->setText(QString::number(g_light_color_coef));
+}
+
+void Sc8Lighting::setLightAmbientCoefValueFromSlider(int new_value)
+{
+    g_light_ambient_coef = (1.0f / 100) * new_value;
+    uiOptionsForm->lightAmbientCoefValueLabel->setText(QString::number(g_light_ambient_coef));
+}
+
+void Sc8Lighting::setLightSpecularCoefValueFromSlider(int new_value)
+{
+    g_light_specular_coef = (1.0f / 100) * new_value;
+    uiOptionsForm->lightSpecularCoefValueLabel->setText(QString::number(g_light_specular_coef));
+}
+
+void Sc8Lighting::setLightSpecularShineCoefValueFromSlider(int new_value)
+{
+    g_light_specular_shine_coef = new_value;
+    uiOptionsForm->lightSpecularShineCoefValueLabel->setText(QString::number(g_light_specular_shine_coef));
+}

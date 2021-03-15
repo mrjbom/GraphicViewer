@@ -90,9 +90,38 @@ void Sc3EBOGreen::drawScene()
     gShaderProgram->disable();
     glDisableClientState(GL_VERTEX_ARRAY);
 }
+
 void Sc3EBOGreen::finishScene()
 {
     glFunctions->glDeleteBuffers(1, &g_VBO);
     glFunctions->glDeleteBuffers(1, &g_EBO);
     delete gShaderProgram;
+}
+
+void Sc3EBOGreen::createUiOptionsWidget()
+{
+    uiOptionsForm = new Ui::Sc3EBOGreenOptionsForm;
+    optionsFormWidget = new QWidget;
+    uiOptionsForm->setupUi(optionsFormWidget);
+    globalMainWindowFormUI->sceneOptionsStackedWidget->addWidget(optionsFormWidget);
+    QObject::connect(uiOptionsForm->showTriangleLinesCheckBox, &QCheckBox::stateChanged, this, &Sc3EBOGreen::showPolygonLinesStateChanged);
+}
+
+void Sc3EBOGreen::deleteUiOptionsWidget()
+{
+    globalMainWindowFormUI->sceneOptionsStackedWidget->removeWidget(optionsFormWidget);
+    delete optionsFormWidget;
+    delete uiOptionsForm;
+
+    g_show_polygon_lines = false;
+}
+
+void Sc3EBOGreen::showPolygonLinesStateChanged(int state)
+{
+    if(state == Qt::Unchecked) {
+        g_show_polygon_lines = false;
+    }
+    else if(state == Qt::Checked) {
+        g_show_polygon_lines = true;
+    }
 }

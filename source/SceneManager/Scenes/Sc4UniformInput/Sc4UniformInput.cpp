@@ -87,6 +87,7 @@ void Sc4UniformInput::drawScene()
     //Unselect shader program
     gShaderProgram->disable();
 }
+
 void Sc4UniformInput::finishScene()
 {
     glFunctions->glDeleteBuffers(1, &g_VBO);

@@ -8,12 +8,14 @@
 #include "../../globalvars.h"
 #include "../../SceneManager.h"
 #include "../../ShaderProgram.h"
-#include <QCheckBox>
+#include "ui_Sc3EBOGreenOptionsForm.h"
 
 class Sc3EBOGreen : public SceneManager
 {
 private:
     QOpenGLFunctions_4_5_Core* glFunctions = nullptr;
+    Ui::Sc3EBOGreenOptionsForm* uiOptionsForm = nullptr;
+    QWidget* optionsFormWidget = nullptr;
 
 private:
     ShaderProgram* gShaderProgram = nullptr;
@@ -28,6 +30,8 @@ public:
     void initScene(int start_window_width, int start_window_height) override;
     void drawScene() override;
     void finishScene() override;
+    void createUiOptionsWidget() override;
+    void deleteUiOptionsWidget() override;
 
 public slots:
     void showPolygonLinesStateChanged(int state);

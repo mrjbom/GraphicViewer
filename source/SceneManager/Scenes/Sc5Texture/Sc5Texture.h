@@ -7,14 +7,14 @@
 #include <GL/GLU.h>
 #include "../../SceneManager.h"
 #include "../../ShaderProgram.h"
-#include <QWidget>
-#include <QSlider>
-#include <QLabel>
+#include "ui_Sc5TextureOptionsForm.h"
 
 class Sc5Texture : public SceneManager
 {
 private:
     QOpenGLFunctions_4_5_Core* glFunctions = nullptr;
+    Ui::Sc5TextureOptionsForm* uiOptionsForm = nullptr;
+    QWidget* optionsFormWidget = nullptr;
 
 private:
     ShaderProgram* gShaderProgram = nullptr;
@@ -34,6 +34,11 @@ public:
     void initScene(int start_window_width, int start_window_height) override;
     void drawScene() override;
     void finishScene() override;
+    void createUiOptionsWidget() override;
+    void deleteUiOptionsWidget() override;
+
+public slots:
+    void setNewMixValueFromSlider(int new_value);
 };
 
 #endif // SC5TEXTURE_H

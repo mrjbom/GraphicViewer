@@ -15,13 +15,14 @@
 #include "../../glm/gtc/matrix_transform.hpp"
 #include "../../glm/gtc/type_ptr.hpp"
 
-#include <QSlider>
-#include <QPushButton>
+#include "ui_Sc7Box3DCamOptionsForm.h"
 
 class Sc7Box3DCam : public SceneManager
 {
 private:
     QOpenGLFunctions_4_5_Core* glFunctions = nullptr;
+    Ui::Sc7Box3DCamOptionsForm* uiOptionsForm = nullptr;
+    QWidget* optionsFormWidget = nullptr;
 
 private:
     int window_width = 0, window_height = 0;
@@ -63,6 +64,13 @@ public:
     void mouseMoveEventHandler(QMouseEvent event) override;
     void keyPressEventHandler(QKeyEvent* event) override;
     void keyReleaseEventHandler(QKeyEvent* event) override;
+    void createUiOptionsWidget() override;
+    void deleteUiOptionsWidget() override;
+
+public slots:
+    void setXRotSpeedValueFromSlider(int new_value);
+    void setYRotSpeedValueFromSlider(int new_value);
+    void resetRotationsButtonClicked();
 };
 
 #endif // SC7BOX3DCAM_H

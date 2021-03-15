@@ -28,6 +28,12 @@
         <property name="enabled">
          <bool>true</bool>
         </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
        </widget>
       </item>
      </layout>
@@ -72,6 +78,33 @@
           <string>Scene</string>
          </attribute>
          <layout class="QGridLayout" name="tab_1GridLayout">
+          <item row="2" column="1" colspan="2">
+           <widget class="QStackedWidget" name="sceneOptionsStackedWidget">
+            <property name="currentIndex">
+             <number>-1</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="sceneFramerateLabelMilliseconds">
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
           <item row="1" column="2">
            <widget class="QComboBox" name="sceneSelectorComboBox">
             <property name="sizePolicy">
@@ -103,13 +136,6 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="2">
-           <widget class="QLabel" name="sceneFramerateLabelMilliseconds">
-            <property name="text">
-             <string>0</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="1">
            <widget class="QLabel" name="sceneSelectorLabel">
             <property name="text">
@@ -117,30 +143,10 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
           <item row="0" column="1">
            <widget class="QLabel" name="sceneFramerateLabel">
             <property name="text">
              <string>Frametime:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1" colspan="2">
-           <widget class="QStackedWidget" name="sceneOptionsStackedWidget">
-            <property name="currentIndex">
-             <number>-1</number>
             </property>
            </widget>
           </item>

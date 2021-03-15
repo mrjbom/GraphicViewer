@@ -72,6 +72,7 @@ void Sc1VBOOrange::drawScene()
     //Unselect shader program
     gShaderProgram->disable();
 }
+
 void Sc1VBOOrange::finishScene()
 {
     glFunctions->glDeleteBuffers(1, &g_VBO);

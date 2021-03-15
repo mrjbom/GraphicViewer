@@ -506,3 +506,40 @@ void Sc7Box3DCam::keyReleaseEventHandler(QKeyEvent* event)
         break;
     }
 }
+
+void Sc7Box3DCam::createUiOptionsWidget()
+{
+    uiOptionsForm = new Ui::Sc7Box3DCamOptionsForm;
+    optionsFormWidget = new QWidget;
+    uiOptionsForm->setupUi(optionsFormWidget);
+    globalMainWindowFormUI->sceneOptionsStackedWidget->addWidget(optionsFormWidget);
+    QObject::connect(uiOptionsForm->xRotationHorizontalSlider, &QSlider::valueChanged, this, &Sc7Box3DCam::setXRotSpeedValueFromSlider);
+    QObject::connect(uiOptionsForm->yRotationHorizontalSlider, &QSlider::valueChanged, this, &Sc7Box3DCam::setYRotSpeedValueFromSlider);
+    QObject::connect(uiOptionsForm->resetRotationsPushButton, &QPushButton::clicked, this, &Sc7Box3DCam::resetRotationsButtonClicked);
+}
+
+void Sc7Box3DCam::deleteUiOptionsWidget()
+{
+    globalMainWindowFormUI->sceneOptionsStackedWidget->removeWidget(optionsFormWidget);
+    delete optionsFormWidget;
+    delete uiOptionsForm;
+
+    x_rotation_speed_in_degrees = 0;
+    y_rotation_speed_in_degrees = 0;
+}
+
+void Sc7Box3DCam::setXRotSpeedValueFromSlider(int new_value)
+{
+    x_rotation_speed_in_degrees = (1.0f / 100) * new_value;
+}
+
+void Sc7Box3DCam::setYRotSpeedValueFromSlider(int new_value)
+{
+    y_rotation_speed_in_degrees = (1.0f / 100) * new_value;
+}
+
+void Sc7Box3DCam::resetRotationsButtonClicked()
+{
+    x_rot = 0;
+    y_rot = 0;
+}

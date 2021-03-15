@@ -320,3 +320,41 @@ void Sc6Box3DPerspective::resizeSceneWindow(int w, int h)
     window_width = w;
     window_height = h;
 }
+
+void Sc6Box3DPerspective::createUiOptionsWidget()
+{
+    uiOptionsForm = new Ui::Sc6Box3DPerspectiveOptionsForm;
+    optionsFormWidget = new QWidget;
+    uiOptionsForm->setupUi(optionsFormWidget);
+    globalMainWindowFormUI->sceneOptionsStackedWidget->addWidget(optionsFormWidget);
+    QObject::connect(uiOptionsForm->xRotationHorizontalSlider, &QSlider::valueChanged, this, &Sc6Box3DPerspective::setXRotSpeedValueFromSlider);
+    QObject::connect(uiOptionsForm->yRotationHorizontalSlider, &QSlider::valueChanged, this, &Sc6Box3DPerspective::setYRotSpeedValueFromSlider);
+    QObject::connect(uiOptionsForm->resetRotationsPushButton, &QPushButton::clicked, this, &Sc6Box3DPerspective::resetRotationsButtonClicked);
+}
+
+void Sc6Box3DPerspective::deleteUiOptionsWidget()
+{
+    globalMainWindowFormUI->sceneOptionsStackedWidget->removeWidget(optionsFormWidget);
+    delete optionsFormWidget;
+    delete uiOptionsForm;
+
+    x_rotation_speed_in_degrees = 0;
+    y_rotation_speed_in_degrees = 0;
+}
+
+void Sc6Box3DPerspective::setXRotSpeedValueFromSlider(int new_value)
+{
+    x_rotation_speed_in_degrees = (1.0f / 100) * new_value;
+}
+
+void Sc6Box3DPerspective::setYRotSpeedValueFromSlider(int new_value)
+{
+    y_rotation_speed_in_degrees = (1.0f / 100) * new_value;
+}
+
+void Sc6Box3DPerspective::resetRotationsButtonClicked()
+{
+    rotation_matrix = glm::mat4(1.0f);
+    x_rot = 0;
+    y_rot = 0;
+}
