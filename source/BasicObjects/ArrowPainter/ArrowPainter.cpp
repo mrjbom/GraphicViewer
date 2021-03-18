@@ -46,9 +46,9 @@ void ArrowPainter::updatePoints(glm::vec3 start_p, glm::vec3 end_p)
     glFunctions->glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void ArrowPainter::setColor(glm::vec3 _color)
+void ArrowPainter::setColor(glm::vec3 new_color)
 {
-    color = _color;
+    color = new_color;
 }
 
 void ArrowPainter::setMVP(glm::mat4 mvp_mat)

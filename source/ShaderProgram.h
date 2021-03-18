@@ -9,16 +9,16 @@ class ShaderProgram
 {
 private:
     QOpenGLFunctions_4_5_Core* glFunctions = nullptr;
-    QString vertexShaderSourceFilePath;
-    QString fragmentShaderSourceFilePath;
+    QString vertex_shader_source_file_path;
+    QString fragment_shader_source_file_path;
 
-    GLuint compiledShaderProgram = 0;
-    GLuint gShaderPrintfBuffer = 0;
-    bool makeSuccessful = false;
-    bool useShaderPrintf = false;
+    GLuint compiled_shader_program = 0;
+    GLuint g_shader_printf_buffer = 0;
+    bool make_successful = false;
+    bool use_shader_printf = false;
 public:
     //Setting the _useShaderPrintf parameter and using the functions associated with printing data from the shader leads to a huge memory overhead!
-    ShaderProgram(QOpenGLFunctions_4_5_Core* _glFunctions, const QString _vertexShaderSourceFilePath, const QString _fragmentShaderSourceFilePath, bool _useShaderPrintf = false);
+    ShaderProgram(QOpenGLFunctions_4_5_Core* targetGlFunctions, const QString vertex_shader_source_file_path, const QString fragment_shader_source_file_path, bool use_shader_printf = false);
     ~ShaderProgram();
     bool compile();
     void enable();

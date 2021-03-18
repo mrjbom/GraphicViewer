@@ -3,19 +3,19 @@
 #include <QDebug>
 
 // _useShaderPrintf
-ShaderProgram::ShaderProgram(QOpenGLFunctions_4_5_Core* _glFunctions, const QString _vertexShaderSourceFilePath, const QString _fragmentShaderSourceFilePath, bool _useShaderPrintf)
+ShaderProgram::ShaderProgram(QOpenGLFunctions_4_5_Core* targetGlFunctions, const QString vertex_shader_source_file_path, const QString fragment_shader_source_file_path, bool use_shader_printf)
 {
-    glFunctions = _glFunctions;
-    vertexShaderSourceFilePath = _vertexShaderSourceFilePath;
-    fragmentShaderSourceFilePath = _fragmentShaderSourceFilePath;
-    useShaderPrintf = _useShaderPrintf;
+    this->glFunctions = targetGlFunctions;
+    this->vertex_shader_source_file_path = vertex_shader_source_file_path;
+    this->fragment_shader_source_file_path = fragment_shader_source_file_path;
+    this->use_shader_printf = use_shader_printf;
 }
 
 ShaderProgram::~ShaderProgram()
 {
-    if(!makeSuccessful)
+    if(!make_successful)
         return;
-    glFunctions->glDeleteProgram(compiledShaderProgram);
+    glFunctions->glDeleteProgram(compiled_shader_program);
 }
 
 bool ShaderProgram::compile()
@@ -28,13 +28,13 @@ bool ShaderProgram::compile()
     }
 
     //Open files containing the vertex and fragment shader source code
-    QFile vertexShaderSourceFile(vertexShaderSourceFilePath);
+    QFile vertexShaderSourceFile(vertex_shader_source_file_path);
     if (!vertexShaderSourceFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug("[ERROR] compile: open vertex shader source code file failed!");
         return false;
     }
 
-    QFile fragmentShaderSourceFile(fragmentShaderSourceFilePath);
+    QFile fragmentShaderSourceFile(fragment_shader_source_file_path);
     if (!fragmentShaderSourceFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug("[ERROR] compile: open fragment shader source code file failed!");
         return false;
@@ -59,7 +59,7 @@ bool ShaderProgram::compile()
 
     //Compile vertex shader
     int vertexShader = glFunctions->glCreateShader(GL_VERTEX_SHADER);
-    if(useShaderPrintf) {
+    if(use_shader_printf) {
         glShaderSourcePrint(glFunctions, vertexShader, 1, &vertexShaderSourceCodeString, NULL);
     }
     else {
@@ -79,7 +79,7 @@ bool ShaderProgram::compile()
 
     //Compile fragment shader
     int fragmentShader = glFunctions->glCreateShader(GL_FRAGMENT_SHADER);
-    if(useShaderPrintf) {
+    if(use_shader_printf) {
         glShaderSourcePrint(glFunctions, fragmentShader, 1, &fragmentShaderSourceCodeString, NULL);
     }
     else {
@@ -117,14 +117,14 @@ bool ShaderProgram::compile()
     glFunctions->glDeleteShader(vertexShader);
     glFunctions->glDeleteShader(fragmentShader);
 
-    compiledShaderProgram = shaderProgram;
-    makeSuccessful = true;
+    compiled_shader_program = shaderProgram;
+    make_successful = true;
     return true;
 }
 
 void ShaderProgram::enable()
 {
-    glFunctions->glUseProgram(compiledShaderProgram);
+    glFunctions->glUseProgram(compiled_shader_program);
 }
 
 void ShaderProgram::disable()
@@ -134,7 +134,7 @@ void ShaderProgram::disable()
 
 void ShaderProgram::setUniform3f(const GLchar* name, float x, float y, float z)
 {
-    GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
+    GLint location = glFunctions->glGetUniformLocation(compiled_shader_program, name);
     if(location < 0) {
         qInfo() << "[ERROR] ShaderProgram::setUniform3f: name:" << name;
         return;
@@ -144,7 +144,7 @@ void ShaderProgram::setUniform3f(const GLchar* name, float x, float y, float z)
 
 void ShaderProgram::setUniform3f(const GLchar* name, glm::vec3 vec)
 {
-    GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
+    GLint location = glFunctions->glGetUniformLocation(compiled_shader_program, name);
     if(location < 0) {
         qInfo() << "[ERROR] ShaderProgram::setUniform3f: name:" << name;
         return;
@@ -154,7 +154,7 @@ void ShaderProgram::setUniform3f(const GLchar* name, glm::vec3 vec)
 
 void ShaderProgram::setUniform1i(const GLchar* name, int num)
 {
-    GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
+    GLint location = glFunctions->glGetUniformLocation(compiled_shader_program, name);
     if(location < 0) {
         qInfo() << "[ERROR] ShaderProgram::setUniform1i: name:" << name;
         return;
@@ -164,7 +164,7 @@ void ShaderProgram::setUniform1i(const GLchar* name, int num)
 
 void ShaderProgram::setUniform1f(const GLchar* name, float num)
 {
-    GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
+    GLint location = glFunctions->glGetUniformLocation(compiled_shader_program, name);
     if(location < 0) {
         qInfo() << "[ERROR] ShaderProgram::setUniform1f: name:" << name;
         return;
@@ -174,7 +174,7 @@ void ShaderProgram::setUniform1f(const GLchar* name, float num)
 
 void ShaderProgram::setUniformMatrix4fv(const GLchar* name, GLsizei count, GLboolean transpose, const GLfloat* value)
 {
-    GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
+    GLint location = glFunctions->glGetUniformLocation(compiled_shader_program, name);
     if(location < 0) {
         qInfo() << "[ERROR] ShaderProgram::setUniformMatrix4fv: name:" << name;
         return;
@@ -184,7 +184,7 @@ void ShaderProgram::setUniformMatrix4fv(const GLchar* name, GLsizei count, GLboo
 
 void ShaderProgram::setUniformBool(const GLchar* name, bool value)
 {
-    GLint location = glFunctions->glGetUniformLocation(compiledShaderProgram, name);
+    GLint location = glFunctions->glGetUniformLocation(compiled_shader_program, name);
     if(location < 0) {
         qInfo() << "[ERROR] ShaderProgram::setUniformBool: name:" << name;
         return;
@@ -194,28 +194,28 @@ void ShaderProgram::setUniformBool(const GLchar* name, bool value)
 
 void ShaderProgram::printfPrepare()
 {
-    if(!useShaderPrintf)
+    if(!use_shader_printf)
         return;
 
     //Create a buffer to hold the printf results
-    gShaderPrintfBuffer = createPrintBuffer(glFunctions);
+    g_shader_printf_buffer = createPrintBuffer(glFunctions);
     //Bind it to the program
-    bindPrintBuffer(glFunctions, compiledShaderProgram, gShaderPrintfBuffer);
+    bindPrintBuffer(glFunctions, compiled_shader_program, g_shader_printf_buffer);
 }
 
 void ShaderProgram::printfTerminate()
 {
-    if(!useShaderPrintf)
+    if(!use_shader_printf)
         return;
 
     //Clean up
-    deletePrintBuffer(glFunctions, gShaderPrintfBuffer);
+    deletePrintBuffer(glFunctions, g_shader_printf_buffer);
 }
 
 std::string ShaderProgram::printfGetData()
 {
-    if(!useShaderPrintf)
+    if(!use_shader_printf)
         return "This shader program does not use ShaderPrintf, enable it using the parameters of the shader program compilation function";
     //Convert to string
-    return getPrintBufferString(glFunctions, gShaderPrintfBuffer).c_str();
+    return getPrintBufferString(glFunctions, g_shader_printf_buffer).c_str();
 }

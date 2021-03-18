@@ -25,7 +25,7 @@ private:
 public:
     ArrowPainter(QOpenGLFunctions_4_5_Core* _glFunctions);
     void updatePoints(glm::vec3 start_p, glm::vec3 end_p);
-    void setColor(glm::vec3 _color);
+    void setColor(glm::vec3 new_color);
     void setMVP(glm::mat4 mvp_mat);
     void Draw();
     ~ArrowPainter();
