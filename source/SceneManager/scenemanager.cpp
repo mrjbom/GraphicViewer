@@ -10,6 +10,7 @@
 #include "Scenes/Sc6Box3DPerspective/Sc6Box3DPerspective.h"
 #include "Scenes/Sc7Box3DCam/Sc7Box3DCam.h"
 #include "Scenes/Sc8Lighting/Sc8Lighting.h"
+#include "Scenes/Sc9LightingMaterials/Sc9LightingMaterials.h"
 
 SceneManager::SceneManager()
 {
@@ -55,6 +56,9 @@ void SceneManager::init(QOpenGLContext* openGLContext)
 
     scenePtr = new Sc8Lighting(openGLContext);
     addSceneObject(scenePtr, "Box with lighting");
+
+    scenePtr = new Sc9LightingMaterials(openGLContext);
+    addSceneObject(scenePtr, "Box with lighting materials");
 
     //Configuring the scene combo-box to select the current scene
     for(size_t i = 0; i < getScenesNumber(); ++i) {

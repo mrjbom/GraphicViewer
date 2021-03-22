@@ -1,6 +1,6 @@
-#assimp
 *pro.user
 
+#assimp
 source/assimp-5.0.1/*
 !source/assimp-5.0.1/build
 source/assimp-5.0.1/build/*

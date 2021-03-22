@@ -22,6 +22,7 @@ SOURCES += \
     source/SceneManager/Scenes/Sc6Box3DPerspective/Sc6Box3DPerspective.cpp \
     source/SceneManager/Scenes/Sc7Box3DCam/Sc7Box3DCam.cpp \
     source/SceneManager/Scenes/Sc8Lighting/Sc8Lighting.cpp \
+    source/SceneManager/Scenes/Sc9LightingMaterials/Sc9LightingMaterials.cpp \
     source/ShaderProgram.cpp \
     source/globalvars.cpp \
     source/main.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     source/SceneManager/Scenes/Sc6Box3DPerspective/Sc6Box3DPerspective.h \
     source/SceneManager/Scenes/Sc7Box3DCam/Sc7Box3DCam.h \
     source/SceneManager/Scenes/Sc8Lighting/Sc8Lighting.h \
+    source/SceneManager/Scenes/Sc9LightingMaterials/Sc9LightingMaterials.h \
     source/ShaderProgram.h \
     source/globalvars.h \
     source/MainOpenGLWidget.h \
@@ -57,7 +59,8 @@ FORMS += \
     source/SceneManager/Scenes/Sc5Texture/ui/Sc5TextureOptionsForm.ui \
     source/SceneManager/Scenes/Sc6Box3DPerspective/ui/Sc6Box3DPerspectiveOptionsForm.ui \
     source/SceneManager/Scenes/Sc7Box3DCam/ui/Sc7Box3DCamOptionsForm.ui \
-    source/SceneManager/Scenes/Sc8Lighting/ui/Sc8LightingOptionsForm.ui
+    source/SceneManager/Scenes/Sc8Lighting/ui/Sc8LightingOptionsForm.ui \
+    source/SceneManager/Scenes/Sc9LightingMaterials/ui/Sc9LightingMaterialsOptionsForm.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

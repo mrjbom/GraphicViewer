@@ -1,5 +1,4 @@
 #version 450 core
-
 in vec3 aaNormal;
 in vec3 aaFragPos;
 
@@ -34,6 +33,5 @@ void main()
     vec3 specularLight = specularLightCoef * specularLightAngleCoef * specularLightColor;
 
     vec3 resultColor = (ambientLight + diffuseLight + specularLight) * objectColor;
-
     FragColor = vec4(resultColor, 1.0);
 }

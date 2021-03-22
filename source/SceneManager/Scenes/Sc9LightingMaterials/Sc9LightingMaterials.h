@@ -1,10 +1,10 @@
-#ifndef SC8LIGHTING_H
-#define SC8LIGHTING_H
+#ifndef SC9LIGHTINGMATERIALS_H
+#define SC9LIGHTINGMATERIALS_H
 
 
 /*
- * Demonstration of the operation of lighting using the Phong reflection model.
- * Part 1
+ * Demonstration of the operation of lighting using the Phong reflection model and various materials.
+ * Part 2
  */
 
 
@@ -23,13 +23,13 @@
 #include "../../glm/gtc/matrix_transform.hpp"
 #include "../../glm/gtc/type_ptr.hpp"
 
-#include "ui_Sc8LightingOptionsForm.h"
+#include "ui_Sc9LightingMaterialsOptionsForm.h"
 
-class Sc8Lighting : public SceneManager
+class Sc9LightingMaterials : public SceneManager
 {
 private:
     QOpenGLFunctions_4_5_Core* glFunctions = nullptr;
-    Ui::Sc8LightingOptionsForm* uiOptionsForm = nullptr;
+    Ui::Sc9LightingMaterialsOptionsForm* uiOptionsForm = nullptr;
     QWidget* optionsFormWidget = nullptr;
 
 private:
@@ -48,10 +48,6 @@ private:
     GLuint g_VBO_cube_wall_texcoords = 0;
     ShaderProgram* gLightShaderProgram = nullptr;
     GLuint g_VAO_light = 0;
-    ShaderProgram* gPyramideShaderProgram = nullptr;
-    GLuint g_VAO_pyramide = 0;
-    GLuint g_VBO_pyramide_vertexes = 0;
-    GLuint g_VBO_pyramide_normals = 0;
     glm::vec3 g_light_to_cube_distance = glm::vec3(2.5f, 0.0f, 0.0f);
     glm::vec3 g_light_position = glm::vec3(0.0f, 0.0f, 0.0f);
 
@@ -68,14 +64,10 @@ private:
     float y_size_scale = 1;
     float light_rotation_around_degress = 0.0f;
     glm::vec3 g_light_color = glm::vec3(1.0f, 1.0f, 1.0f);
-    float g_light_color_coef = 1.0f;
-    float g_light_ambient_coef = 0.3f;
-    float g_light_specular_coef = 0.5f;
-    int g_light_specular_shine_coef = 32;
 
 public:
-    Sc8Lighting(QOpenGLContext* openGLContext);
-    ~Sc8Lighting();
+    Sc9LightingMaterials(QOpenGLContext* openGLContext);
+    ~Sc9LightingMaterials();
     void initScene(int start_window_width, int start_window_height) override;
     void drawScene() override;
     void finishScene() override;
@@ -95,10 +87,6 @@ public slots:
     void setYSizeValueFromSlider(int new_value);
     void setLightRotValueFromSlider(int new_value);
     void resetRotationsButtonClicked();
-    void setLightColorCoefValueFromSlider(int new_value);
-    void setLightAmbientCoefValueFromSlider(int new_value);
-    void setLightSpecularCoefValueFromSlider(int new_value);
-    void setLightSpecularShineCoefValueFromSlider(int new_value);
 };
 
-#endif // SC8LIGHTING_H
+#endif // SC9LIGHTINGMATERIALS_H
