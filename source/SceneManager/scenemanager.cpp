@@ -11,6 +11,7 @@
 #include "Scenes/Sc7Box3DCam/Sc7Box3DCam.h"
 #include "Scenes/Sc8Lighting/Sc8Lighting.h"
 #include "Scenes/Sc9LightingMaterials/Sc9LightingMaterials.h"
+#include "Scenes/Sc10LightingMaps/Sc10LightingMaps.h"
 
 SceneManager::SceneManager()
 {
@@ -30,26 +31,26 @@ void SceneManager::init(QOpenGLContext* openGLContext)
     this->openGLContext = openGLContext;
     SceneManager* scenePtr = nullptr;
 
-    scenePtr = new Sc0Test(openGLContext);
-    addSceneObject(scenePtr, "Test scene");
-
-    scenePtr = new Sc1VBOOrange(openGLContext);
-    addSceneObject(scenePtr, "Triangle VBO(Orange)");
-
-    scenePtr = new Sc2VAOBlue(openGLContext);
-    addSceneObject(scenePtr, "Triangle VAO(Blue)");
-
-    scenePtr = new Sc3EBOGreen(openGLContext);
-    addSceneObject(scenePtr, "Triangle EBO(Green)");
-
-    scenePtr = new Sc4UniformInput(openGLContext);
-    addSceneObject(scenePtr, "Triangle Uniform Input");
-
-    scenePtr = new Sc5Texture(openGLContext);
-    addSceneObject(scenePtr,"Square Textured");
-
-    scenePtr = new Sc6Box3DPerspective(openGLContext);
-    addSceneObject(scenePtr, "Box in 3D space");
+    //scenePtr = new Sc0Test(openGLContext);
+    //addSceneObject(scenePtr, "Test scene");
+    //
+    //scenePtr = new Sc1VBOOrange(openGLContext);
+    //addSceneObject(scenePtr, "Triangle VBO(Orange)");
+    //
+    //scenePtr = new Sc2VAOBlue(openGLContext);
+    //addSceneObject(scenePtr, "Triangle VAO(Blue)");
+    //
+    //scenePtr = new Sc3EBOGreen(openGLContext);
+    //addSceneObject(scenePtr, "Triangle EBO(Green)");
+    //
+    //scenePtr = new Sc4UniformInput(openGLContext);
+    //addSceneObject(scenePtr, "Triangle Uniform Input");
+    //
+    //scenePtr = new Sc5Texture(openGLContext);
+    //addSceneObject(scenePtr,"Square Textured");
+    //
+    //scenePtr = new Sc6Box3DPerspective(openGLContext);
+    //addSceneObject(scenePtr, "Box in 3D space");
 
     scenePtr = new Sc7Box3DCam(openGLContext);
     addSceneObject(scenePtr, "Box 3D Camera");
@@ -59,6 +60,9 @@ void SceneManager::init(QOpenGLContext* openGLContext)
 
     scenePtr = new Sc9LightingMaterials(openGLContext);
     addSceneObject(scenePtr, "Box with lighting materials");
+
+    scenePtr = new Sc10LightingMaps(openGLContext);
+    addSceneObject(scenePtr, "Box with lighting maps");
 
     //Configuring the scene combo-box to select the current scene
     for(size_t i = 0; i < getScenesNumber(); ++i) {

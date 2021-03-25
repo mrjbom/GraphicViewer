@@ -1,17 +1,17 @@
-#include "Sc8Lighting.h"
+#include "Sc10LightingMaps.h"
 #include "../../globalvars.h"
 #include <QGLWidget> //for convertation to gl format
 
-Sc8Lighting::Sc8Lighting(QOpenGLContext* openGLContext)
+Sc10LightingMaps::Sc10LightingMaps(QOpenGLContext* openGLContext)
 {
     glFunctions = openGLContext->versionFunctions<QOpenGLFunctions_4_5_Core>();
 }
 
-Sc8Lighting::~Sc8Lighting()
+Sc10LightingMaps::~Sc10LightingMaps()
 {
 }
 
-void Sc8Lighting::initScene(int start_window_width, int start_window_height)
+void Sc10LightingMaps::initScene(int start_window_width, int start_window_height)
 {
     //I specifically set all the variables manually, because this is a test code.
     float cube_vertexes_coords_normalized[] =
@@ -226,7 +226,7 @@ void Sc8Lighting::initScene(int start_window_width, int start_window_height)
     arrowPainter = new ArrowPainter(glFunctions);
 
     //Create shader program object
-    gBoxShaderProgram = new ShaderProgram(glFunctions, ":Scenes/Sc8Lighting/shaders/box/vertshader.vert", ":/Scenes/Sc8Lighting/shaders/box/fragshader.frag");
+    gBoxShaderProgram = new ShaderProgram(glFunctions, ":Scenes/Sc10LightingMaps/shaders/box/vertshader.vert", ":/Scenes/Sc10LightingMaps/shaders/box/fragshader.frag");
 
     //Compile shader program
     if(!gBoxShaderProgram->compile()) {
@@ -235,7 +235,7 @@ void Sc8Lighting::initScene(int start_window_width, int start_window_height)
     }
 
     //Create shader program object
-    gLightShaderProgram = new ShaderProgram(glFunctions, ":Scenes/Sc8Lighting/shaders/light/vertshader.vert", ":/Scenes/Sc8Lighting/shaders/light/fragshader.frag");
+    gLightShaderProgram = new ShaderProgram(glFunctions, ":Scenes/Sc10LightingMaps/shaders/light/vertshader.vert", ":/Scenes/Sc10LightingMaps/shaders/light/fragshader.frag");
 
     //Compile shader program
     if(!gLightShaderProgram->compile()) {
@@ -243,14 +243,94 @@ void Sc8Lighting::initScene(int start_window_width, int start_window_height)
         return;
     }
 
-    //Create shader program object
-    gPyramideShaderProgram = new ShaderProgram(glFunctions, ":Scenes/Sc8Lighting/shaders/pyramide/vertshader.vert", ":/Scenes/Sc8Lighting/shaders/pyramide/fragshader.frag");
-
-    //Compile shader program
-    if(!gPyramideShaderProgram->compile()) {
-        qDebug("[ERROR] initializeGL: compile light shader program failed!");
+    //Load texture image
+    QImage imgWallTexture(":Scenes/Sc10LightingMaps/textures/metalbox_deffusemap512x512.png");
+    if(imgWallTexture.isNull()) {
+        qInfo("[ERROR] initScene: image texture load failed!");
         return;
     }
+    imgWallTexture = QGLWidget::convertToGLFormat(imgWallTexture);
+    //You must use the "Premultiplied alpha" format, otherwise artifacts appear
+    imgWallTexture = imgWallTexture.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+
+    //Load texture image
+    QImage imgWallTexture2(":Scenes/Sc10LightingMaps/textures/metalbox_specularmap512x512.png");
+    if(imgWallTexture2.isNull()) {
+        qInfo("[ERROR] initScene: image texture load failed!");
+        return;
+    }
+    imgWallTexture2 = QGLWidget::convertToGLFormat(imgWallTexture2);
+    //You must use the "Premultiplied alpha" format, otherwise artifacts appear
+    imgWallTexture2 = imgWallTexture2.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+
+    //Texture ID(name)
+    unsigned int metalbox_deffusemap_texture = 0;
+    unsigned int metalbox_specularmap_texture = 0;
+    //Allocate 1 buffer for textures
+    glFunctions->glGenTextures(1, &metalbox_deffusemap_texture);
+    glFunctions->glGenTextures(1, &metalbox_specularmap_texture);
+    //Select wall texture
+    glFunctions->glBindTexture(GL_TEXTURE_2D, metalbox_deffusemap_texture);
+    //Load data to texture
+    glFunctions->glTexImage2D(GL_TEXTURE_2D, //selected texture type
+                 0, //mipmap level(we generate him using OpenGL)
+                 GL_RGBA, //texture data format
+                 imgWallTexture.width(),
+                 imgWallTexture.height(),
+                 0, //always zero
+                 GL_RGBA, //image format
+                 GL_UNSIGNED_BYTE, //image data format
+                 imgWallTexture.bits() //image data
+                );
+
+    if(glFunctions->glGetError() != GL_NO_ERROR) {
+        qInfo("[ERROR] initScene: glTexImage2D failed!");
+        return;
+    }
+
+    //Generate mipmap for texture
+    glFunctions->glGenerateMipmap(GL_TEXTURE_2D);
+
+    //Setting up texture
+    //Texture draw
+    glFunctions->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glFunctions->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    //Texture filtration
+    glFunctions->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+    glFunctions->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    //Select wall texture
+    glFunctions->glBindTexture(GL_TEXTURE_2D, metalbox_specularmap_texture);
+    //Load data to texture
+    glFunctions->glTexImage2D(GL_TEXTURE_2D, //selected texture type
+                 0, //mipmap level(we generate him using OpenGL)
+                 GL_RGBA, //texture data format
+                 imgWallTexture2.width(),
+                 imgWallTexture2.height(),
+                 0, //always zero
+                 GL_RGBA, //image format
+                 GL_UNSIGNED_BYTE, //image data format
+                 imgWallTexture2.bits() //image data
+                );
+
+    if(glFunctions->glGetError() != GL_NO_ERROR) {
+        qInfo("[ERROR] initScene: glTexImage2D failed!");
+        return;
+    }
+
+    //Generate mipmap for texture
+    glFunctions->glGenerateMipmap(GL_TEXTURE_2D);
+
+    //Setting up texture
+    //Texture draw
+    glFunctions->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glFunctions->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    //Texture filtration
+    glFunctions->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+    glFunctions->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    //Unselect texture
+    glFunctions->glBindTexture(GL_TEXTURE_2D, 0);
 
     //Vertex buffer object ID(name)
     unsigned int VBOBoxVertexes = 0;
@@ -346,14 +426,13 @@ void Sc8Lighting::initScene(int start_window_width, int start_window_height)
     g_VAO_cube = VAOBox;
     g_VBO_cube_vertexes = VBOBoxVertexes;
     g_VBO_cube_normals = VBOBoxNormals;
-    g_VBO_cube_wall_texcoords = VBOBoxWallTexcoords;
+    g_VBO_cube_metalbox_deffusemap_texcoords = VBOBoxWallTexcoords;
+    g_metalbox_deffusemap_texture = metalbox_deffusemap_texture;
+    g_metalbox_specularmap_texture = metalbox_specularmap_texture;
     g_VAO_light = VAOlight;
-    g_VAO_pyramide = VAOPyramide;
-    g_VBO_pyramide_vertexes = VBOPyramideVertexes;
-    g_VBO_pyramide_normals = VBOPyramideNormals;
 }
 
-void Sc8Lighting::drawScene()
+void Sc10LightingMaps::drawScene()
 {
     glFunctions->glEnable(GL_DEPTH_TEST);
     glFunctions->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -379,7 +458,7 @@ void Sc8Lighting::drawScene()
     gLightShaderProgram->setUniformMatrix4fv("projectionMatrix", 1, GL_FALSE, glm::value_ptr(projection_matrix));
     gLightShaderProgram->setUniformMatrix4fv("viewMatrix", 1, GL_FALSE, glm::value_ptr(view_matrix));
     gLightShaderProgram->setUniformMatrix4fv("modelMatrix", 1, GL_FALSE, glm::value_ptr(model_matrix));
-    gLightShaderProgram->setUniform3f("lightColor", g_light_color * g_light_color_coef);
+    gLightShaderProgram->setUniform3f("lightColor", g_light_color);
 
     //Select VAO
     glFunctions->glBindVertexArray(g_VAO_light);
@@ -408,6 +487,11 @@ void Sc8Lighting::drawScene()
 
     //Select VAO
     glFunctions->glBindVertexArray(g_VAO_cube);
+    //Select texture
+    glFunctions->glActiveTexture(GL_TEXTURE0);
+    glFunctions->glBindTexture(GL_TEXTURE_2D, g_metalbox_deffusemap_texture);
+    glFunctions->glActiveTexture(GL_TEXTURE1);
+    glFunctions->glBindTexture(GL_TEXTURE_2D, g_metalbox_specularmap_texture);
     //Select shader program
     gBoxShaderProgram->enable();
     //use matrix
@@ -429,19 +513,19 @@ void Sc8Lighting::drawScene()
     gBoxShaderProgram->setUniformMatrix4fv("modelMatrix", 1, GL_FALSE, glm::value_ptr(model_matrix));
     gBoxShaderProgram->setUniformMatrix4fv("normalMatrix", 1, GL_FALSE, glm::value_ptr(normal_matrix));
     gBoxShaderProgram->setUniform3f("cameraPosition", cam->getPosition());
-    gBoxShaderProgram->setUniform3f("objectColor", 1.0f, 0.0f, 0.0f);
-    gBoxShaderProgram->setUniform3f("ambientLightColor", g_light_color * g_light_color_coef);
-    gBoxShaderProgram->setUniform1f("ambientLightCoef", g_light_ambient_coef);
-    gBoxShaderProgram->setUniform3f("deffuseLightPosition", g_light_position);
-    gBoxShaderProgram->setUniform3f("deffuseLightColor", g_light_color * g_light_color_coef);
-    gBoxShaderProgram->setUniform3f("specularLightColor", g_light_color * g_light_color_coef);
-    gBoxShaderProgram->setUniform1f("specularLightCoef", g_light_specular_coef);
-    gBoxShaderProgram->setUniform1f("specularLightShineCoef", g_light_specular_shine_coef);
+    gBoxShaderProgram->setUniform1i("material.diffuse", 0);
+    gBoxShaderProgram->setUniform1i("material.specular", 1);
+    gBoxShaderProgram->setUniform1f("material.shininess", 32.0f);
+    gBoxShaderProgram->setUniform3f("light.position", g_light_position);
+    gBoxShaderProgram->setUniform3f("light.ambient", 0.2f, 0.2f, 0.2f);
+    gBoxShaderProgram->setUniform3f("light.diffuse", 0.5f, 0.5f, 0.5f);
+    gBoxShaderProgram->setUniform3f("light.specular", 1.0f, 1.0f, 1.0f);
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     //Enable the vertex attribute(the rest attributes remain off for optimization)
     glFunctions->glEnableVertexAttribArray(0);
     glFunctions->glEnableVertexAttribArray(1);
+    glFunctions->glEnableVertexAttribArray(2);
 
     gBoxShaderProgram->printfPrepare();
 
@@ -454,80 +538,24 @@ void Sc8Lighting::drawScene()
 
     glFunctions->glDisableVertexAttribArray(0);
     glFunctions->glDisableVertexAttribArray(1);
+    glFunctions->glDisableVertexAttribArray(2);
     //Unselect VAO
     glFunctions->glBindVertexArray(0);
     //Unselect shader program
     gBoxShaderProgram->disable();
+    //Unselect texture
+    glFunctions->glBindTexture(GL_TEXTURE_2D, 0);
     //Unselect VAO
     glFunctions->glBindVertexArray(0);
-
-    ////Select VAO
-    //glFunctions->glBindVertexArray(g_VAO_pyramide);
-    ////Select shader program
-    //gPyramideShaderProgram->enable();
-    ////use matrix
-    ////create model matrix
-    //model_matrix = glm::mat4(1.0f);
-    //
-    //glm::mat4 rm_x = glm::rotate(glm::mat4(1.0f),
-    //    glm::radians(y_rotation_speed_in_degrees), glm::vec3(0, 1, 0));
-    //glm::mat4 rm_y = glm::rotate(glm::mat4(1.0f),
-    //    glm::radians(x_rotation_speed_in_degrees), glm::vec3(1, 0, 0));
-    //rotation_matrix = rm_x * rm_y * rotation_matrix;
-    //
-    //model_matrix = rotation_matrix * glm::scale(model_matrix, glm::vec3(x_size_scale, y_size_scale, 1.0f));
-    //model_matrix = glm::translate(model_matrix, glm::vec3(0.0f, -0.25f, 0.0f));
-    //glm::mat4 normal_matrix = glm::transpose(glm::inverse(model_matrix));
-    //
-    //view_matrix = cam->getViewMatrix();
-    //gPyramideShaderProgram->setUniformMatrix4fv("projectionMatrix", 1, GL_FALSE, glm::value_ptr(projection_matrix));
-    //gPyramideShaderProgram->setUniformMatrix4fv("viewMatrix", 1, GL_FALSE, glm::value_ptr(view_matrix));
-    //gPyramideShaderProgram->setUniformMatrix4fv("modelMatrix", 1, GL_FALSE, glm::value_ptr(model_matrix));
-    //gPyramideShaderProgram->setUniformMatrix4fv("normalMatrix", 1, GL_FALSE, glm::value_ptr(normal_matrix));
-    //gPyramideShaderProgram->setUniform3f("cameraPosition", cam->getPosition());
-    //gPyramideShaderProgram->setUniform3f("objectColor", 1.0f, 0.0f, 0.0f);
-    //gPyramideShaderProgram->setUniform3f("ambientLightColor", 1.0f, 1.0f, 1.0f);
-    //gPyramideShaderProgram->setUniform1f("ambientLightCoef", 0.3f);
-    //gPyramideShaderProgram->setUniform3f("deffuseLightPosition", g_light_position);
-    //gPyramideShaderProgram->setUniform3f("deffuseLightColor", g_light_color);
-    //gPyramideShaderProgram->setUniform3f("specularLightColor", g_light_color);
-    //gPyramideShaderProgram->setUniform1f("specularLightCoef", 0.5);
-    //gPyramideShaderProgram->setUniform1f("specularLightShineCoef", 32);
-    //
-    ////glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    ////Enable the vertex attribute(the rest attributes remain off for optimization)
-    //glFunctions->glEnableVertexAttribArray(0);
-    //glFunctions->glEnableVertexAttribArray(1);
-    //
-    //gPyramideShaderProgram->printfPrepare();
-    //
-    ////Draw pyramide using triangles
-    //glFunctions->glDrawArrays(GL_TRIANGLES, 0, 18);
-    //
-    ////Debug output from
-    ////qInfo() << QString::fromStdString(gPyramideShaderProgram->printfGetData());
-    //gPyramideShaderProgram->printfTerminate();
-    //
-    //glFunctions->glDisableVertexAttribArray(0);
-    //glFunctions->glDisableVertexAttribArray(1);
-    ////Unselect VAO
-    //glFunctions->glBindVertexArray(0);
-    ////Unselect shader program
-    //gPyramideShaderProgram->disable();
-    ////Unselect VAO
-    //glFunctions->glBindVertexArray(0);
 }
 
-void Sc8Lighting::finishScene()
+void Sc10LightingMaps::finishScene()
 {
     glFunctions->glDeleteBuffers(1, &g_VBO_cube_vertexes);
     glFunctions->glDeleteBuffers(1, &g_VBO_cube_normals);
-    glFunctions->glDeleteBuffers(1, &g_VBO_cube_wall_texcoords);
-    glFunctions->glDeleteBuffers(1, &g_VBO_pyramide_vertexes);
-    glFunctions->glDeleteBuffers(1, &g_VBO_pyramide_normals);
+    glFunctions->glDeleteBuffers(1, &g_VBO_cube_metalbox_deffusemap_texcoords);
     glFunctions->glDeleteVertexArrays(1, &g_VAO_cube);
     glFunctions->glDeleteVertexArrays(1, &g_VAO_light);
-    glFunctions->glDeleteVertexArrays(1, &g_VAO_pyramide);
 
     glFunctions->glDisable(GL_BLEND);
 
@@ -540,25 +568,20 @@ void Sc8Lighting::finishScene()
     y_size_scale = 1;
     light_rotation_around_degress = 0;
     g_light_color = glm::vec3(1.0f, 1.0f, 1.0f);
-    g_light_color_coef = 1.0f;
-    g_light_ambient_coef = 0.3f;
-    g_light_specular_coef = 0.5f;
-    g_light_specular_shine_coef = 32;
 
     delete gBoxShaderProgram;
     delete gLightShaderProgram;
-    delete gPyramideShaderProgram;
     delete cam;
     delete arrowPainter;
 }
 
-void Sc8Lighting::resizeSceneWindow(int w, int h)
+void Sc10LightingMaps::resizeSceneWindow(int w, int h)
 {
     window_width = w;
     window_height = h;
 }
 
-void Sc8Lighting::mousePressEventHandler(QMouseEvent event)
+void Sc10LightingMaps::mousePressEventHandler(QMouseEvent event)
 {
     if(event.button() != Qt::LeftButton)
         return;
@@ -568,14 +591,14 @@ void Sc8Lighting::mousePressEventHandler(QMouseEvent event)
     mouse_left_button_pressed = true;
 }
 
-void Sc8Lighting::mouseReleaseEventHandler(QMouseEvent event)
+void Sc10LightingMaps::mouseReleaseEventHandler(QMouseEvent event)
 {
     if(event.button() != Qt::LeftButton)
         return;
     mouse_left_button_pressed = false;
 }
 
-void Sc8Lighting::mouseMoveEventHandler(QMouseEvent event)
+void Sc10LightingMaps::mouseMoveEventHandler(QMouseEvent event)
 {
     //"Note that the returned value(QMouseEvent::button()) is always Qt::NoButton for mouse move events."
 
@@ -593,7 +616,7 @@ void Sc8Lighting::mouseMoveEventHandler(QMouseEvent event)
     }
 }
 
-void Sc8Lighting::keyPressEventHandler(QKeyEvent* event)
+void Sc10LightingMaps::keyPressEventHandler(QKeyEvent* event)
 {
     //Exclude repeated calls when the button is pressed
     if(event->isAutoRepeat())
@@ -624,7 +647,7 @@ void Sc8Lighting::keyPressEventHandler(QKeyEvent* event)
     }
 }
 
-void Sc8Lighting::keyReleaseEventHandler(QKeyEvent* event)
+void Sc10LightingMaps::keyReleaseEventHandler(QKeyEvent* event)
 {
     //Exclude repeated calls when the button is pressed
     if(event->isAutoRepeat())
@@ -655,97 +678,57 @@ void Sc8Lighting::keyReleaseEventHandler(QKeyEvent* event)
     }
 }
 
-void Sc8Lighting::createUiOptionsWidget()
+void Sc10LightingMaps::createUiOptionsWidget()
 {
-    uiOptionsForm = new Ui::Sc8LightingOptionsForm;
+    uiOptionsForm = new Ui::Sc10LightingMapsOptionsForm;
     optionsFormWidget = new QWidget;
     uiOptionsForm->setupUi(optionsFormWidget);
     globalMainWindowFormUI->sceneOptionsStackedWidget->addWidget(optionsFormWidget);
 
-    QObject::connect(uiOptionsForm->xRotationSlider, &QSlider::valueChanged, this, &Sc8Lighting::setXRotSpeedValueFromSlider);
-    QObject::connect(uiOptionsForm->yRotationSlider, &QSlider::valueChanged, this, &Sc8Lighting::setYRotSpeedValueFromSlider);
-    QObject::connect(uiOptionsForm->xSizeSlider, &QSlider::valueChanged, this, &Sc8Lighting::setXSizeValueFromSlider);
-    QObject::connect(uiOptionsForm->ySizeSlider, &QSlider::valueChanged, this, &Sc8Lighting::setYSizeValueFromSlider);
-    QObject::connect(uiOptionsForm->resetRotationsPushButton, &QPushButton::clicked, this, &Sc8Lighting::resetRotationsButtonClicked);
-
-    QObject::connect(uiOptionsForm->lightRotationSlider, &QSlider::valueChanged, this, &Sc8Lighting::setLightRotValueFromSlider);
-
-    uiOptionsForm->lightColorCoefSlider->setValue(g_light_color_coef * 100);
-    uiOptionsForm->lightColorCoefValueLabel->setText(QString::number(g_light_color_coef));
-    QObject::connect(uiOptionsForm->lightColorCoefSlider, &QSlider::valueChanged, this, &Sc8Lighting::setLightColorCoefValueFromSlider);
-
-    uiOptionsForm->lightAmbientCoefSlider->setValue(g_light_ambient_coef * 100);
-    uiOptionsForm->lightAmbientCoefValueLabel->setText(QString::number(g_light_ambient_coef));
-    QObject::connect(uiOptionsForm->lightAmbientCoefSlider, &QSlider::valueChanged, this, &Sc8Lighting::setLightAmbientCoefValueFromSlider);
-
-    uiOptionsForm->lightSpecularCoefSlider->setValue(g_light_specular_coef * 100);
-    uiOptionsForm->lightSpecularCoefValueLabel->setText(QString::number(g_light_specular_coef));
-    QObject::connect(uiOptionsForm->lightSpecularCoefSlider, &QSlider::valueChanged, this, &Sc8Lighting::setLightSpecularCoefValueFromSlider);
-
-    uiOptionsForm->lightSpecularShineCoefSlider->setValue(g_light_specular_shine_coef);
-    uiOptionsForm->lightSpecularShineCoefValueLabel->setText(QString::number(g_light_specular_shine_coef));
-    QObject::connect(uiOptionsForm->lightSpecularShineCoefSlider, &QSlider::valueChanged, this, &Sc8Lighting::setLightSpecularShineCoefValueFromSlider);
+    QObject::connect(uiOptionsForm->xRotationSlider, &QSlider::valueChanged, this, &Sc10LightingMaps::setXRotSpeedValueFromSlider);
+    QObject::connect(uiOptionsForm->yRotationSlider, &QSlider::valueChanged, this, &Sc10LightingMaps::setYRotSpeedValueFromSlider);
+    QObject::connect(uiOptionsForm->xSizeSlider, &QSlider::valueChanged, this, &Sc10LightingMaps::setXSizeValueFromSlider);
+    QObject::connect(uiOptionsForm->ySizeSlider, &QSlider::valueChanged, this, &Sc10LightingMaps::setYSizeValueFromSlider);
+    QObject::connect(uiOptionsForm->resetRotationsPushButton, &QPushButton::clicked, this, &Sc10LightingMaps::resetRotationsButtonClicked);
+    QObject::connect(uiOptionsForm->resetRotationsPushButton, &QPushButton::clicked, this, &Sc10LightingMaps::resetRotationsButtonClicked);
+    QObject::connect(uiOptionsForm->lightRotationSlider, &QSlider::valueChanged, this, &Sc10LightingMaps::setLightRotValueFromSlider);
 }
 
-void Sc8Lighting::deleteUiOptionsWidget()
+void Sc10LightingMaps::deleteUiOptionsWidget()
 {
     globalMainWindowFormUI->sceneOptionsStackedWidget->removeWidget(optionsFormWidget);
     delete optionsFormWidget;
     delete uiOptionsForm;
 }
 
-void Sc8Lighting::setXRotSpeedValueFromSlider(int new_value)
+void Sc10LightingMaps::setXRotSpeedValueFromSlider(int new_value)
 {
     x_rotation_speed_in_degrees = (1.0f / 100) * new_value;
 }
 
-void Sc8Lighting::setYRotSpeedValueFromSlider(int new_value)
+void Sc10LightingMaps::setYRotSpeedValueFromSlider(int new_value)
 {
     y_rotation_speed_in_degrees = (1.0f / 100) * new_value;
 }
 
-void Sc8Lighting::setXSizeValueFromSlider(int new_value)
+void Sc10LightingMaps::setXSizeValueFromSlider(int new_value)
 {
     x_size_scale = (1.0f / 100) * new_value;
 }
 
-void Sc8Lighting::setYSizeValueFromSlider(int new_value)
+void Sc10LightingMaps::setYSizeValueFromSlider(int new_value)
 {
     y_size_scale = (1.0f / 100) * new_value;
 }
 
-void Sc8Lighting::resetRotationsButtonClicked()
+void Sc10LightingMaps::resetRotationsButtonClicked()
 {
     rotation_matrix = glm::mat4(1.0f);
     x_rot = 0;
     y_rot = 0;
 }
 
-void Sc8Lighting::setLightRotValueFromSlider(int new_value)
+void Sc10LightingMaps::setLightRotValueFromSlider(int new_value)
 {
     light_rotation_around_degress = new_value;
-}
-
-void Sc8Lighting::setLightColorCoefValueFromSlider(int new_value)
-{
-    g_light_color_coef = (1.0f / 100) * new_value;
-    uiOptionsForm->lightColorCoefValueLabel->setText(QString::number(g_light_color_coef));
-}
-
-void Sc8Lighting::setLightAmbientCoefValueFromSlider(int new_value)
-{
-    g_light_ambient_coef = (1.0f / 100) * new_value;
-    uiOptionsForm->lightAmbientCoefValueLabel->setText(QString::number(g_light_ambient_coef));
-}
-
-void Sc8Lighting::setLightSpecularCoefValueFromSlider(int new_value)
-{
-    g_light_specular_coef = (1.0f / 100) * new_value;
-    uiOptionsForm->lightSpecularCoefValueLabel->setText(QString::number(g_light_specular_coef));
-}
-
-void Sc8Lighting::setLightSpecularShineCoefValueFromSlider(int new_value)
-{
-    g_light_specular_shine_coef = new_value;
-    uiOptionsForm->lightSpecularShineCoefValueLabel->setText(QString::number(g_light_specular_shine_coef));
 }

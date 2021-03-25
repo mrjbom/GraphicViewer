@@ -7,17 +7,34 @@ MainOpenGLWidget::MainOpenGLWidget(QWidget* parent) : QOpenGLWidget(parent)
     //To accept keyboard events
     setFocusPolicy(Qt::StrongFocus);
 
+    glTimeMonitor = new QOpenGLTimeMonitor;
+
+    frametimeLabelUpdateTimer = new QTimer();
+    QObject::connect(frametimeLabelUpdateTimer, &QTimer::timeout, this, &MainOpenGLWidget::updateFrameRenderLabel);
+    frametimeLabelUpdateTimer->setInterval(200);
+    frametimeLabelUpdateTimer->start();
+
+    QObject::connect(this, &MainOpenGLWidget::frameSwapped, this, &MainOpenGLWidget::frameSwappedSlot);
 }
 
 MainOpenGLWidget::~MainOpenGLWidget()
 {
     sceneManager->final();
+    glTimeMonitor->destroy();
+    glTimeMonitor->deleteLater();
     delete sceneManager;
+    delete frametimeLabelUpdateTimer;
 }
 
 void MainOpenGLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
+
+    glTimeMonitor->setSampleCount(2);
+    if(!glTimeMonitor->create()) {
+        qInfo() << "[ERROR] initializeGL: GL time monitor create() failed!";
+        return;
+    }
     openglVersionString = (char*)glGetString(GL_VERSION);
     sceneManager->init(this->context());
     glClearColor(0.0, 0.0, 0.0, 0.0);
@@ -32,13 +49,12 @@ void MainOpenGLWidget::resizeGL(int w, int h)
 
 void MainOpenGLWidget::paintGL()
 {
+    glTimeMonitor->reset();
+    glTimeMonitor->recordSample();
     sceneManager->callInitSceneAndOptionsWidget(this->width(), this->height());
-    QElapsedTimer framerateTime;
-    framerateTime.start();
     sceneManager->callDrawScene();
-    int timeElapsedInMilliseconds = framerateTime.elapsed();
-    globalMainWindowFormUI->sceneFramerateLabelMilliseconds->setText(QString::number(timeElapsedInMilliseconds));
-    update();
+    glTimeMonitor->recordSample();
+    lastFrameRenderTimeInNanoseconds = glTimeMonitor->waitForIntervals()[0];
 }
 
 //void MainOpenGLWidget::mousePressEvent(QMouseEvent* event)
@@ -105,8 +121,6 @@ void MainOpenGLWidget::mouseMoveEvent(QMouseEvent* event)
 
     QMouseEvent eventCopy = *event;
     sceneManager->callMouseMoveEventHandler(eventCopy);
-
-
 }
 
 void MainOpenGLWidget::keyPressEvent(QKeyEvent* event)
@@ -117,4 +131,29 @@ void MainOpenGLWidget::keyPressEvent(QKeyEvent* event)
 void MainOpenGLWidget::keyReleaseEvent(QKeyEvent* event)
 {
     sceneManager->callKeyReleaseEventHandler(event);
+}
+
+void MainOpenGLWidget::updateFrameRenderLabel()
+{
+    double timeElapsedInMilliseconds = lastFrameRenderTimeInNanoseconds / 1000000.0f;
+    QString formatedString = "";
+    QString frametimeString = QString::number(timeElapsedInMilliseconds);
+    QString fpsString = "";
+    if(timeElapsedInMilliseconds == 0) {
+        timeElapsedInMilliseconds = 0.000001;
+    }
+    uint64_t fps = 1000.0f / timeElapsedInMilliseconds;
+    if(fps > 1000) {
+        fpsString = " > 1000";
+    }
+    else {
+        fpsString = QString::number(fps);
+    }
+    formatedString = frametimeString + " ms (FPS" + fpsString + ")";
+    globalMainWindowFormUI->sceneFramerateLabelMilliseconds->setText(formatedString);
+}
+
+void MainOpenGLWidget::frameSwappedSlot()
+{
+    update();
 }

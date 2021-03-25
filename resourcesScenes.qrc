@@ -49,4 +49,12 @@
         <file alias="/shaders/light/fragshader.frag">source/SceneManager/Scenes/Sc9LightingMaterials/shaders/light/fragshader.frag</file>
         <file alias="/shaders/light/vertshader.vert">source/SceneManager/Scenes/Sc9LightingMaterials/shaders/light/vertshader.vert</file>
     </qresource>
+    <qresource prefix="/Scenes/Sc10LightingMaps">
+        <file alias="/shaders/box/fragshader.frag">source/SceneManager/Scenes/Sc10LightingMaps/shaders/box/fragshader.frag</file>
+        <file alias="/shaders/box/vertshader.vert">source/SceneManager/Scenes/Sc10LightingMaps/shaders/box/vertshader.vert</file>
+        <file alias="/shaders/light/fragshader.frag">source/SceneManager/Scenes/Sc10LightingMaps/shaders/light/fragshader.frag</file>
+        <file alias="/shaders/light/vertshader.vert">source/SceneManager/Scenes/Sc10LightingMaps/shaders/light/vertshader.vert</file>
+        <file alias="/textures/metalbox_deffusemap512x512.png">source/SceneManager/Scenes/Sc10LightingMaps/textures/metalbox_deffusemap512x512.png</file>
+        <file alias="/textures/metalbox_specularmap512x512.png">source/SceneManager/Scenes/Sc10LightingMaps/textures/metalbox_specularmap512x512.png</file>
+    </qresource>
 </RCC>

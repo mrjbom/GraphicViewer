@@ -206,7 +206,7 @@ void Sc9LightingMaterials::initScene(int start_window_width, int start_window_he
                             //left side
                             -0.894427, 0.447214, 0,
                             -0.894427, 0.447214, 0,
-                            -0.894427, 0.447214, 0,
+                            -0.894427, 0.447214, 0
                          };
 
     window_width = start_window_width;

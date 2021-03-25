@@ -13,6 +13,7 @@ SOURCES += \
     source/BasicObjects/ArrowPainter/ArrowPainter.cpp \
     source/Camera/Camera.cpp \
     source/SceneManager/Scenes/Sc0Test/Sc0Test.cpp \
+    source/SceneManager/Scenes/Sc10LightingMaps/Sc10LightingMaps.cpp \
     source/SceneManager/Scenes/Sc1VBOOrange/Sc1VBOOrange.cpp \
     source/SceneManager/Scenes/Sc2VAOBlue/Sc2VAOBlue.cpp \
     source/SceneManager/Scenes/Sc3EBOGreen/Sc3EBOGreen.cpp \
@@ -33,6 +34,7 @@ HEADERS += \
     source/BasicObjects/ArrowPainter/ArrowPainter.h \
     source/Camera/Camera.h \
     source/SceneManager/Scenes/Sc0Test/Sc0Test.h \
+    source/SceneManager/Scenes/Sc10LightingMaps/Sc10LightingMaps.h \
     source/SceneManager/Scenes/Sc1VBOOrange/Sc1VBOOrange.h \
     source/SceneManager/Scenes/Sc2VAOBlue/Sc2VAOBlue.h \
     source/SceneManager/Scenes/Sc3EBOGreen/Sc3EBOGreen.h \
@@ -52,6 +54,7 @@ HEADERS += \
 FORMS += \
     MainWindowForm.ui \
     source/SceneManager/Scenes/Sc0Test/ui/Sc0TestOptionsForm.ui \
+    source/SceneManager/Scenes/Sc10LightingMaps/ui/Sc10LightingMapsOptionsForm.ui \
     source/SceneManager/Scenes/Sc1VBOOrange/ui/Sc1VBOOrangeOptionsForm.ui \
     source/SceneManager/Scenes/Sc2VAOBlue/ui/Sc2VAOBlueOptionsForm.ui \
     source/SceneManager/Scenes/Sc3EBOGreen/ui/Sc3EBOGreenOptionsForm.ui \

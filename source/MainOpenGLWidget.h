@@ -3,10 +3,12 @@
 
 #include <QDebug>
 #include <QPoint>
+#include <QTimer>
 #include <QElapsedTimer>
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <QOpenGLWidget>
+#include <QOpenGLTimeMonitor>
 #include <QOpenGLFunctions_4_5_Core>
 #include <GL/GLU.h>
 #include "SceneManager/SceneManager.h"
@@ -26,6 +28,10 @@ private:
     QPoint virtualMousePosition = { 0, 0 };
     QPoint mouseLastPositon = { 0, 0 };
     QString savedWindowTitle = "";
+
+    QOpenGLTimeMonitor* glTimeMonitor = nullptr;
+    QTimer* frametimeLabelUpdateTimer = nullptr;
+    uint64_t lastFrameRenderTimeInNanoseconds = 0;
 public:
     MainOpenGLWidget(QWidget *parent = nullptr);
     ~MainOpenGLWidget();
@@ -41,6 +47,10 @@ protected:
     void mouseMoveEvent(QMouseEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
     void keyReleaseEvent(QKeyEvent* event) override;
+
+public slots:
+    void updateFrameRenderLabel();
+    void frameSwappedSlot();
 };
 
 #endif // MAINOPENGLWIDGET_H
