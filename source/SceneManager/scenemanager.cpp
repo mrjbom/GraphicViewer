@@ -12,6 +12,7 @@
 #include "Scenes/Sc8Lighting/Sc8Lighting.h"
 #include "Scenes/Sc9LightingMaterials/Sc9LightingMaterials.h"
 #include "Scenes/Sc10LightingMaps/Sc10LightingMaps.h"
+#include "Scenes/Sc11ManyCubesLM/Sc11ManyCubesLM.h"
 
 SceneManager::SceneManager()
 {
@@ -64,10 +65,12 @@ void SceneManager::init(QOpenGLContext* openGLContext)
     scenePtr = new Sc10LightingMaps(openGLContext);
     addSceneObject(scenePtr, "Box with lighting maps");
 
+    scenePtr = new Sc11ManyCubesLM(openGLContext);
+    addSceneObject(scenePtr, "Many boxes with lighting maps (FPS)");
+
     //Configuring the scene combo-box to select the current scene
     for(size_t i = 0; i < getScenesNumber(); ++i) {
         globalMainWindowFormUI->sceneSelectorComboBox->addItem(getSceneName(i));
-        //globalMainWindowFormUI->sceneOptrionsStackedWidget->addWidget();
     }
     QObject::connect(globalMainWindowFormUI->sceneSelectorComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(comboBoxChangedCurrentIndex(int)));
     setCurrentSceneObjectIndex(0);

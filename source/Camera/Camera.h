@@ -8,6 +8,7 @@
 #include "../../glm/ext/matrix_clip_space.hpp"
 #include "../../glm/ext/scalar_constants.hpp"
 #include <bitset>
+#include <QDebug>
 
 enum CameraMoveDirections
 {
@@ -16,7 +17,8 @@ enum CameraMoveDirections
     MOVE_RIGHT = 2,
     MOVE_LEFT = 3,
     MOVE_UP = 4,
-    MOVE_DOWN = 5
+    MOVE_DOWN = 5,
+    MOVE_SHIFT = 6
 };
 
 class Camera
@@ -36,7 +38,7 @@ private:
 
     float camera_move_speed = 0.1f;
     float mouse_sensitivity = 0.1f;
-    std::bitset<6> camera_move_directions;
+    std::bitset<7> camera_move_directions;
 public:
     Camera(glm::vec3 cam_position, glm::vec3 cam_target, glm::vec3 up_vector = glm::vec3(0.0, 1.0, 0.0));
     ~Camera();

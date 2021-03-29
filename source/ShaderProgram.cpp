@@ -73,6 +73,7 @@ bool ShaderProgram::compile()
     if (!vertexShaderCompileStatus) {
         char infoLog[errorMessageBufferSize];
         glFunctions->glGetShaderInfoLog(vertexShader, sizeof(infoLog), NULL, infoLog);
+        qDebug() << vertex_shader_source_file_path << "\n" << fragment_shader_source_file_path;
         qDebug() << "[ERROR] compile: vertex shader compilation failed!\n" << infoLog;
         return false;
     }
@@ -93,6 +94,7 @@ bool ShaderProgram::compile()
     if (!fragmentShaderCompileStatus) {
         char infoLog[errorMessageBufferSize];
         glFunctions->glGetShaderInfoLog(fragmentShader, sizeof(infoLog), NULL, infoLog);
+        qDebug() << fragment_shader_source_file_path;
         qDebug() << "[ERROR] compile: fragment shader compilation failed!\n" << infoLog;
         return false;
     }
@@ -110,6 +112,7 @@ bool ShaderProgram::compile()
     if (!shaderProgramLinkStatus) {
         char infoLog[errorMessageBufferSize];
         glFunctions->glGetProgramInfoLog(shaderProgram, sizeof(infoLog), NULL, infoLog);
+        qDebug() << vertex_shader_source_file_path << "\n" << fragment_shader_source_file_path;
         qDebug() << "[ERROR] compile: shader program link failed!\n" << infoLog;
         return false;
     }

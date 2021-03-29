@@ -92,23 +92,27 @@ void Camera::update()
     camera_up = glm::normalize(glm::cross(camera_right, camera_direction));
 
     //Move
+    float camera_move_speed_tmp = camera_move_speed;
+    if(camera_move_directions.test(CameraMoveDirections::MOVE_SHIFT)) {
+        camera_move_speed_tmp *= 2.0f;
+    }
     if(camera_move_directions.test(CameraMoveDirections::MOVE_FORWARD)) {
-        camera_position += camera_direction * camera_move_speed;
+        camera_position += camera_direction * camera_move_speed_tmp;
     }
     if(camera_move_directions.test(CameraMoveDirections::MOVE_BACK)) {
-        camera_position -= camera_direction * camera_move_speed;
+        camera_position -= camera_direction * camera_move_speed_tmp;
     }
     if(camera_move_directions.test(CameraMoveDirections::MOVE_RIGHT)) {
-        camera_position += camera_right * camera_move_speed;
+        camera_position += camera_right * camera_move_speed_tmp;
     }
     if(camera_move_directions.test(CameraMoveDirections::MOVE_LEFT)) {
-        camera_position -= camera_right * camera_move_speed;
+        camera_position -= camera_right * camera_move_speed_tmp;
     }
     if(camera_move_directions.test(CameraMoveDirections::MOVE_UP)) {
-        camera_position += camera_up * camera_move_speed;
+        camera_position += camera_up * camera_move_speed_tmp;
     }
     if(camera_move_directions.test(CameraMoveDirections::MOVE_DOWN)) {
-        camera_position -= camera_up * camera_move_speed;
+        camera_position -= camera_up * camera_move_speed_tmp;
     }
 }
 
