@@ -501,13 +501,11 @@ void Sc11ManyCubesLM::drawScene()
     x_rot += x_rotation_speed_in_degrees;
     y_rot += y_rotation_speed_in_degrees;
 
-    glm::mat4 normal_matrix = glm::transpose(glm::inverse(rotation_matrix * glm::scale(model_matrix, glm::vec3(x_size_scale, y_size_scale, 1.0f))));
-
     view_matrix = cam->getViewMatrix();
     gBoxShaderProgram->setUniformMatrix4fv("projectionMatrix", 1, GL_FALSE, glm::value_ptr(projection_matrix));
     gBoxShaderProgram->setUniformMatrix4fv("viewMatrix", 1, GL_FALSE, glm::value_ptr(view_matrix));
     //gBoxShaderProgram->setUniformMatrix4fv("modelMatrix", 1, GL_FALSE, glm::value_ptr(model_matrix));
-    gBoxShaderProgram->setUniformMatrix4fv("normalMatrix", 1, GL_FALSE, glm::value_ptr(normal_matrix));
+    //gBoxShaderProgram->setUniformMatrix4fv("normalMatrix", 1, GL_FALSE, glm::value_ptr(normal_matrix));
     gBoxShaderProgram->setUniform3f("cameraPosition", cam->getPosition());
     gBoxShaderProgram->setUniform1i("material.diffuse", 0);
     gBoxShaderProgram->setUniform1i("material.specular", 1);
@@ -524,6 +522,14 @@ void Sc11ManyCubesLM::drawScene()
     glFunctions->glEnableVertexAttribArray(2);
 
     gBoxShaderProgram->printfPrepare();
+
+    model_matrix =
+            glm::rotate(model_matrix, glm::radians(x_rot), glm::vec3(1.0f, 0.0f, 0.0f))
+          * glm::rotate(model_matrix, glm::radians(y_rot), glm::vec3(0.0f, 1.0f, 0.0f))
+          * glm::scale(model_matrix, glm::vec3(x_size_scale, y_size_scale, 1.0f));
+
+    gBoxShaderProgram->setUniformMatrix4fv("normalMatrix", 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(model_matrix))));
+
 
     for(int z = 0; z < g_diagonal; ++z) {
         for(int y = 0; y < g_diagonal; ++y) {
