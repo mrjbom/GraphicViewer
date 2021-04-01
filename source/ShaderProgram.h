@@ -18,7 +18,7 @@ private:
     bool use_shader_printf = false;
 public:
     //Setting the _useShaderPrintf parameter and using the functions associated with printing data from the shader leads to a huge memory overhead!
-    ShaderProgram(QOpenGLFunctions_4_5_Core* targetGlFunctions, const QString vertex_shader_source_file_path, const QString fragment_shader_source_file_path, bool use_shader_printf = false);
+    ShaderProgram(QOpenGLFunctions_4_5_Core* targetGlFunctions, const QString vertex_shader_source_file_path, const QString fragment_shader_source_file_path, bool use_ARB = false, bool use_shader_printf = false);
     ~ShaderProgram();
     bool compile();
     void enable();
@@ -29,6 +29,13 @@ public:
     void setUniform1f(const GLchar* name, float num);
     void setUniformMatrix4fv(const GLchar* name, GLsizei count, GLboolean transpose, const GLfloat* value);
     void setUniformBool(const GLchar* name, bool value);
+
+    bool extAvailable(const GLchar* name);
+
+    //for #include in GLSL using ARB_shading_language_include
+    void createNamedStringFromFile(const QString named_string_file_path, const char* pathname);
+    void deleteNamedString(const char* pathname);
+
 
     //Using these functions if useShaderPrintf enabled results in a huge memory overhead!
     void printfPrepare();

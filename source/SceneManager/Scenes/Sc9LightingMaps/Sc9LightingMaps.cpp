@@ -1,17 +1,17 @@
-#include "Sc10LightingMaps.h"
+#include "Sc9LightingMaps.h"
 #include "../../globalvars.h"
 #include <QGLWidget> //for convertation to gl format
 
-Sc10LightingMaps::Sc10LightingMaps(QOpenGLContext* openGLContext)
+Sc9LightingMaps::Sc9LightingMaps(QOpenGLContext* openGLContext)
 {
     glFunctions = openGLContext->versionFunctions<QOpenGLFunctions_4_5_Core>();
 }
 
-Sc10LightingMaps::~Sc10LightingMaps()
+Sc9LightingMaps::~Sc9LightingMaps()
 {
 }
 
-void Sc10LightingMaps::initScene(int start_window_width, int start_window_height)
+void Sc9LightingMaps::initScene(int start_window_width, int start_window_height)
 {
     //I specifically set all the variables manually, because this is a test code.
     float cube_vertexes_coords_normalized[] =
@@ -226,8 +226,9 @@ void Sc10LightingMaps::initScene(int start_window_width, int start_window_height
     arrowPainter = new ArrowPainter(glFunctions);
 
     //Create shader program object
-    gBoxShaderProgram = new ShaderProgram(glFunctions, ":Scenes/Sc10LightingMaps/shaders/box/vertshader.vert", ":/Scenes/Sc10LightingMaps/shaders/box/fragshader.frag");
+    gBoxShaderProgram = new ShaderProgram(glFunctions, ":Scenes/Sc9LightingMaps/shaders/box/vertshader.vert", ":/Scenes/Sc9LightingMaps/shaders/box/fragshader.frag");
 
+    gBoxShaderProgram->createNamedStringFromFile(":Scenes/Sc9LightingMaps/shaders/box/light_type.glsl", "/light_type.glsl");
     //Compile shader program
     if(!gBoxShaderProgram->compile()) {
         qDebug("[ERROR] initializeGL: compile cube shader program failed!");
@@ -235,7 +236,7 @@ void Sc10LightingMaps::initScene(int start_window_width, int start_window_height
     }
 
     //Create shader program object
-    gLightShaderProgram = new ShaderProgram(glFunctions, ":Scenes/Sc10LightingMaps/shaders/light/vertshader.vert", ":/Scenes/Sc10LightingMaps/shaders/light/fragshader.frag");
+    gLightShaderProgram = new ShaderProgram(glFunctions, ":Scenes/Sc9LightingMaps/shaders/light/vertshader.vert", ":/Scenes/Sc9LightingMaps/shaders/light/fragshader.frag");
 
     //Compile shader program
     if(!gLightShaderProgram->compile()) {
@@ -244,7 +245,7 @@ void Sc10LightingMaps::initScene(int start_window_width, int start_window_height
     }
 
     //Load texture image
-    QImage imgWallTexture(":Scenes/Sc10LightingMaps/textures/metalbox_deffusemap512x512.png");
+    QImage imgWallTexture(":Scenes/Sc9LightingMaps/textures/metalbox_deffusemap512x512.png");
     if(imgWallTexture.isNull()) {
         qInfo("[ERROR] initScene: image texture load failed!");
         return;
@@ -254,7 +255,7 @@ void Sc10LightingMaps::initScene(int start_window_width, int start_window_height
     imgWallTexture = imgWallTexture.convertToFormat(QImage::Format_ARGB32_Premultiplied);
 
     //Load texture image
-    QImage imgWallTexture2(":Scenes/Sc10LightingMaps/textures/metalbox_specularmap512x512.png");
+    QImage imgWallTexture2(":Scenes/Sc9LightingMaps/textures/metalbox_specularmap512x512.png");
     if(imgWallTexture2.isNull()) {
         qInfo("[ERROR] initScene: image texture load failed!");
         return;
@@ -432,7 +433,7 @@ void Sc10LightingMaps::initScene(int start_window_width, int start_window_height
     g_VAO_light = VAOlight;
 }
 
-void Sc10LightingMaps::drawScene()
+void Sc9LightingMaps::drawScene()
 {
     glFunctions->glEnable(GL_DEPTH_TEST);
     glFunctions->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -452,7 +453,7 @@ void Sc10LightingMaps::drawScene()
     view_matrix = cam->getViewMatrix();
 
     model_matrix = glm::rotate(model_matrix, glm::radians(light_rotation_around_degress), glm::vec3(0, 1, 0));
-    model_matrix = glm::translate(model_matrix, g_light_to_cube_distance);
+    model_matrix = glm::translate(model_matrix, g_light_direction);
     model_matrix = glm::scale(model_matrix, glm::vec3(0.5, 0.5, 0.5));
 
     gLightShaderProgram->setUniformMatrix4fv("projectionMatrix", 1, GL_FALSE, glm::value_ptr(projection_matrix));
@@ -468,8 +469,8 @@ void Sc10LightingMaps::drawScene()
 
     //calculating light position
     //                             box position
-    g_light_position = glm::vec3(0.0f, 0.0f, 0.0f) + g_light_to_cube_distance;
-    g_light_position = glm::vec4(g_light_position, 0.0f) * glm::rotate(glm::mat4(1.0f), glm::radians(light_rotation_around_degress), glm::vec3(0, 1, 0));
+    g_light_position = g_light_direction;
+    g_light_position = glm::vec4(g_light_position, 1.0f) * glm::rotate(glm::mat4(1.0f), glm::radians(light_rotation_around_degress), glm::vec3(0, 1, 0));
     g_light_position.z = -g_light_position.z;
     //qInfo() << g_light_position.x << g_light_position.y << g_light_position.z;
 
@@ -517,8 +518,8 @@ void Sc10LightingMaps::drawScene()
     gBoxShaderProgram->setUniform1i("material.specular", 1);
     gBoxShaderProgram->setUniform1f("material.shininess", 32.0f);
     gBoxShaderProgram->setUniform3f("light.position", g_light_position);
-    gBoxShaderProgram->setUniform3f("light.ambient", 0.2f, 0.2f, 0.2f);
-    gBoxShaderProgram->setUniform3f("light.diffuse", 0.5f, 0.5f, 0.5f);
+    gBoxShaderProgram->setUniform3f("light.ambient", 0.4f, 0.4f, 0.4f);
+    gBoxShaderProgram->setUniform3f("light.diffuse", 0.7f, 0.7f, 0.7f);
     gBoxShaderProgram->setUniform3f("light.specular", 1.0f, 1.0f, 1.0f);
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -549,7 +550,7 @@ void Sc10LightingMaps::drawScene()
     glFunctions->glBindVertexArray(0);
 }
 
-void Sc10LightingMaps::finishScene()
+void Sc9LightingMaps::finishScene()
 {
     glFunctions->glDeleteBuffers(1, &g_VBO_cube_vertexes);
     glFunctions->glDeleteBuffers(1, &g_VBO_cube_normals);
@@ -567,6 +568,7 @@ void Sc10LightingMaps::finishScene()
     x_size_scale = 1;
     y_size_scale = 1;
     light_rotation_around_degress = 0;
+    g_light_direction = glm::vec3(2.5f, 0.0f, 0.0f);
     g_light_color = glm::vec3(1.0f, 1.0f, 1.0f);
 
     delete gBoxShaderProgram;
@@ -575,13 +577,13 @@ void Sc10LightingMaps::finishScene()
     delete arrowPainter;
 }
 
-void Sc10LightingMaps::resizeSceneWindow(int w, int h)
+void Sc9LightingMaps::resizeSceneWindow(int w, int h)
 {
     window_width = w;
     window_height = h;
 }
 
-void Sc10LightingMaps::mousePressEventHandler(QMouseEvent event)
+void Sc9LightingMaps::mousePressEventHandler(QMouseEvent event)
 {
     if(event.button() != Qt::LeftButton)
         return;
@@ -591,14 +593,14 @@ void Sc10LightingMaps::mousePressEventHandler(QMouseEvent event)
     mouse_left_button_pressed = true;
 }
 
-void Sc10LightingMaps::mouseReleaseEventHandler(QMouseEvent event)
+void Sc9LightingMaps::mouseReleaseEventHandler(QMouseEvent event)
 {
     if(event.button() != Qt::LeftButton)
         return;
     mouse_left_button_pressed = false;
 }
 
-void Sc10LightingMaps::mouseMoveEventHandler(QMouseEvent event)
+void Sc9LightingMaps::mouseMoveEventHandler(QMouseEvent event)
 {
     //"Note that the returned value(QMouseEvent::button()) is always Qt::NoButton for mouse move events."
 
@@ -616,7 +618,7 @@ void Sc10LightingMaps::mouseMoveEventHandler(QMouseEvent event)
     }
 }
 
-void Sc10LightingMaps::keyPressEventHandler(QKeyEvent* event)
+void Sc9LightingMaps::keyPressEventHandler(QKeyEvent* event)
 {
     //Exclude repeated calls when the button is pressed
     if(event->isAutoRepeat())
@@ -647,7 +649,7 @@ void Sc10LightingMaps::keyPressEventHandler(QKeyEvent* event)
     }
 }
 
-void Sc10LightingMaps::keyReleaseEventHandler(QKeyEvent* event)
+void Sc9LightingMaps::keyReleaseEventHandler(QKeyEvent* event)
 {
     //Exclude repeated calls when the button is pressed
     if(event->isAutoRepeat())
@@ -678,57 +680,77 @@ void Sc10LightingMaps::keyReleaseEventHandler(QKeyEvent* event)
     }
 }
 
-void Sc10LightingMaps::createUiOptionsWidget()
+void Sc9LightingMaps::createUiOptionsWidget()
 {
-    uiOptionsForm = new Ui::Sc10LightingMapsOptionsForm;
+    uiOptionsForm = new Ui::Sc9LightingMapsOptionsForm;
     optionsFormWidget = new QWidget;
     uiOptionsForm->setupUi(optionsFormWidget);
     globalMainWindowFormUI->sceneOptionsStackedWidget->addWidget(optionsFormWidget);
 
-    QObject::connect(uiOptionsForm->xRotationSlider, &QSlider::valueChanged, this, &Sc10LightingMaps::setXRotSpeedValueFromSlider);
-    QObject::connect(uiOptionsForm->yRotationSlider, &QSlider::valueChanged, this, &Sc10LightingMaps::setYRotSpeedValueFromSlider);
-    QObject::connect(uiOptionsForm->xSizeSlider, &QSlider::valueChanged, this, &Sc10LightingMaps::setXSizeValueFromSlider);
-    QObject::connect(uiOptionsForm->ySizeSlider, &QSlider::valueChanged, this, &Sc10LightingMaps::setYSizeValueFromSlider);
-    QObject::connect(uiOptionsForm->resetRotationsPushButton, &QPushButton::clicked, this, &Sc10LightingMaps::resetRotationsButtonClicked);
-    QObject::connect(uiOptionsForm->resetRotationsPushButton, &QPushButton::clicked, this, &Sc10LightingMaps::resetRotationsButtonClicked);
-    QObject::connect(uiOptionsForm->lightRotationSlider, &QSlider::valueChanged, this, &Sc10LightingMaps::setLightRotValueFromSlider);
+    QObject::connect(uiOptionsForm->xRotationSlider, &QSlider::valueChanged, this, &Sc9LightingMaps::setXRotSpeedValueFromSlider);
+    QObject::connect(uiOptionsForm->yRotationSlider, &QSlider::valueChanged, this, &Sc9LightingMaps::setYRotSpeedValueFromSlider);
+    QObject::connect(uiOptionsForm->xSizeSlider, &QSlider::valueChanged, this, &Sc9LightingMaps::setXSizeValueFromSlider);
+    QObject::connect(uiOptionsForm->ySizeSlider, &QSlider::valueChanged, this, &Sc9LightingMaps::setYSizeValueFromSlider);
+    QObject::connect(uiOptionsForm->resetRotationsPushButton, &QPushButton::clicked, this, &Sc9LightingMaps::resetRotationsButtonClicked);
+    QObject::connect(uiOptionsForm->lightRotationSlider, &QSlider::valueChanged, this, &Sc9LightingMaps::setLightRotValueFromSlider);
+    uiOptionsForm->lightDistinationDoubleSpinBoxX->setValue(g_light_direction.x);
+    QObject::connect(uiOptionsForm->lightDistinationDoubleSpinBoxX, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &Sc9LightingMaps::setXLightDistValueFromSlider);
+    uiOptionsForm->lightDistinationDoubleSpinBoxY->setValue(g_light_direction.y);
+    QObject::connect(uiOptionsForm->lightDistinationDoubleSpinBoxY, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &Sc9LightingMaps::setYLightDistValueFromSlider);
+    uiOptionsForm->lightDistinationDoubleSpinBoxZ->setValue(g_light_direction.z);
+    QObject::connect(uiOptionsForm->lightDistinationDoubleSpinBoxZ, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &Sc9LightingMaps::setZLightDistValueFromSlider);
 }
 
-void Sc10LightingMaps::deleteUiOptionsWidget()
+void Sc9LightingMaps::deleteUiOptionsWidget()
 {
     globalMainWindowFormUI->sceneOptionsStackedWidget->removeWidget(optionsFormWidget);
     delete optionsFormWidget;
     delete uiOptionsForm;
 }
 
-void Sc10LightingMaps::setXRotSpeedValueFromSlider(int new_value)
+void Sc9LightingMaps::setXRotSpeedValueFromSlider(int new_value)
 {
     x_rotation_speed_in_degrees = (1.0f / 100) * new_value;
 }
 
-void Sc10LightingMaps::setYRotSpeedValueFromSlider(int new_value)
+void Sc9LightingMaps::setYRotSpeedValueFromSlider(int new_value)
 {
     y_rotation_speed_in_degrees = (1.0f / 100) * new_value;
 }
 
-void Sc10LightingMaps::setXSizeValueFromSlider(int new_value)
+void Sc9LightingMaps::setXSizeValueFromSlider(int new_value)
 {
     x_size_scale = (1.0f / 100) * new_value;
 }
 
-void Sc10LightingMaps::setYSizeValueFromSlider(int new_value)
+void Sc9LightingMaps::setYSizeValueFromSlider(int new_value)
 {
     y_size_scale = (1.0f / 100) * new_value;
 }
 
-void Sc10LightingMaps::resetRotationsButtonClicked()
+void Sc9LightingMaps::resetRotationsButtonClicked()
 {
     rotation_matrix = glm::mat4(1.0f);
     x_rot = 0;
     y_rot = 0;
 }
 
-void Sc10LightingMaps::setLightRotValueFromSlider(int new_value)
+void Sc9LightingMaps::setLightRotValueFromSlider(int new_value)
 {
     light_rotation_around_degress = new_value;
+}
+
+void Sc9LightingMaps::setXLightDistValueFromSlider(double new_value)
+{
+    g_light_direction.x = new_value;
+}
+
+void Sc9LightingMaps::setYLightDistValueFromSlider(double new_value)
+{
+    g_light_direction.y = new_value;
+}
+
+void Sc9LightingMaps::setZLightDistValueFromSlider(double new_value)
+{
+    g_light_direction.z = new_value;
 }

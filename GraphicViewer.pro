@@ -13,8 +13,8 @@ SOURCES += \
     source/BasicObjects/ArrowPainter/ArrowPainter.cpp \
     source/Camera/Camera.cpp \
     source/SceneManager/Scenes/Sc0Test/Sc0Test.cpp \
-    source/SceneManager/Scenes/Sc10LightingMaps/Sc10LightingMaps.cpp \
-    source/SceneManager/Scenes/Sc11ManyCubesLM/Sc11ManyCubesLM.cpp \
+    source/SceneManager/Scenes/Sc9LightingMaps/Sc9LightingMaps.cpp \
+    source/SceneManager/Scenes/Sc10ManyCubesLM/Sc10ManyCubesLM.cpp \
     source/SceneManager/Scenes/Sc1VBOOrange/Sc1VBOOrange.cpp \
     source/SceneManager/Scenes/Sc2VAOBlue/Sc2VAOBlue.cpp \
     source/SceneManager/Scenes/Sc3EBOGreen/Sc3EBOGreen.cpp \
@@ -24,7 +24,6 @@ SOURCES += \
     source/SceneManager/Scenes/Sc6Box3DPerspective/Sc6Box3DPerspective.cpp \
     source/SceneManager/Scenes/Sc7Box3DCam/Sc7Box3DCam.cpp \
     source/SceneManager/Scenes/Sc8Lighting/Sc8Lighting.cpp \
-    source/SceneManager/Scenes/Sc9LightingMaterials/Sc9LightingMaterials.cpp \
     source/ShaderProgram.cpp \
     source/globalvars.cpp \
     source/main.cpp \
@@ -35,8 +34,8 @@ HEADERS += \
     source/BasicObjects/ArrowPainter/ArrowPainter.h \
     source/Camera/Camera.h \
     source/SceneManager/Scenes/Sc0Test/Sc0Test.h \
-    source/SceneManager/Scenes/Sc10LightingMaps/Sc10LightingMaps.h \
-    source/SceneManager/Scenes/Sc11ManyCubesLM/Sc11ManyCubesLM.h \
+    source/SceneManager/Scenes/Sc9LightingMaps/Sc9LightingMaps.h \
+    source/SceneManager/Scenes/Sc10ManyCubesLM/Sc10ManyCubesLM.h \
     source/SceneManager/Scenes/Sc1VBOOrange/Sc1VBOOrange.h \
     source/SceneManager/Scenes/Sc2VAOBlue/Sc2VAOBlue.h \
     source/SceneManager/Scenes/Sc3EBOGreen/Sc3EBOGreen.h \
@@ -46,7 +45,6 @@ HEADERS += \
     source/SceneManager/Scenes/Sc6Box3DPerspective/Sc6Box3DPerspective.h \
     source/SceneManager/Scenes/Sc7Box3DCam/Sc7Box3DCam.h \
     source/SceneManager/Scenes/Sc8Lighting/Sc8Lighting.h \
-    source/SceneManager/Scenes/Sc9LightingMaterials/Sc9LightingMaterials.h \
     source/ShaderProgram.h \
     source/globalvars.h \
     source/MainOpenGLWidget.h \
@@ -56,8 +54,8 @@ HEADERS += \
 FORMS += \
     MainWindowForm.ui \
     source/SceneManager/Scenes/Sc0Test/ui/Sc0TestOptionsForm.ui \
-    source/SceneManager/Scenes/Sc10LightingMaps/ui/Sc10LightingMapsOptionsForm.ui \
-    source/SceneManager/Scenes/Sc11ManyCubesLM/ui/Sc11ManyCubesLMOptionsForm.ui \
+    source/SceneManager/Scenes/Sc9LightingMaps/ui/Sc9LightingMapsOptionsForm.ui \
+    source/SceneManager/Scenes/Sc10ManyCubesLM/ui/Sc10ManyCubesLMOptionsForm.ui \
     source/SceneManager/Scenes/Sc1VBOOrange/ui/Sc1VBOOrangeOptionsForm.ui \
     source/SceneManager/Scenes/Sc2VAOBlue/ui/Sc2VAOBlueOptionsForm.ui \
     source/SceneManager/Scenes/Sc3EBOGreen/ui/Sc3EBOGreenOptionsForm.ui \
@@ -66,7 +64,6 @@ FORMS += \
     source/SceneManager/Scenes/Sc6Box3DPerspective/ui/Sc6Box3DPerspectiveOptionsForm.ui \
     source/SceneManager/Scenes/Sc7Box3DCam/ui/Sc7Box3DCamOptionsForm.ui \
     source/SceneManager/Scenes/Sc8Lighting/ui/Sc8LightingOptionsForm.ui \
-    source/SceneManager/Scenes/Sc9LightingMaterials/ui/Sc9LightingMaterialsOptionsForm.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

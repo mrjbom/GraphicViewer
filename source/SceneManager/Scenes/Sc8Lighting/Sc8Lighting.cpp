@@ -390,7 +390,7 @@ void Sc8Lighting::drawScene()
     //calculating light position
     //                             box position
     g_light_position = glm::vec3(0.0f, 0.0f, 0.0f) + g_light_to_cube_distance;
-    g_light_position = glm::vec4(g_light_position, 0.0f) * glm::rotate(glm::mat4(1.0f), glm::radians(light_rotation_around_degress), glm::vec3(0, 1, 0));
+    g_light_position = glm::vec4(g_light_position, 1.0f) * glm::rotate(glm::mat4(1.0f), glm::radians(light_rotation_around_degress), glm::vec3(0, 1, 0));
     g_light_position.z = -g_light_position.z;
     //qInfo() << g_light_position.x << g_light_position.y << g_light_position.z;
 

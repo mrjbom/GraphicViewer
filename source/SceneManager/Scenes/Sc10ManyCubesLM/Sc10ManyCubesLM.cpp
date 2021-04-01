@@ -1,17 +1,17 @@
-#include "Sc11ManyCubesLM.h"
+#include "Sc10ManyCubesLM.h"
 #include "../../globalvars.h"
 #include <QGLWidget> //for convertation to gl format
 
-Sc11ManyCubesLM::Sc11ManyCubesLM(QOpenGLContext* openGLContext)
+Sc10ManyCubesLM::Sc10ManyCubesLM(QOpenGLContext* openGLContext)
 {
     glFunctions = openGLContext->versionFunctions<QOpenGLFunctions_4_5_Core>();
 }
 
-Sc11ManyCubesLM::~Sc11ManyCubesLM()
+Sc10ManyCubesLM::~Sc10ManyCubesLM()
 {
 }
 
-void Sc11ManyCubesLM::initScene(int start_window_width, int start_window_height)
+void Sc10ManyCubesLM::initScene(int start_window_width, int start_window_height)
 {
     //I specifically set all the variables manually, because this is a test code.
     float cube_vertexes_coords_normalized[] =
@@ -226,7 +226,7 @@ void Sc11ManyCubesLM::initScene(int start_window_width, int start_window_height)
     arrowPainter = new ArrowPainter(glFunctions);
 
     //Create shader program object
-    gBoxShaderProgram = new ShaderProgram(glFunctions, ":Scenes/Sc11ManyCubesLM/shaders/box/vertshader.vert", ":/Scenes/Sc11ManyCubesLM/shaders/box/fragshader.frag");
+    gBoxShaderProgram = new ShaderProgram(glFunctions, ":Scenes/Sc10ManyCubesLM/shaders/box/vertshader.vert", ":/Scenes/Sc10ManyCubesLM/shaders/box/fragshader.frag");
 
     //Compile shader program
     if(!gBoxShaderProgram->compile()) {
@@ -235,7 +235,7 @@ void Sc11ManyCubesLM::initScene(int start_window_width, int start_window_height)
     }
 
     //Create shader program object
-    gLightShaderProgram = new ShaderProgram(glFunctions, ":Scenes/Sc11ManyCubesLM/shaders/light/vertshader.vert", ":/Scenes/Sc11ManyCubesLM/shaders/light/fragshader.frag");
+    gLightShaderProgram = new ShaderProgram(glFunctions, ":Scenes/Sc10ManyCubesLM/shaders/light/vertshader.vert", ":/Scenes/Sc10ManyCubesLM/shaders/light/fragshader.frag");
 
     //Compile shader program
     if(!gLightShaderProgram->compile()) {
@@ -244,7 +244,7 @@ void Sc11ManyCubesLM::initScene(int start_window_width, int start_window_height)
     }
 
     //Load texture image
-    QImage imgWallTexture(":Scenes/Sc11ManyCubesLM/textures/metalbox_deffusemap512x512.png");
+    QImage imgWallTexture(":Scenes/Sc10ManyCubesLM/textures/metalbox_deffusemap512x512.png");
     if(imgWallTexture.isNull()) {
         qInfo("[ERROR] initScene: image texture load failed!");
         return;
@@ -254,7 +254,7 @@ void Sc11ManyCubesLM::initScene(int start_window_width, int start_window_height)
     imgWallTexture = imgWallTexture.convertToFormat(QImage::Format_ARGB32_Premultiplied);
 
     //Load texture image
-    QImage imgWallTexture2(":Scenes/Sc11ManyCubesLM/textures/metalbox_specularmap512x512.png");
+    QImage imgWallTexture2(":Scenes/Sc10ManyCubesLM/textures/metalbox_specularmap512x512.png");
     if(imgWallTexture2.isNull()) {
         qInfo("[ERROR] initScene: image texture load failed!");
         return;
@@ -432,7 +432,7 @@ void Sc11ManyCubesLM::initScene(int start_window_width, int start_window_height)
     g_VAO_light = VAOlight;
 }
 
-void Sc11ManyCubesLM::drawScene()
+void Sc10ManyCubesLM::drawScene()
 {
     glFunctions->glEnable(GL_DEPTH_TEST);
     glFunctions->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -565,7 +565,7 @@ void Sc11ManyCubesLM::drawScene()
     glFunctions->glBindVertexArray(0);
 }
 
-void Sc11ManyCubesLM::finishScene()
+void Sc10ManyCubesLM::finishScene()
 {
     glFunctions->glDeleteBuffers(1, &g_VBO_cube_vertexes);
     glFunctions->glDeleteBuffers(1, &g_VBO_cube_normals);
@@ -591,13 +591,13 @@ void Sc11ManyCubesLM::finishScene()
     delete arrowPainter;
 }
 
-void Sc11ManyCubesLM::resizeSceneWindow(int w, int h)
+void Sc10ManyCubesLM::resizeSceneWindow(int w, int h)
 {
     window_width = w;
     window_height = h;
 }
 
-void Sc11ManyCubesLM::mousePressEventHandler(QMouseEvent event)
+void Sc10ManyCubesLM::mousePressEventHandler(QMouseEvent event)
 {
     if(event.button() != Qt::LeftButton)
         return;
@@ -607,14 +607,14 @@ void Sc11ManyCubesLM::mousePressEventHandler(QMouseEvent event)
     mouse_left_button_pressed = true;
 }
 
-void Sc11ManyCubesLM::mouseReleaseEventHandler(QMouseEvent event)
+void Sc10ManyCubesLM::mouseReleaseEventHandler(QMouseEvent event)
 {
     if(event.button() != Qt::LeftButton)
         return;
     mouse_left_button_pressed = false;
 }
 
-void Sc11ManyCubesLM::mouseMoveEventHandler(QMouseEvent event)
+void Sc10ManyCubesLM::mouseMoveEventHandler(QMouseEvent event)
 {
     //"Note that the returned value(QMouseEvent::button()) is always Qt::NoButton for mouse move events."
 
@@ -632,7 +632,7 @@ void Sc11ManyCubesLM::mouseMoveEventHandler(QMouseEvent event)
     }
 }
 
-void Sc11ManyCubesLM::keyPressEventHandler(QKeyEvent* event)
+void Sc10ManyCubesLM::keyPressEventHandler(QKeyEvent* event)
 {
     //Exclude repeated calls when the button is pressed
     if(event->isAutoRepeat())
@@ -669,7 +669,7 @@ void Sc11ManyCubesLM::keyPressEventHandler(QKeyEvent* event)
     }
 }
 
-void Sc11ManyCubesLM::keyReleaseEventHandler(QKeyEvent* event)
+void Sc10ManyCubesLM::keyReleaseEventHandler(QKeyEvent* event)
 {
     //Exclude repeated calls when the button is pressed
     if(event->isAutoRepeat())
@@ -703,62 +703,62 @@ void Sc11ManyCubesLM::keyReleaseEventHandler(QKeyEvent* event)
     }
 }
 
-void Sc11ManyCubesLM::createUiOptionsWidget()
+void Sc10ManyCubesLM::createUiOptionsWidget()
 {
-    uiOptionsForm = new Ui::Sc11ManyCubesLMOptionsForm;
+    uiOptionsForm = new Ui::Sc10ManyCubesLMOptionsForm;
     optionsFormWidget = new QWidget;
     uiOptionsForm->setupUi(optionsFormWidget);
     globalMainWindowFormUI->sceneOptionsStackedWidget->addWidget(optionsFormWidget);
 
-    QObject::connect(uiOptionsForm->xRotationSlider, &QSlider::valueChanged, this, &Sc11ManyCubesLM::setXRotSpeedValueFromSlider);
-    QObject::connect(uiOptionsForm->yRotationSlider, &QSlider::valueChanged, this, &Sc11ManyCubesLM::setYRotSpeedValueFromSlider);
-    QObject::connect(uiOptionsForm->xSizeSlider, &QSlider::valueChanged, this, &Sc11ManyCubesLM::setXSizeValueFromSlider);
-    QObject::connect(uiOptionsForm->ySizeSlider, &QSlider::valueChanged, this, &Sc11ManyCubesLM::setYSizeValueFromSlider);
-    QObject::connect(uiOptionsForm->resetRotationsPushButton, &QPushButton::clicked, this, &Sc11ManyCubesLM::resetRotationsButtonClicked);
-    QObject::connect(uiOptionsForm->lightRotationSlider, &QSlider::valueChanged, this, &Sc11ManyCubesLM::setLightRotValueFromSlider);
-    QObject::connect(uiOptionsForm->diagonalSpinBox, QOverload<int>::of(&QSpinBox::valueChanged), this, &Sc11ManyCubesLM::setDiagonalValueFromSlider);
+    QObject::connect(uiOptionsForm->xRotationSlider, &QSlider::valueChanged, this, &Sc10ManyCubesLM::setXRotSpeedValueFromSlider);
+    QObject::connect(uiOptionsForm->yRotationSlider, &QSlider::valueChanged, this, &Sc10ManyCubesLM::setYRotSpeedValueFromSlider);
+    QObject::connect(uiOptionsForm->xSizeSlider, &QSlider::valueChanged, this, &Sc10ManyCubesLM::setXSizeValueFromSlider);
+    QObject::connect(uiOptionsForm->ySizeSlider, &QSlider::valueChanged, this, &Sc10ManyCubesLM::setYSizeValueFromSlider);
+    QObject::connect(uiOptionsForm->resetRotationsPushButton, &QPushButton::clicked, this, &Sc10ManyCubesLM::resetRotationsButtonClicked);
+    QObject::connect(uiOptionsForm->lightRotationSlider, &QSlider::valueChanged, this, &Sc10ManyCubesLM::setLightRotValueFromSlider);
+    QObject::connect(uiOptionsForm->diagonalSpinBox, QOverload<int>::of(&QSpinBox::valueChanged), this, &Sc10ManyCubesLM::setDiagonalValueFromSlider);
 }
 
-void Sc11ManyCubesLM::deleteUiOptionsWidget()
+void Sc10ManyCubesLM::deleteUiOptionsWidget()
 {
     globalMainWindowFormUI->sceneOptionsStackedWidget->removeWidget(optionsFormWidget);
     delete optionsFormWidget;
     delete uiOptionsForm;
 }
 
-void Sc11ManyCubesLM::setXRotSpeedValueFromSlider(int new_value)
+void Sc10ManyCubesLM::setXRotSpeedValueFromSlider(int new_value)
 {
     x_rotation_speed_in_degrees = (1.0f / 100) * new_value;
 }
 
-void Sc11ManyCubesLM::setYRotSpeedValueFromSlider(int new_value)
+void Sc10ManyCubesLM::setYRotSpeedValueFromSlider(int new_value)
 {
     y_rotation_speed_in_degrees = (1.0f / 100) * new_value;
 }
 
-void Sc11ManyCubesLM::setXSizeValueFromSlider(int new_value)
+void Sc10ManyCubesLM::setXSizeValueFromSlider(int new_value)
 {
     x_size_scale = (1.0f / 100) * new_value;
 }
 
-void Sc11ManyCubesLM::setYSizeValueFromSlider(int new_value)
+void Sc10ManyCubesLM::setYSizeValueFromSlider(int new_value)
 {
     y_size_scale = (1.0f / 100) * new_value;
 }
 
-void Sc11ManyCubesLM::resetRotationsButtonClicked()
+void Sc10ManyCubesLM::resetRotationsButtonClicked()
 {
     rotation_matrix = glm::mat4(1.0f);
     x_rot = 0;
     y_rot = 0;
 }
 
-void Sc11ManyCubesLM::setLightRotValueFromSlider(int new_value)
+void Sc10ManyCubesLM::setLightRotValueFromSlider(int new_value)
 {
     light_rotation_around_degress = new_value;
 }
 
-void Sc11ManyCubesLM::setDiagonalValueFromSlider(int new_value)
+void Sc10ManyCubesLM::setDiagonalValueFromSlider(int new_value)
 {
     g_diagonal = new_value;
 }

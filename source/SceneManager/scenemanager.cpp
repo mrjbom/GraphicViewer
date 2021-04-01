@@ -10,9 +10,8 @@
 #include "Scenes/Sc6Box3DPerspective/Sc6Box3DPerspective.h"
 #include "Scenes/Sc7Box3DCam/Sc7Box3DCam.h"
 #include "Scenes/Sc8Lighting/Sc8Lighting.h"
-#include "Scenes/Sc9LightingMaterials/Sc9LightingMaterials.h"
-#include "Scenes/Sc10LightingMaps/Sc10LightingMaps.h"
-#include "Scenes/Sc11ManyCubesLM/Sc11ManyCubesLM.h"
+#include "Scenes/Sc9LightingMaps/Sc9LightingMaps.h"
+#include "Scenes/Sc10ManyCubesLM/Sc10ManyCubesLM.h"
 
 SceneManager::SceneManager()
 {
@@ -59,13 +58,10 @@ void SceneManager::init(QOpenGLContext* openGLContext)
     scenePtr = new Sc8Lighting(openGLContext);
     addSceneObject(scenePtr, "Box with lighting");
 
-    scenePtr = new Sc9LightingMaterials(openGLContext);
-    addSceneObject(scenePtr, "Box with lighting materials");
-
-    scenePtr = new Sc10LightingMaps(openGLContext);
+    scenePtr = new Sc9LightingMaps(openGLContext);
     addSceneObject(scenePtr, "Box with lighting maps");
 
-    scenePtr = new Sc11ManyCubesLM(openGLContext);
+    scenePtr = new Sc10ManyCubesLM(openGLContext);
     addSceneObject(scenePtr, "Many boxes with lighting maps (FPS)");
 
     //Configuring the scene combo-box to select the current scene

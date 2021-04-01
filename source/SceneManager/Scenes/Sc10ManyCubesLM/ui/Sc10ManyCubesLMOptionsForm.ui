@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Sc10LightingMapsOptionsForm</class>
- <widget class="QWidget" name="Sc10LightingMapsOptionsForm">
+ <class>Sc10ManyCubesLMOptionsForm</class>
+ <widget class="QWidget" name="Sc10ManyCubesLMOptionsForm">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -193,6 +193,32 @@
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="diagonalSpinBoxLabel">
+     <property name="text">
+      <string>Number of objects along the axis</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QSpinBox" name="diagonalSpinBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>256</number>
+     </property>
+     <property name="singleStep">
+      <number>1</number>
      </property>
     </widget>
    </item>

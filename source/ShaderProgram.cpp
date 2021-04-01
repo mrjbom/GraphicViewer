@@ -3,7 +3,7 @@
 #include <QDebug>
 
 // _useShaderPrintf
-ShaderProgram::ShaderProgram(QOpenGLFunctions_4_5_Core* targetGlFunctions, const QString vertex_shader_source_file_path, const QString fragment_shader_source_file_path, bool use_shader_printf)
+ShaderProgram::ShaderProgram(QOpenGLFunctions_4_5_Core* targetGlFunctions, const QString vertex_shader_source_file_path, const QString fragment_shader_source_file_path, bool use_ARB, bool use_shader_printf)
 {
     this->glFunctions = targetGlFunctions;
     this->vertex_shader_source_file_path = vertex_shader_source_file_path;
@@ -193,6 +193,96 @@ void ShaderProgram::setUniformBool(const GLchar* name, bool value)
         return;
     }
     glFunctions->glUniform1i(location, (int)value);
+}
+
+bool ShaderProgram::extAvailable(const GLchar *name)
+{
+    std::string extentions_list((char*)glGetString(GL_EXTENSIONS));
+    if(extentions_list.find(name) == std::string::npos) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+void ShaderProgram::createNamedStringFromFile(const QString named_string_file_path, const char* pathname)
+{
+    if(!extAvailable("GL_ARB_shading_language_include")) {
+        qDebug("[ERROR] defineNamedStringARBFromFile: extention GL_ARB_shading_language_include not available!");
+        return;
+    }
+
+    //Find functions
+    //void glNamedStringARB(enum type, int namelen, const char *name, int stringlen, const char *string);
+    PFNGLNAMEDSTRINGARBPROC glNamedStringARB;
+    glNamedStringARB = (PFNGLNAMEDSTRINGARBPROC)wglGetProcAddress("glNamedStringARB");
+    if(glNamedStringARB == NULL) {
+        qDebug("[ERROR] defineNamedStringARBFromFile: can't find glNamedStringARB pointer!");
+        return;
+    }
+    //void glDeleteNamedStringARB(int namelen, const char *name);
+    PFNGLDELETENAMEDSTRINGARBPROC glDeleteNamedStringARB;
+    glDeleteNamedStringARB = (PFNGLDELETENAMEDSTRINGARBPROC)wglGetProcAddress("glDeleteNamedStringARB");
+    if(glDeleteNamedStringARB == NULL) {
+        qDebug("[ERROR] defineNamedStringARBFromFile: can't find glDeleteNamedStringARB pointer!");
+        return;
+    }
+    //void glCompileShaderIncludeARB(uint shader, sizei count, const char *const *path, const int *length);
+    PFNGLCOMPILESHADERINCLUDEARBPROC glCompileShaderIncludeARB;
+    glCompileShaderIncludeARB = (PFNGLCOMPILESHADERINCLUDEARBPROC)wglGetProcAddress("glCompileShaderIncludeARB");
+    if(glCompileShaderIncludeARB == NULL) {
+        qDebug("[ERROR] defineNamedStringARBFromFile: can't find glCompileShaderIncludeARB pointer!");
+        return;
+    }
+    //boolean glIsNamedStringARB(int namelen, const char *name);
+    PFNGLISNAMEDSTRINGARBPROC glIsNamedStringARB;
+    glIsNamedStringARB = (PFNGLISNAMEDSTRINGARBPROC)wglGetProcAddress("glIsNamedStringARB");
+    if(glIsNamedStringARB == NULL) {
+        qDebug("[ERROR] defineNamedStringARBFromFile: can't find glIsNamedStringARB pointer!");
+        return;
+    }
+    //void glGetNamedStringARB(int namelen, const char *name, sizei bufSize, int *stringlen, char *string);
+    PFNGLGETNAMEDSTRINGARBPROC glGetNamedStringARB;
+    glGetNamedStringARB = (PFNGLGETNAMEDSTRINGARBPROC)wglGetProcAddress("glGetNamedStringARB");
+    if(glGetNamedStringARB == NULL) {
+        qDebug("[ERROR] defineNamedStringARBFromFile: can't find glGetNamedStringARB pointer!");
+        return;
+    }
+    //void GetNamedStringivARB(int namelen, const char *name, enum pname, int *params);
+    PFNGLGETNAMEDSTRINGIVARBPROC glGetNamedStringivARB;
+    glGetNamedStringivARB = (PFNGLGETNAMEDSTRINGIVARBPROC)wglGetProcAddress("glGetNamedStringivARB");
+    if(glGetNamedStringivARB == NULL) {
+        qDebug("[ERROR] defineNamedStringARBFromFile: can't find glGetNamedStringivARB pointer!");
+        return;
+    }
+
+
+    QFile namedStringSourceFile(named_string_file_path);
+    if (!namedStringSourceFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug("[ERROR] defineNamedStringARBFromFile: open named string source file failed!");
+        return;
+    }
+
+    QByteArray namedStringSourceByteArray;
+    while (!namedStringSourceFile.atEnd()) {
+        namedStringSourceByteArray.append(namedStringSourceFile.readLine());
+    }
+    namedStringSourceFile.close();
+
+    //Define named string
+    glNamedStringARB(GL_SHADER_INCLUDE_ARB, strlen(pathname), pathname, namedStringSourceByteArray.length(), namedStringSourceByteArray.data());
+}
+
+void ShaderProgram::deleteNamedString(const char* pathname)
+{
+    //void glDeleteNamedStringARB(int namelen, const char *name);
+    PFNGLDELETENAMEDSTRINGARBPROC glDeleteNamedStringARB;
+    glDeleteNamedStringARB = (PFNGLDELETENAMEDSTRINGARBPROC)wglGetProcAddress("glDeleteNamedStringARB");
+    if(glDeleteNamedStringARB == NULL) {
+        qDebug("[ERROR] defineNamedStringARBFromFile: can't find glDeleteNamedStringARB pointer!");
+        return;
+    }
+    glDeleteNamedStringARB(strlen(pathname), pathname);
 }
 
 void ShaderProgram::printfPrepare()

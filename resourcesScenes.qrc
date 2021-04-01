@@ -43,26 +43,21 @@
         <file alias="/shaders/pyramide/fragshader.frag">source/SceneManager/Scenes/Sc8Lighting/shaders/pyramide/fragshader.frag</file>
         <file alias="/shaders/pyramide/vertshader.vert">source/SceneManager/Scenes/Sc8Lighting/shaders/pyramide/vertshader.vert</file>
     </qresource>
-    <qresource prefix="/Scenes/Sc9LightingMaterials">
-        <file alias="/shaders/box/fragshader.frag">source/SceneManager/Scenes/Sc9LightingMaterials/shaders/box/fragshader.frag</file>
-        <file alias="/shaders/box/vertshader.vert">source/SceneManager/Scenes/Sc9LightingMaterials/shaders/box/vertshader.vert</file>
-        <file alias="/shaders/light/fragshader.frag">source/SceneManager/Scenes/Sc9LightingMaterials/shaders/light/fragshader.frag</file>
-        <file alias="/shaders/light/vertshader.vert">source/SceneManager/Scenes/Sc9LightingMaterials/shaders/light/vertshader.vert</file>
+    <qresource prefix="/Scenes/Sc9LightingMaps">
+        <file alias="/textures/metalbox_deffusemap512x512.png">source/SceneManager/Scenes/Sc9LightingMaps/textures/metalbox_deffusemap512x512.png</file>
+        <file alias="/textures/metalbox_specularmap512x512.png">source/SceneManager/Scenes/Sc9LightingMaps/textures/metalbox_specularmap512x512.png</file>
+        <file alias="/shaders/box/fragshader.frag">source/SceneManager/Scenes/Sc9LightingMaps/shaders/box/fragshader.frag</file>
+        <file alias="/shaders/box/vertshader.vert">source/SceneManager/Scenes/Sc9LightingMaps/shaders/box/vertshader.vert</file>
+        <file alias="/shaders/light/fragshader.frag">source/SceneManager/Scenes/Sc10ManyCubesLM/shaders/light/fragshader.frag</file>
+        <file alias="/shaders/light/vertshader.vert">source/SceneManager/Scenes/Sc10ManyCubesLM/shaders/light/vertshader.vert</file>
+        <file alias="/shaders/box/light_type.glsl">source/SceneManager/Scenes/Sc9LightingMaps/shaders/box/light_type.glsl</file>
     </qresource>
-    <qresource prefix="/Scenes/Sc10LightingMaps">
-        <file alias="/shaders/box/fragshader.frag">source/SceneManager/Scenes/Sc10LightingMaps/shaders/box/fragshader.frag</file>
-        <file alias="/shaders/box/vertshader.vert">source/SceneManager/Scenes/Sc10LightingMaps/shaders/box/vertshader.vert</file>
-        <file alias="/shaders/light/fragshader.frag">source/SceneManager/Scenes/Sc10LightingMaps/shaders/light/fragshader.frag</file>
-        <file alias="/shaders/light/vertshader.vert">source/SceneManager/Scenes/Sc10LightingMaps/shaders/light/vertshader.vert</file>
-        <file alias="/textures/metalbox_deffusemap512x512.png">source/SceneManager/Scenes/Sc10LightingMaps/textures/metalbox_deffusemap512x512.png</file>
-        <file alias="/textures/metalbox_specularmap512x512.png">source/SceneManager/Scenes/Sc10LightingMaps/textures/metalbox_specularmap512x512.png</file>
-    </qresource>
-    <qresource prefix="/Scenes/Sc11ManyCubesLM">
-        <file alias="/shaders/box/fragshader.frag">source/SceneManager/Scenes/Sc11ManyCubesLM/shaders/box/fragshader.frag</file>
-        <file alias="/shaders/box/vertshader.vert">source/SceneManager/Scenes/Sc11ManyCubesLM/shaders/box/vertshader.vert</file>
-        <file alias="/shaders/light/fragshader.frag">source/SceneManager/Scenes/Sc11ManyCubesLM/shaders/light/fragshader.frag</file>
-        <file alias="/shaders/light/vertshader.vert">source/SceneManager/Scenes/Sc11ManyCubesLM/shaders/light/vertshader.vert</file>
-        <file alias="/textures/metalbox_deffusemap512x512.png">source/SceneManager/Scenes/Sc11ManyCubesLM/textures/metalbox_deffusemap512x512.png</file>
-        <file alias="/textures/metalbox_specularmap512x512.png">source/SceneManager/Scenes/Sc11ManyCubesLM/textures/metalbox_specularmap512x512.png</file>
+    <qresource prefix="/Scenes/Sc10ManyCubesLM">
+        <file alias="/textures/metalbox_deffusemap512x512.png">source/SceneManager/Scenes/Sc10ManyCubesLM/textures/metalbox_deffusemap512x512.png</file>
+        <file alias="/textures/metalbox_specularmap512x512.png">source/SceneManager/Scenes/Sc10ManyCubesLM/textures/metalbox_specularmap512x512.png</file>
+        <file alias="/shaders/box/fragshader.frag">source/SceneManager/Scenes/Sc10ManyCubesLM/shaders/box/fragshader.frag</file>
+        <file alias="/shaders/box/vertshader.vert">source/SceneManager/Scenes/Sc10ManyCubesLM/shaders/box/vertshader.vert</file>
+        <file alias="/shaders/light/fragshader.frag">source/SceneManager/Scenes/Sc10ManyCubesLM/shaders/light/fragshader.frag</file>
+        <file alias="/shaders/light/vertshader.vert">source/SceneManager/Scenes/Sc10ManyCubesLM/shaders/light/vertshader.vert</file>
     </qresource>
 </RCC>

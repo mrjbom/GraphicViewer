@@ -1,11 +1,5 @@
-#ifndef SC10LIGHTINGMAPS_H
-#define SC10LIGHTINGMAPS_H
-
-
-/*
- * Demonstration of the operation of lighting using the Phong reflection model and various materials.
- * Part 2
- */
+#ifndef SС10MANYCUBESLM_H
+#define SС10MANYCUBESLM_H
 
 
 #include <QDebug>
@@ -23,13 +17,13 @@
 #include "../../glm/gtc/matrix_transform.hpp"
 #include "../../glm/gtc/type_ptr.hpp"
 
-#include "ui_Sc10LightingMapsOptionsForm.h"
+#include "ui_Sc10ManyCubesLMOptionsForm.h"
 
-class Sc10LightingMaps : public SceneManager
+class Sc10ManyCubesLM : public SceneManager
 {
 private:
     QOpenGLFunctions_4_5_Core* glFunctions = nullptr;
-    Ui::Sc10LightingMapsOptionsForm* uiOptionsForm = nullptr;
+    Ui::Sc10ManyCubesLMOptionsForm* uiOptionsForm = nullptr;
     QWidget* optionsFormWidget = nullptr;
 
 private:
@@ -50,7 +44,7 @@ private:
     GLuint g_metalbox_specularmap_texture = 0;
     ShaderProgram* gLightShaderProgram = nullptr;
     GLuint g_VAO_light = 0;
-    glm::vec3 g_light_to_cube_distance = glm::vec3(2.5f, 0.0f, 0.0f);
+    glm::vec3 g_light_to_cube_distance = glm::vec3(2.5f, 2.5f, 0.0f);
     glm::vec3 g_light_position = glm::vec3(0.0f, 0.0f, 0.0f);
 
     glm::mat4 model_matrix = glm::mat4(1.0f);
@@ -66,10 +60,11 @@ private:
     float y_size_scale = 1;
     float light_rotation_around_degress = 0.0f;
     glm::vec3 g_light_color = glm::vec3(1.0f, 1.0f, 1.0f);
+    int g_diagonal = 1;
 
 public:
-    Sc10LightingMaps(QOpenGLContext* openGLContext);
-    ~Sc10LightingMaps();
+    Sc10ManyCubesLM(QOpenGLContext* openGLContext);
+    ~Sc10ManyCubesLM();
     void initScene(int start_window_width, int start_window_height) override;
     void drawScene() override;
     void finishScene() override;
@@ -88,7 +83,8 @@ public slots:
     void setXSizeValueFromSlider(int new_value);
     void setYSizeValueFromSlider(int new_value);
     void setLightRotValueFromSlider(int new_value);
+    void setDiagonalValueFromSlider(int new_value);
     void resetRotationsButtonClicked();
 };
 
-#endif // SC10LIGHTINGMAPS_H
+#endif // SС10MANYCUBESLM_H
