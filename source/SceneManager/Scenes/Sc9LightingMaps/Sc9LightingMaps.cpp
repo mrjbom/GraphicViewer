@@ -228,7 +228,8 @@ void Sc9LightingMaps::initScene(int start_window_width, int start_window_height)
     //Create shader program object
     gBoxShaderProgram = new ShaderProgram(glFunctions, ":Scenes/Sc9LightingMaps/shaders/box/vertshader.vert", ":/Scenes/Sc9LightingMaps/shaders/box/fragshader.frag");
 
-    gBoxShaderProgram->createNamedStringFromFile(":Scenes/Sc9LightingMaps/shaders/box/light_type.glsl", "/light_type.glsl");
+    gBoxShaderProgram->defineNamedStringFromFile(":Scenes/Sc9LightingMaps/shaders/box/light_types.glsl", "/light_types.glsl");
+    gBoxShaderProgram->defineNamedStringFromFile(":Scenes/Sc9LightingMaps/shaders/box/material.glsl", "/material.glsl");
     //Compile shader program
     if(!gBoxShaderProgram->compile()) {
         qDebug("[ERROR] initializeGL: compile cube shader program failed!");
@@ -521,6 +522,9 @@ void Sc9LightingMaps::drawScene()
     gBoxShaderProgram->setUniform3f("light.ambient", 0.4f, 0.4f, 0.4f);
     gBoxShaderProgram->setUniform3f("light.diffuse", 0.7f, 0.7f, 0.7f);
     gBoxShaderProgram->setUniform3f("light.specular", 1.0f, 1.0f, 1.0f);
+    gBoxShaderProgram->setUniform1f("light.constant", 1.0f);
+    gBoxShaderProgram->setUniform1f("light.linear", 0.35f);
+    gBoxShaderProgram->setUniform1f("light.quadratic", 0.44f);
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     //Enable the vertex attribute(the rest attributes remain off for optimization)

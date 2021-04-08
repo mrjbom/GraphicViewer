@@ -1,6 +1,7 @@
 #version 450 core
 #extension GL_ARB_shading_language_include : require
-#include "/light_type.glsl"
+#include "/light_types.glsl"
+#include "/material.glsl"
 
 in vec3 aaNormal;
 in vec2 aaTexCoord;
@@ -29,6 +30,13 @@ void main()
     vec3 reflectLightDirection = reflect(-deffuseLightDirection, normalizedNormal);
     float specularLightAngleCoef = pow(max(dot(cameraDirection, reflectLightDirection), 0.0), material.shininess);
     vec3 specularLight = light.specular * (specularLightAngleCoef * vec3(texture(material.specular, aaTexCoord)));
+
+    float distance = length(light.position - aaFragPos);
+    float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
+
+    specularLight *= attenuation;
+    ambientLight *= attenuation;
+    diffuseLight *= attenuation;
 
     vec3 resultColor = ambientLight + diffuseLight + specularLight;
 

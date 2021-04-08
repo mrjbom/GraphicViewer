@@ -50,7 +50,8 @@
         <file alias="/shaders/box/vertshader.vert">source/SceneManager/Scenes/Sc9LightingMaps/shaders/box/vertshader.vert</file>
         <file alias="/shaders/light/fragshader.frag">source/SceneManager/Scenes/Sc10ManyCubesLM/shaders/light/fragshader.frag</file>
         <file alias="/shaders/light/vertshader.vert">source/SceneManager/Scenes/Sc10ManyCubesLM/shaders/light/vertshader.vert</file>
-        <file alias="/shaders/box/light_type.glsl">source/SceneManager/Scenes/Sc9LightingMaps/shaders/box/light_type.glsl</file>
+        <file alias="/shaders/box/light_types.glsl">source/SceneManager/Scenes/Sc9LightingMaps/shaders/box/light_types.glsl</file>
+        <file alias="/shaders/box/material.glsl">source/SceneManager/Scenes/Sc9LightingMaps/shaders/box/material.glsl</file>
     </qresource>
     <qresource prefix="/Scenes/Sc10ManyCubesLM">
         <file alias="/textures/metalbox_deffusemap512x512.png">source/SceneManager/Scenes/Sc10ManyCubesLM/textures/metalbox_deffusemap512x512.png</file>

@@ -3,7 +3,7 @@
 #include <QDebug>
 
 // _useShaderPrintf
-ShaderProgram::ShaderProgram(QOpenGLFunctions_4_5_Core* targetGlFunctions, const QString vertex_shader_source_file_path, const QString fragment_shader_source_file_path, bool use_ARB, bool use_shader_printf)
+ShaderProgram::ShaderProgram(QOpenGLFunctions_4_5_Core* targetGlFunctions, const QString vertex_shader_source_file_path, const QString fragment_shader_source_file_path, bool use_shader_printf)
 {
     this->glFunctions = targetGlFunctions;
     this->vertex_shader_source_file_path = vertex_shader_source_file_path;
@@ -205,7 +205,7 @@ bool ShaderProgram::extAvailable(const GLchar *name)
     }
 }
 
-void ShaderProgram::createNamedStringFromFile(const QString named_string_file_path, const char* pathname)
+void ShaderProgram::defineNamedStringFromFile(const QString named_string_file_path, const char* pathname)
 {
     if(!extAvailable("GL_ARB_shading_language_include")) {
         qDebug("[ERROR] defineNamedStringARBFromFile: extention GL_ARB_shading_language_include not available!");
