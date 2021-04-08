@@ -1,4 +1,4 @@
-# GraphicViewerQt
+# GraphicsViewerQt
 
 ## About
 
@@ -8,4 +8,4 @@ A collection of demonstrative scenes using an OpenGL-based Qt application.
 
 **This project is now being developed [here][gv]**
 
-[gv]: <https://github.com/mrjbom/GraphicViewer>
+[gv]: <https://github.com/mrjbom/GraphicsViewer>
